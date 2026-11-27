@@ -1,1 +1,1 @@
-App.jsx [generated with web_code_canvas tool]
+[generated with web_code_canvas tool]
