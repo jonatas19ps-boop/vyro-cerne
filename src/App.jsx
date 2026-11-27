@@ -6,11 +6,9 @@ import {
   Megaphone,
   Scissors,
   Wallet,
-  ShoppingBag,
   Users,
   Plus,
   Trash2,
-  Edit3,
   Check,
   X,
   Search,
@@ -20,14 +18,10 @@ import {
   CloudOff,
   RefreshCw,
   ArrowRight,
-  Sparkles,
   CheckCircle2,
   Clock,
-  AlertCircle,
-  ExternalLink,
-  Sliders,
-  Layers,
-  ShieldCheck
+  Sparkles,
+  Layers
 } from 'lucide-react';
 
 // ============================================================================
@@ -162,7 +156,6 @@ const PRODUCTION_STAGES = [
 ];
 
 const INITIAL_CHECKLIST = [
-  // TECIDOS & MATÉRIAS-PRIMAS
   {
     id: 'chk-1',
     name: 'Tecido Meia Malha Lavanda (3 kg adquiridos)',
@@ -223,7 +216,6 @@ const INITIAL_CHECKLIST = [
     dueDate: '2027-02-15',
     notes: 'Gramatura encorpada para caimento baggy.'
   },
-  // AVIAMENTOS & ACABAMENTOS
   {
     id: 'chk-6',
     name: 'Etiquetas Tecidas VYRO ESSENCE + Tag Montanha MG',
@@ -248,7 +240,6 @@ const INITIAL_CHECKLIST = [
     dueDate: '2027-02-25',
     notes: 'Zíper duplo alternativo ao YKK + ferragens.'
   },
-  // CONFECÇÃO & BORDADO (Fechando R$ 4.018,07 total de produção)
   {
     id: 'chk-8',
     name: 'Corte, Costura CMT & Bordado Lavanda (50 peças)',
@@ -261,7 +252,6 @@ const INITIAL_CHECKLIST = [
     dueDate: '2027-04-30',
     notes: 'Mão de obra de costura e bordado do Jorts VY-04.'
   },
-  // SET & CAPTAÇÃO AUDIOVISUAL (JULHO 2027)
   {
     id: 'chk-9',
     name: 'Reserva Airbnb — Casa Vilas Boas (Nova Lima)',
@@ -429,8 +419,8 @@ const INITIAL_SALES = [
 ];
 
 const INITIAL_PARTNER_CONFIG = {
-  discrollSetSharePct: 20, // % apenas sobre os custos de gravação do Set
-  discrollCap: 1200, // Teto máximo leve para não apertar o Discroll
+  discrollSetSharePct: 20,
+  discrollCap: 1200,
   contingencyReserve: 600
 };
 
@@ -445,7 +435,7 @@ const DEFAULT_STATE = {
 };
 
 // ============================================================================
-// UTILITÁRIOS DE FORMATAÇÃO & COMPONENTES VISUAIS MINERAIS
+// UTILITÁRIOS & SÍMBOLO OFICIAL VYRO EM 3D (BASEADO EM VYRO2026)
 // ============================================================================
 
 const formatBRL = (val) =>
@@ -454,52 +444,124 @@ const formatBRL = (val) =>
     currency: 'BRL'
   }).format(Number(val) || 0);
 
-// Símbolo VYRO SVG de alta precisão (baseado no emblema fluido VYRO2026)
-function VyroEmblem({ className = 'w-12 h-12', glow = false }) {
+// Símbolo vetorial exato da VYRO (curva em S fluida com anéis orbitais internos)
+function VyroSymbolSvg({ className = 'w-12 h-12', mode = 'front' }) {
+  const uid = useMemo(() => Math.random().toString(36).slice(2, 7), []);
+
+  if (mode === 'depth') {
+    return (
+      <svg viewBox="0 0 520 260" fill="none" className={className}>
+        <path
+          d="M235 42 C142 82, 56 142, 62 174 C67 196, 128 190, 186 164 C144 176, 102 176, 98 158 C94 136, 152 94, 235 42 Z M285 218 C378 178, 464 118, 458 86 C453 64, 392 70, 334 96 C376 84, 418 84, 422 102 C426 124, 368 166, 285 218 Z M352 76 C264 116, 184 156, 148 186 C214 156, 294 116, 352 76 Z"
+          fill="#4A4453"
+          opacity="0.55"
+        />
+      </svg>
+    );
+  }
+
   return (
-    <svg
-      viewBox="0 0 400 220"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
+    <svg viewBox="0 0 520 260" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
       <defs>
-        <linearGradient id="vyroMineralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#F4F1EA" />
-          <stop offset="45%" stopColor="#D1D3D4" />
-          <stop offset="75%" stopColor="#A89AB8" />
-          <stop offset="100%" stopColor="#5E6D55" />
+        <linearGradient id={`vyroChrome-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="35%" stopColor="#F4F1EA" />
+          <stop offset="70%" stopColor="#C8C2D1" />
+          <stop offset="100%" stopColor="#8E9C87" />
         </linearGradient>
-        <linearGradient id="vyroStrokeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#72293C" stopOpacity="0.8" />
-          <stop offset="50%" stopColor="#F4F1EA" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#A89AB8" stopOpacity="0.8" />
+        <linearGradient id={`vyroRim-${uid}`} x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#A89AB8" stopOpacity="0.9" />
+          <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
+          <stop offset="100%" stopColor="#5E6D55" stopOpacity="0.9" />
         </linearGradient>
       </defs>
-      {/* Asa Esquerda Fluida */}
+
+      {/* 1. Lâmina Superior Esquerda (S Fluido) */}
       <path
-        d="M175 24 C105 72, 32 135, 34 166 C36 188, 86 184, 134 164 C104 166, 78 158, 82 138 C87 112, 132 76, 175 24 Z"
-        fill="url(#vyroMineralGrad)"
-        stroke="url(#vyroStrokeGrad)"
-        strokeWidth="1.5"
-        style={glow ? { filter: 'drop-shadow(0 0 18px rgba(168,154,184,0.35))' } : undefined}
+        d="M235 42 C142 82, 56 142, 62 174 C67 196, 128 190, 186 164 C144 176, 102 176, 98 158 C94 136, 152 94, 235 42 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        stroke={`url(#vyroRim-${uid})`}
+        strokeWidth="1.2"
       />
-      {/* Feixe Central Diagonal */}
+      {/* Anel Orbital Interno Esquerdo */}
       <path
-        d="M262 56 C198 94, 132 134, 108 168 C166 136, 232 96, 262 56 Z"
-        fill="url(#vyroMineralGrad)"
-        stroke="#F4F1EA"
-        strokeWidth="1"
+        d="M174 84 C132 114, 106 144, 112 162 C117 176, 148 176, 182 165 C154 169, 134 165, 132 152 C129 136, 148 110, 174 84 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        opacity="0.92"
       />
-      {/* Asa Direita Fluida */}
+
+      {/* 2. Lâmina Diagonal Central (Conexão Dinâmica) */}
       <path
-        d="M225 196 C295 148, 368 85, 366 54 C364 32, 314 36, 266 56 C296 54, 322 62, 318 82 C313 108, 268 144, 225 196 Z"
-        fill="url(#vyroMineralGrad)"
-        stroke="url(#vyroStrokeGrad)"
-        strokeWidth="1.5"
-        style={glow ? { filter: 'drop-shadow(0 0 18px rgba(94,109,85,0.35))' } : undefined}
+        d="M352 76 C264 114, 182 154, 142 186 C210 154, 292 114, 352 76 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        stroke="#FFFFFF"
+        strokeWidth="0.9"
+      />
+      <path
+        d="M378 74 C290 116, 208 156, 168 188 C236 156, 318 116, 378 74 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        opacity="0.88"
+      />
+
+      {/* 3. Lâmina Inferior Direita (S Fluido Espelhado) */}
+      <path
+        d="M285 218 C378 178, 464 118, 458 86 C453 64, 392 70, 334 96 C376 84, 418 84, 422 102 C426 124, 368 166, 285 218 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        stroke={`url(#vyroRim-${uid})`}
+        strokeWidth="1.2"
+      />
+      {/* Anel Orbital Interno Direito */}
+      <path
+        d="M346 176 C388 146, 414 116, 408 98 C403 84, 372 84, 338 95 C366 91, 386 95, 388 108 C391 124, 372 150, 346 176 Z"
+        fill={`url(#vyroChrome-${uid})`}
+        opacity="0.92"
       />
     </svg>
+  );
+}
+
+// Emblema 3D Multi-Camada Interativo
+function VyroEmblem3D({ className = 'w-12 h-12', interactive = false, tilt = { rx: 0, ry: 0 } }) {
+  if (!interactive) {
+    return <VyroSymbolSvg className={className} mode="front" />;
+  }
+
+  return (
+    <div
+      className="relative inline-flex items-center justify-center"
+      style={{
+        transformStyle: 'preserve-3d',
+        transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+        transition: 'transform 120ms ease-out'
+      }}
+    >
+      {/* Camada Sombra Profunda (Z = -18px) */}
+      <div
+        className="absolute inset-0 pointer-events-none blur-[2px] opacity-60"
+        style={{ transform: 'translateZ(-18px) translateY(8px)' }}
+      >
+        <VyroSymbolSvg className={className} mode="depth" />
+      </div>
+
+      {/* Camada Extrusão Metálica Intermediária (Z = -8px) */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-75"
+        style={{ transform: 'translateZ(-8px) translateY(3px)' }}
+      >
+        <VyroSymbolSvg className={className} mode="depth" />
+      </div>
+
+      {/* Camada Frontal Cromada/Mineral (Z = +28px) */}
+      <div
+        className="relative"
+        style={{
+          transform: 'translateZ(28px)',
+          filter: 'drop-shadow(0 14px 28px rgba(168,154,184,0.32))'
+        }}
+      >
+        <VyroSymbolSvg className={className} mode="front" />
+      </div>
+    </div>
   );
 }
 
@@ -515,12 +577,12 @@ function FloatingMineralCard({ children, className = '', accent = '#A89AB8', onC
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -2.2;
-    const rotateY = ((x - centerX) / centerX) * 2.2;
+    const rotateX = ((y - centerY) / centerY) * -2.0;
+    const rotateY = ((x - centerX) / centerX) * 2.0;
 
     setStyle({
       transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-1px)`,
-      backgroundImage: `radial-gradient(360px circle at ${x}px ${y}px, ${accent}14, transparent 70%)`
+      backgroundImage: `radial-gradient(380px circle at ${x}px ${y}px, ${accent}16, transparent 70%)`
     });
   };
 
@@ -538,14 +600,14 @@ function FloatingMineralCard({ children, className = '', accent = '#A89AB8', onC
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={style}
-      className={`relative rounded-2xl bg-[#121513]/85 backdrop-blur-md border border-[#242926] transition-all duration-200 ease-out hover:border-[#373F3A] shadow-[0_12px_32px_rgba(0,0,0,0.45)] ${className}`}
+      className={`relative rounded-2xl bg-[#121513]/85 backdrop-blur-md border border-[#242926] transition-all duration-200 ease-out hover:border-[#3A433D] shadow-[0_12px_32px_rgba(0,0,0,0.45)] ${className}`}
     >
       {children}
     </div>
   );
 }
 
-// Fundo topográfico mineral inspirado na referência geológica
+// Fundo topográfico mineral inspirado na estética geológica CERNE
 function TopographicBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -553,7 +615,7 @@ function TopographicBackground() {
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(circle at 18% 15%, rgba(94,109,85,0.14), transparent 42%), radial-gradient(circle at 82% 20%, rgba(168,154,184,0.10), transparent 40%), radial-gradient(circle at 55% 88%, rgba(114,41,60,0.12), transparent 45%), #0B0D0C'
+            'radial-gradient(circle at 18% 15%, rgba(94,109,85,0.15), transparent 42%), radial-gradient(circle at 82% 20%, rgba(168,154,184,0.11), transparent 40%), radial-gradient(circle at 55% 88%, rgba(114,41,60,0.13), transparent 45%), #0B0D0C'
         }}
       />
       <svg
@@ -607,8 +669,8 @@ function PortalLanding({ onEnter, stats }) {
     const nx = (e.clientX / innerWidth) * 2 - 1;
     const ny = (e.clientY / innerHeight) * 2 - 1;
     setTilt({
-      rx: -ny * 16,
-      ry: nx * 20,
+      rx: -ny * 18,
+      ry: nx * 22,
       gx: (e.clientX / innerWidth) * 100,
       gy: (e.clientY / innerHeight) * 100
     });
@@ -633,40 +695,34 @@ function PortalLanding({ onEnter, stats }) {
       </div>
 
       {/* Centro 3D Interativo */}
-      <div className="flex flex-col items-center text-center my-auto py-8">
+      <div className="flex flex-col items-center text-center my-auto py-6">
         <div
           onClick={onEnter}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && onEnter()}
-          className="group relative cursor-pointer p-10 md:p-14 rounded-3xl transition-transform duration-150 ease-out"
-          style={{
-            transform: `perspective(1100px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-            transformStyle: 'preserve-3d'
-          }}
+          className="group relative cursor-pointer px-8 py-10 sm:px-14 sm:py-12 rounded-3xl transition-all duration-200"
         >
           {/* Halo Mineral Dinâmico */}
           <div
-            className="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none"
+            className="absolute inset-0 rounded-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
             style={{
-              background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, rgba(168,154,184,0.22), rgba(94,109,85,0.12) 45%, transparent 72%)`
+              background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, rgba(168,154,184,0.24), rgba(94,109,85,0.14) 45%, transparent 72%)`
             }}
           />
-          <div className="absolute inset-2 rounded-3xl border border-[#2A302C] group-hover:border-[#A89AB8]/50 transition-colors pointer-events-none" />
+          <div className="absolute inset-1 rounded-3xl border border-[#2A302C] group-hover:border-[#A89AB8]/60 transition-colors pointer-events-none bg-[#111412]/40 backdrop-blur-sm" />
 
-          {/* Camada de profundidade 3D da Logo */}
-          <div
-            className="relative transition-transform duration-200"
-            style={{ transform: 'translateZ(42px)' }}
-          >
-            <VyroEmblem className="w-64 sm:w-80 md:w-96 h-auto mx-auto" glow />
+          {/* Emblema VYRO 3D com Extrusão Real */}
+          <div className="relative z-10">
+            <VyroEmblem3D
+              className="w-72 sm:w-96 md:w-[440px] h-auto mx-auto"
+              interactive
+              tilt={tilt}
+            />
           </div>
 
-          <div
-            className="mt-6 space-y-1.5"
-            style={{ transform: 'translateZ(24px)' }}
-          >
-            <p className="text-[11px] tracking-[0.35em] uppercase text-[#A89AB8]">
+          <div className="relative z-10 mt-4 space-y-1.5">
+            <p className="text-[11px] tracking-[0.36em] uppercase text-[#A89AB8]">
               FREQUÊNCIA MINERAL
             </p>
             <h1 className="text-2xl sm:text-3xl font-light tracking-[0.14em] text-[#F4F1EA]">
@@ -674,30 +730,27 @@ function PortalLanding({ onEnter, stats }) {
             </h1>
           </div>
 
-          <div
-            className="mt-7 inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F4F1EA] text-[#0B0D0C] text-xs font-semibold tracking-[0.16em] uppercase group-hover:bg-[#A89AB8] group-hover:text-[#0B0D0C] transition-all shadow-lg"
-            style={{ transform: 'translateZ(32px)' }}
-          >
-            <span>Entrar no Painel</span>
+          <div className="relative z-10 mt-7 inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#F4F1EA] text-[#0B0D0C] text-xs font-semibold tracking-[0.16em] uppercase group-hover:bg-[#A89AB8] group-hover:text-[#0B0D0C] transition-all shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+            <span>Acessar Painéis</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
 
         {/* Pílulas Minerais de Resumo Vivo */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl w-full">
-          <div className="px-4 py-3 rounded-xl bg-[#121513]/80 border border-[#242926] text-left">
+          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Evolução Geral</div>
             <div className="text-base font-semibold text-[#F4F1EA] mt-0.5">{stats.overallProgress}%</div>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-[#121513]/80 border border-[#242926] text-left">
+          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Caixa HEXA Pago</div>
             <div className="text-base font-semibold text-[#8BB174] mt-0.5">{formatBRL(stats.salesPaidTotal)}</div>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-[#121513]/80 border border-[#242926] text-left">
+          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Custo Total CERNE</div>
             <div className="text-base font-semibold text-[#F4F1EA] mt-0.5">{formatBRL(stats.totalProjectCost)}</div>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-[#121513]/80 border border-[#242926] text-left">
+          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Gravação Set</div>
             <div className="text-base font-semibold text-[#A89AB8] mt-0.5">Julho 2027</div>
           </div>
@@ -706,7 +759,7 @@ function PortalLanding({ onEnter, stats }) {
 
       {/* Rodapé */}
       <div className="w-full max-w-6xl flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#737B76]">
-        <span>Mova o cursor para interagir • Clique no emblema VYRO para abrir</span>
+        <span>Mova o cursor para girar o símbolo 3D • Clique para abrir os controles</span>
         <span>50 Peças • Casa Vilas Boas • DJ Discroll</span>
       </div>
     </div>
@@ -722,7 +775,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [globalSearch, setGlobalSearch] = useState('');
 
-  // Estado persistente principal
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -733,7 +785,6 @@ export default function App() {
     return DEFAULT_STATE;
   });
 
-  // Configuração da Nuvem (Supabase REST API - zero dependências extras)
   const [cloudCfg, setCloudCfg] = useState(() => {
     try {
       const saved = localStorage.getItem(CLOUD_CFG_KEY);
@@ -744,12 +795,11 @@ export default function App() {
     return { url: '', anonKey: '', connected: false };
   });
 
-  const [cloudStatus, setCloudStatus] = useState('local'); // 'local' | 'syncing' | 'synced' | 'error'
+  const [cloudStatus, setCloudStatus] = useState('local');
   const [cloudMsg, setCloudMsg] = useState('');
   const [showCloudModal, setShowCloudModal] = useState(false);
   const isRemotePullRef = useRef(false);
 
-  // Salva no localStorage sempre que data mudar
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -758,13 +808,11 @@ export default function App() {
     }
   }, [data]);
 
-  // Busca dados da nuvem ao iniciar se já estiver conectado
   useEffect(() => {
     if (!cloudCfg.connected || !cloudCfg.url || !cloudCfg.anonKey) return;
     pullFromSupabase(cloudCfg.url, cloudCfg.anonKey);
   }, []);
 
-  // Push automático para Supabase quando houver edições locais
   useEffect(() => {
     if (!cloudCfg.connected || !cloudCfg.url || !cloudCfg.anonKey) return;
     if (isRemotePullRef.current) {
@@ -857,14 +905,12 @@ export default function App() {
   // ============================================================================
 
   const stats = useMemo(() => {
-    // 1. Checklist (Produção, Tecidos, Aviamentos e Set)
     const checklistTotal = data.checklist.reduce((acc, item) => acc + Number(item.amount || 0), 0);
     const checklistPaid = data.checklist
       .filter((i) => i.paid)
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
     const checklistPending = checklistTotal - checklistPaid;
 
-    // Separação Produção vs Set
     const productionCostTotal = data.checklist
       .filter((i) => i.category !== 'Set & Gravação')
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
@@ -879,17 +925,14 @@ export default function App() {
       .filter((i) => i.category === 'Set & Gravação' && i.paid)
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
 
-    // 2. Tráfego Pago
     const adsBudgetTotal = data.ads.reduce((acc, ad) => acc + Number(ad.budget || 0), 0);
     const adsSpentTotal = data.ads.reduce((acc, ad) => acc + Number(ad.spent || 0), 0);
 
-    // 3. Custo Total da Coleção CERNE (Checklist + Tráfego + Reserva)
     const contingency = Number(data.partnerConfig.contingencyReserve || 0);
     const totalProjectCost = checklistTotal + adsBudgetTotal + contingency;
     const totalAlreadyPaid = checklistPaid + adsSpentTotal;
     const remainingToPay = Math.max(0, totalProjectCost - totalAlreadyPaid);
 
-    // 4. Caixa das Vendas da Coleção Anterior (VYRO HEXA CLUB - base R$ 219,90)
     const salesPaidTotal = data.sales
       .filter((s) => s.paymentStatus === 'Pago')
       .reduce((acc, s) => acc + Number(s.qty || 1) * Number(s.unitPrice || 0), 0);
@@ -910,13 +953,10 @@ export default function App() {
       .filter((s) => s.paymentStatus === 'Cortesia')
       .reduce((acc, s) => acc + Number(s.qty || 1), 0);
 
-    // 5. Rateio Inteligente entre Sócios (Jonatas, Marcos Paulo e DJ Discroll)
-    // Discroll participa APENAS de uma porcentagem leve sobre o custo do Set (com teto opcional)
     const discrollRaw = setCostTotal * (Number(data.partnerConfig.discrollSetSharePct || 0) / 100);
     const discrollCap = Number(data.partnerConfig.discrollCap || 0);
     const discrollShare = discrollCap > 0 ? Math.min(discrollRaw, discrollCap) : discrollRaw;
 
-    // O caixa já recebido da HEXA CLUB abate o investimento que Jonatas e Marcos precisam tirar do bolso
     const netNeedAfterCash = Math.max(0, totalProjectCost - salesPaidTotal - discrollShare);
     const netNeedIfAllPaid = Math.max(
       0,
@@ -926,14 +966,12 @@ export default function App() {
     const jonatasShare = netNeedAfterCash / 2;
     const marcosShare = netNeedAfterCash / 2;
 
-    // 6. Receita Projetada das 50 Peças CERNE
     const totalPiecesQty = data.pieces.reduce((acc, p) => acc + Number(p.qty || 0), 0);
     const projectedRevenueCerne = data.pieces.reduce(
       (acc, p) => acc + Number(p.qty || 0) * Number(p.salePrice || 0),
       0
     );
 
-    // 7. Evolução Geral (%)
     const paidItemsRatio =
       data.checklist.length > 0
         ? data.checklist.filter((i) => i.paid).length / data.checklist.length
@@ -982,7 +1020,7 @@ export default function App() {
   }, [data]);
 
   // ============================================================================
-  // HANDLERS DE EDIÇÃO RÁPIDA (CHECKLIST, VENDAS, PEÇAS, CALENDÁRIO, ADS)
+  // HANDLERS DE EDIÇÃO RÁPIDA
   // ============================================================================
 
   const toggleChecklistPaid = (id) => {
@@ -1200,15 +1238,14 @@ export default function App() {
       {/* SIDEBAR FIXA MINERAL */}
       <aside className="w-full lg:w-72 lg:fixed lg:inset-y-0 lg:left-0 bg-[#0F1210]/90 backdrop-blur-xl border-b lg:border-b-0 lg:border-r border-[#212623] z-30 flex flex-col justify-between p-5">
         <div>
-          {/* Cabeçalho Marca */}
           <div className="flex items-center justify-between pb-5 border-b border-[#1E2320]">
             <button
               onClick={() => setShowPortal(true)}
               title="Voltar ao Portal 3D VYRO"
               className="flex items-center gap-3 text-left group"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#161A18] border border-[#2A302C] flex items-center justify-center group-hover:border-[#A89AB8] transition-colors">
-                <VyroEmblem className="w-8 h-auto" />
+              <div className="w-11 h-11 rounded-xl bg-[#161A18] border border-[#2A302C] flex items-center justify-center group-hover:border-[#A89AB8] transition-colors p-1">
+                <VyroEmblem3D className="w-full h-auto" />
               </div>
               <div>
                 <div className="text-sm font-semibold tracking-[0.14em] text-[#F4F1EA]">
@@ -1221,7 +1258,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* Busca Rápida */}
           <div className="mt-4 relative">
             <Search className="w-3.5 h-3.5 text-[#757E78] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -1233,7 +1269,6 @@ export default function App() {
             />
           </div>
 
-          {/* Navegação Principal */}
           <nav className="mt-5 space-y-1">
             <div className="px-2.5 pb-1.5 text-[10px] uppercase tracking-[0.2em] text-[#6B736E]">
               Gestão da Coleção
@@ -1276,9 +1311,7 @@ export default function App() {
           </nav>
         </div>
 
-        {/* Rodapé Sidebar: Status Nuvem + Backup */}
         <div className="mt-6 pt-4 border-t border-[#1E2320] space-y-2.5">
-          {/* Card Marco Julho/Agosto */}
           <div className="p-3 rounded-xl bg-gradient-to-br from-[#171C19] to-[#121513] border border-[#262C28]">
             <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-[#A89AB8]">
               <span>Cronograma Alvo</span>
@@ -1326,7 +1359,6 @@ export default function App() {
 
       {/* CONTEÚDO PRINCIPAL */}
       <main className="flex-1 lg:pl-72 relative z-10">
-        {/* Barra Superior */}
         <header className="sticky top-0 z-20 bg-[#0B0D0C]/80 backdrop-blur-md border-b border-[#1D221F] px-6 py-4 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#8E9690]">
@@ -1365,12 +1397,8 @@ export default function App() {
         </header>
 
         <div className="p-6 max-w-7xl mx-auto space-y-6">
-          {/* ================================================================ */}
-          {/* ABA 1: OVERVIEW & EVOLUÇÃO DA COLEÇÃO                            */}
-          {/* ================================================================ */}
           {activeTab === 'overview' && (
             <>
-              {/* Barra Mestre de Evolução */}
               <FloatingMineralCard accent="#5E6D55" className="p-6">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
@@ -1425,7 +1453,6 @@ export default function App() {
                 </div>
               </FloatingMineralCard>
 
-              {/* 4 KPIs Principais */}
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <FloatingMineralCard accent="#F4F1EA" className="p-5">
                   <div className="text-xs text-[#8E9690]">Investimento Total CERNE</div>
@@ -1468,7 +1495,6 @@ export default function App() {
                 </FloatingMineralCard>
               </div>
 
-              {/* Rateio Rápido Sócios + Próximos Itens a Pagar */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <FloatingMineralCard accent="#A89AB8" className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
@@ -1519,7 +1545,6 @@ export default function App() {
                   </div>
                 </FloatingMineralCard>
 
-                {/* Baixa Rápida de Itens */}
                 <FloatingMineralCard accent="#5E6D55" className="p-5 lg:col-span-2 space-y-4">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-medium text-[#F4F1EA]">
@@ -1584,9 +1609,6 @@ export default function App() {
             </>
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 2: CHECKLIST ITEM POR ITEM (TECIDOS, AVIAMENTOS, SET)        */}
-          {/* ================================================================ */}
           {activeTab === 'checklist' && (
             <ChecklistTab
               items={data.checklist}
@@ -1598,9 +1620,6 @@ export default function App() {
             />
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 3: VENDAS & CAIXA (COLEÇÃO ANTERIOR A R$ 219,90)             */}
-          {/* ================================================================ */}
           {activeTab === 'sales' && (
             <SalesTab
               sales={data.sales}
@@ -1613,9 +1632,6 @@ export default function App() {
             />
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 4: APORTE SÓCIOS (JONATAS, MARCOS PAULO & DJ DISCROLL)       */}
-          {/* ================================================================ */}
           {activeTab === 'partners' && (
             <PartnersTab
               stats={stats}
@@ -1629,9 +1645,6 @@ export default function App() {
             />
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 5: 8 PEÇAS DA COLEÇÃO CERNE (VY-01 A VY-08)                  */}
-          {/* ================================================================ */}
           {activeTab === 'pieces' && (
             <PiecesTab
               pieces={data.pieces}
@@ -1641,9 +1654,6 @@ export default function App() {
             />
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 6: CALENDÁRIO & PRAZOS MÉDIOS (DEZ/26 A AGO/27)              */}
-          {/* ================================================================ */}
           {activeTab === 'calendar' && (
             <CalendarTab
               calendar={data.calendar}
@@ -1653,9 +1663,6 @@ export default function App() {
             />
           )}
 
-          {/* ================================================================ */}
-          {/* ABA 7: TRÁFEGO PAGO & CAMPANHAS                                  */}
-          {/* ================================================================ */}
           {activeTab === 'ads' && (
             <AdsTab
               ads={data.ads}
@@ -1667,7 +1674,6 @@ export default function App() {
         </div>
       </main>
 
-      {/* MODAL DE CONFIGURAÇÃO DA NUVEM (SUPABASE) */}
       {showCloudModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-lg rounded-2xl bg-[#131715] border border-[#2A312D] p-6 space-y-5 shadow-2xl">
@@ -1799,7 +1805,6 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
 
   return (
     <div className="space-y-6">
-      {/* Formulário Rápido de Novo Item */}
       <FloatingMineralCard accent="#A89AB8" className="p-5">
         <h3 className="text-xs uppercase tracking-[0.18em] text-[#A89AB8] mb-3">
           Adicionar Novo Item (Tecido, Aviamento, Costura ou Equipamento)
@@ -1840,7 +1845,6 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         </form>
       </FloatingMineralCard>
 
-      {/* Filtros por Categoria */}
       <div className="flex flex-wrap items-center gap-2">
         {categories.map((cat) => (
           <button
@@ -1857,7 +1861,6 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         ))}
       </div>
 
-      {/* Lista Editável */}
       <FloatingMineralCard accent="#5E6D55" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -1968,7 +1971,6 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
 
   return (
     <div className="space-y-6">
-      {/* Resumo Caixa Coleção Anterior */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FloatingMineralCard accent="#5E6D55" className="p-5">
           <div className="text-xs text-[#8E9690]">Caixa Recebido (Pagos)</div>
@@ -2001,7 +2003,6 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         </FloatingMineralCard>
       </div>
 
-      {/* Adicionar Pedido */}
       <FloatingMineralCard accent="#A89AB8" className="p-5">
         <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <input
@@ -2038,7 +2039,6 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         </form>
       </FloatingMineralCard>
 
-      {/* Filtros */}
       <div className="flex flex-wrap items-center gap-2">
         {['Todos', 'Pago', 'Não pago', 'Cortesia'].map((st) => (
           <button
@@ -2055,7 +2055,6 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         ))}
       </div>
 
-      {/* Tabela de Clientes */}
       <FloatingMineralCard accent="#5E6D55" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -2134,7 +2133,6 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
 function PartnersTab({ stats, config, onUpdateConfig }) {
   return (
     <div className="space-y-6">
-      {/* Parâmetros da Fórmula Justa */}
       <FloatingMineralCard accent="#A89AB8" className="p-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -2197,7 +2195,6 @@ function PartnersTab({ stats, config, onUpdateConfig }) {
         </div>
       </FloatingMineralCard>
 
-      {/* Cards Individuais dos 3 Sócios/Parceiros */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <FloatingMineralCard accent="#5E6D55" className="p-6 space-y-3">
           <div className="flex items-center justify-between">
@@ -2290,7 +2287,6 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField }) {
               </div>
             </div>
 
-            {/* Seletor de Etapa */}
             <div>
               <div className="flex items-center justify-between text-[11px] mb-1.5">
                 <span className="text-[#8E9690]">
@@ -2308,7 +2304,6 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField }) {
               />
             </div>
 
-            {/* Valores Editáveis */}
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#1E2320] text-xs">
               <div>
                 <span className="text-[10px] text-[#7D8680] block">Custo Est./un</span>
@@ -2401,7 +2396,6 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
             </div>
           </div>
 
-          {/* Adicionar entrega */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -2432,7 +2426,7 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
 
 function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
   const [name, setName] = useState('');
-  const [platform, setPlatform] = useState('Instagram / Reels');
+  const [platform] = useState('Instagram / Reels');
   const [budget, setBudget] = useState('');
 
   const totalBudget = ads.reduce((a, b) => a + Number(b.budget || 0), 0);
