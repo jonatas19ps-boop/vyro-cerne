@@ -27,7 +27,7 @@ import {
 // 4 Peças Principais (6 SKUs somando 50 peças) | Produção Total: R$ 4.018,07
 // ============================================================================
 
-const STORAGE_KEY = 'vyro_cerne_management_v7';
+const STORAGE_KEY = 'vyro_cerne_management_v8';
 const CLOUD_CFG_KEY = 'vyro_cerne_supabase_cfg_v1';
 
 const INITIAL_PIECES = [
@@ -39,7 +39,7 @@ const INITIAL_PIECES = [
     mineral: 'Quartzo Fumê',
     accent: '#9CA3AF',
     sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
-    fabric: 'Meia Malha Heavyweight 280g Cinza Mescla + Ribana',
+    fabric: 'Meia Malha Heavyweight 280g Cinza Mescla + Ribana Cinza Mescla',
     fabricWeightKg: 3.15,
     trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
     productionTotalCost: 598.5,
@@ -55,13 +55,13 @@ const INITIAL_PIECES = [
     mineral: 'Quartzo Lavanda',
     accent: '#A89AB8',
     sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
-    fabric: 'Meia Malha Heavyweight 280g Lavanda (3,0000 kg já adquiridos)',
+    fabric: 'Meia Malha Heavyweight 280g Lavanda (3,0000 kg já adquiridos) + Ribana Lavanda',
     fabricWeightKg: 3.0,
     trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
     productionTotalCost: 615.0,
     salePrice: 219.9,
     stageIndex: 3,
-    notes: '3,0000 kg de malha lavanda e ribana já adquiridos e em estoque.'
+    notes: '3,0000 kg de malha lavanda e ribana lavanda já adquiridos.'
   },
   {
     id: 'VY-03',
@@ -70,8 +70,8 @@ const INITIAL_PIECES = [
     name: 'Camiseta Boxy Preta',
     mineral: 'Obsidiana / Grafite',
     accent: '#52525B',
-    sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un (Subtotal Camisetas = 30 un)
-    fabric: 'Meia Malha Heavyweight 280g Preto Grafite + Ribana',
+    sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
+    fabric: 'Meia Malha Heavyweight 280g Preto Grafite + Ribana Preta',
     fabricWeightKg: 3.15,
     trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
     productionTotalCost: 598.5,
@@ -103,7 +103,7 @@ const INITIAL_PIECES = [
     mineral: 'Epidoto & Granada',
     accent: '#5E6D55',
     sizes: { P: 1, M: 3, G: 2, GG: 1 }, // 7 un
-    fabric: 'Moletom 3 Cabos 360g Verde Oliva + Forro Interno Capuz Vinho',
+    fabric: 'Moletom 3 Cabos 360g Verde Oliva + Forro Capuz Vinho + Ribana Oliva',
     fabricWeightKg: 7.35,
     trims: 'Zíper duplo metálico (alt. YKK), cordão longo, ilhós, etiqueta VYRO',
     productionTotalCost: 1185.0,
@@ -138,137 +138,328 @@ const PRODUCTION_STAGES = [
   'Controle Qualidade & Tag'
 ];
 
-// Soma exata da produção (Tecidos + Aviamentos + CMT/Bordado) = R$ 4.018,07
-// Soma exata do Set Julho 2027 (Casa Vilas Boas R$ 1.830,00 + Equipamentos R$ 3.705,00) = R$ 5.535,00
+// ============================================================================
+// CHECKLIST TOTALMENTE DESMEMBRADO ITEM POR ITEM (SEM AGRUPAMENTOS)
+// Soma exata da Produção = R$ 4.018,07 | Soma exata do Set Julho/27 = R$ 5.535,00
+// ============================================================================
 const INITIAL_CHECKLIST = [
+  // --- TECIDOS PRINCIPAIS (SEPARADOS POR COR E PEÇA) ---
   {
-    id: 'chk-1',
-    name: 'Tecido Meia Malha Lavanda (3,0000 kg adquiridos)',
+    id: 'chk-tec-lavanda',
+    name: 'Malha Heavyweight 280g — Lavanda',
     category: 'Tecidos',
     scope: 'VY-02 (Camiseta Boxy Lavanda)',
     supplier: 'Fornecedor Malhas BH',
-    qtyLabel: '3,0000 kg',
-    amount: 285.0,
+    targetQty: '3,0000 kg',
+    boughtQty: '3,0000 kg',
+    amount: 210.0,
     paid: true,
     dueDate: '2026-11-20',
-    notes: 'Já comprado e recebido para as 10 camisetas lavanda.'
+    notes: 'Meta atingida: 3,0000 kg já comprados e recebidos.'
   },
   {
-    id: 'chk-2',
-    name: 'Ribana Canelada (Golas, Punhos & Touca Vinho)',
+    id: 'chk-tec-cinza-camiseta',
+    name: 'Malha Heavyweight 280g — Cinza Mescla',
     category: 'Tecidos',
-    scope: 'VY-01, VY-02, VY-03, VY-05, VY-06',
-    supplier: 'Fornecedor Malhas BH',
-    qtyLabel: '2,4500 kg',
-    amount: 195.0,
-    paid: true,
-    dueDate: '2026-11-20',
-    notes: 'Compra já realizada.'
-  },
-  {
-    id: 'chk-3',
-    name: 'Malha Heavyweight 280g Cinza Mescla & Preta (20 camisetas)',
-    category: 'Tecidos',
-    scope: 'VY-01, VY-03',
+    scope: 'VY-01 (Camiseta Boxy Cinza)',
     supplier: 'Aradefe / JMEI Têxtil',
-    qtyLabel: '6,3000 kg',
-    amount: 560.0,
+    targetQty: '3,1500 kg',
+    boughtQty: '0,0000 kg',
+    amount: 220.0,
     paid: false,
     dueDate: '2027-01-15',
-    notes: '3,1500 kg Cinza Mescla + 3,1500 kg Preto Grafite.'
+    notes: 'Meta de compra para as 10 camisetas boxy cinza mescla.'
   },
   {
-    id: 'chk-4',
-    name: 'Moletom 3 Cabos Verde Oliva + Forro Capuz Vinho (7 moletons)',
+    id: 'chk-tec-preta-camiseta',
+    name: 'Malha Heavyweight 280g — Preta',
     category: 'Tecidos',
-    scope: 'VY-05 (Moletom Zip Duplo)',
-    supplier: 'Aliah Tecidos',
-    qtyLabel: '7,3500 kg',
-    amount: 740.0,
+    scope: 'VY-03 (Camiseta Boxy Preta)',
+    supplier: 'Aradefe / JMEI Têxtil',
+    targetQty: '3,1500 kg',
+    boughtQty: '0,0000 kg',
+    amount: 220.0,
     paid: false,
-    dueDate: '2027-02-10',
-    notes: 'Corpo verde oliva 360g + malha vinho para forro interno do capuz.'
+    dueDate: '2027-01-15',
+    notes: 'Meta de compra para as 10 camisetas boxy pretas.'
   },
   {
-    id: 'chk-5',
-    name: 'Moletom / Sarja Encorpada Cinza Mescla (8 Jorts Baggy)',
+    id: 'chk-tec-jorts-cinza',
+    name: 'Moletom / Sarja Encorpada — Cinza Mescla (Jorts)',
     category: 'Tecidos',
-    scope: 'VY-04 (Jorts Baggy)',
+    scope: 'VY-04 (Jorts Baggy Cinza)',
     supplier: 'Aliah Tecidos',
-    qtyLabel: '4,8000 kg',
+    targetQty: '4,8000 kg',
+    boughtQty: '0,0000 kg',
     amount: 410.0,
     paid: false,
     dueDate: '2027-02-15',
-    notes: 'Gramatura pesada para estruturar o caimento baggy.'
+    notes: 'Meta de compra para os 8 jorts baggy cinza mescla.'
   },
   {
-    id: 'chk-6',
-    name: 'Etiquetas Retangulares VYRO ESSENCE + Tag Montanha MG',
+    id: 'chk-tec-moletom-oliva',
+    name: 'Moletom 3 Cabos 360g — Verde Oliva',
+    category: 'Tecidos',
+    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
+    supplier: 'Aliah Tecidos',
+    targetQty: '5,8000 kg',
+    boughtQty: '0,0000 kg',
+    amount: 580.0,
+    paid: false,
+    dueDate: '2027-02-10',
+    notes: 'Corpo principal dos 7 moletons verde oliva.'
+  },
+  {
+    id: 'chk-tec-forro-vinho',
+    name: 'Malha / Forro Capuz — Vinho',
+    category: 'Tecidos',
+    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
+    supplier: 'Aliah Tecidos',
+    targetQty: '1,5500 kg',
+    boughtQty: '0,0000 kg',
+    amount: 160.0,
+    paid: false,
+    dueDate: '2027-02-10',
+    notes: 'Forro interno do capuz em tom vinho.'
+  },
+
+  // --- RIBANAS (SEPARADAS POR COR E PEÇA) ---
+  {
+    id: 'chk-rib-lavanda',
+    name: 'Ribana Canelada 2x1 — Lavanda (Gola)',
+    category: 'Ribanas',
+    scope: 'VY-02 (Camiseta Boxy Lavanda)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '0,4500 kg',
+    boughtQty: '0,4500 kg',
+    amount: 75.0,
+    paid: true,
+    dueDate: '2026-11-20',
+    notes: 'Ribana lavanda já comprada junto com a malha.'
+  },
+  {
+    id: 'chk-rib-cinza',
+    name: 'Ribana Canelada 2x1 — Cinza Mescla (Gola)',
+    category: 'Ribanas',
+    scope: 'VY-01 (Camiseta Boxy Cinza)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '0,4500 kg',
+    boughtQty: '0,4500 kg',
+    amount: 60.0,
+    paid: true,
+    dueDate: '2026-11-20',
+    notes: 'Ribana cinza já comprada.'
+  },
+  {
+    id: 'chk-rib-preta',
+    name: 'Ribana Canelada 2x1 — Preta (Gola)',
+    category: 'Ribanas',
+    scope: 'VY-03 (Camiseta Boxy Preta)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '0,4500 kg',
+    boughtQty: '0,4500 kg',
+    amount: 60.0,
+    paid: true,
+    dueDate: '2026-11-20',
+    notes: 'Ribana preta já comprada.'
+  },
+  {
+    id: 'chk-rib-oliva',
+    name: 'Ribana Canelada — Verde Oliva (Punhos e Barra)',
+    category: 'Ribanas',
+    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
+    supplier: 'Aliah Tecidos',
+    targetQty: '0,9000 kg',
+    boughtQty: '0,0000 kg',
+    amount: 85.0,
+    paid: false,
+    dueDate: '2027-02-10',
+    notes: 'Punhos das mangas e barra do moletom oliva.'
+  },
+  {
+    id: 'chk-rib-touca-vinho',
+    name: 'Ribana Canelada Grossa — Vinho (Touca)',
+    category: 'Ribanas',
+    scope: 'VY-06 (Touca Canelada Vinho)',
+    supplier: 'Aliah Tecidos',
+    targetQty: '0,8500 kg',
+    boughtQty: '0,0000 kg',
+    amount: 95.0,
+    paid: false,
+    dueDate: '2027-02-15',
+    notes: 'Matéria-prima principal das 5 toucas vinho.'
+  },
+
+  // --- AVIAMENTOS & ETIQUETAS (SEPARADOS ITEM A ITEM) ---
+  {
+    id: 'chk-av-etiqueta',
+    name: 'Etiqueta Interna Tecida VYRO ESSENCE',
     category: 'Aviamentos',
-    scope: '4 Peças / 50 un',
+    scope: 'Todas as 4 Peças (50 un)',
     supplier: 'Insumos UAI',
-    qtyLabel: '100 un',
-    amount: 240.0,
+    targetQty: '60 un',
+    boughtQty: '0 un',
+    amount: 130.0,
     paid: false,
     dueDate: '2027-02-20',
-    notes: 'Etiqueta interna + tag externa inspirada em Minas Gerais.'
+    notes: 'Etiqueta retangular aplicada na gola/cós/barra.'
   },
   {
-    id: 'chk-7',
-    name: 'Zíper Duplo Metálico (alt. YKK), Cordão Longo, Passantes e Rebites',
+    id: 'chk-av-tag',
+    name: 'Tag Externa Sarja Montanha MG + Cordão',
     category: 'Aviamentos',
-    scope: 'VY-04, VY-05',
+    scope: 'Todas as 4 Peças (50 un)',
     supplier: 'Insumos UAI',
-    qtyLabel: 'Kit 50 pçs',
-    amount: 248.07,
+    targetQty: '60 un',
+    boughtQty: '0 un',
+    amount: 110.0,
+    paid: false,
+    dueDate: '2027-02-20',
+    notes: 'Tag externa com identidade mineral de Minas Gerais.'
+  },
+  {
+    id: 'chk-av-ziper',
+    name: 'Zíper Duplo Metálico (Alternativa YKK)',
+    category: 'Aviamentos',
+    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
+    supplier: 'Insumos UAI',
+    targetQty: '7 un',
+    boughtQty: '0 un',
+    amount: 112.0,
     paid: false,
     dueDate: '2027-02-25',
-    notes: '7 zíperes duplos para o moletom oliva + rebites/passantes dos 8 jorts.'
+    notes: '1 zíper duplo por moletom (7 unidades).'
   },
   {
-    id: 'chk-8',
-    name: 'Corte, Costura CMT & Bordado Lavanda (Lote 50 peças)',
+    id: 'chk-av-cordao',
+    name: 'Cordão Longo Algodão + Ponteiras Metálicas',
+    category: 'Aviamentos',
+    scope: 'VY-04 (Jorts) e VY-05 (Moletom)',
+    supplier: 'Insumos UAI',
+    targetQty: '15 un',
+    boughtQty: '0 un',
+    amount: 56.07,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: '8 cordões para os jorts + 7 para os capuzes dos moletons.'
+  },
+  {
+    id: 'chk-av-rebites',
+    name: 'Rebites Metálicos + Ilhós + Passantes',
+    category: 'Aviamentos',
+    scope: 'VY-04 (Jorts) e VY-05 (Moletom)',
+    supplier: 'Insumos UAI',
+    targetQty: '1 kit (50 pçs)',
+    boughtQty: '0 kit',
+    amount: 45.0,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: 'Reforço dos bolsos do jorts e ilhós do capuz.'
+  },
+
+  // --- COSTURA CMT & BORDADO (SEPARADOS POR PEÇA) ---
+  {
+    id: 'chk-cmt-camisetas',
+    name: 'Corte & Costura CMT — 30 Camisetas Boxy (3 cores)',
     category: 'Produção',
-    scope: 'VY-01 a VY-06 (50 pçs)',
-    supplier: 'Oficina Confecção BH / Contagem',
-    qtyLabel: '50 peças',
-    amount: 1340.0,
+    scope: 'VY-01, VY-02, VY-03 (30 un)',
+    supplier: 'Oficina Confecção BH',
+    targetQty: '30 peças',
+    boughtQty: '0 peças',
+    amount: 540.0,
+    paid: false,
+    dueDate: '2027-04-20',
+    notes: 'R$ 18,00 por camiseta (corte, fechamento e gola ribana).'
+  },
+  {
+    id: 'chk-cmt-jorts',
+    name: 'Corte, Costura & Bordado Lavanda — 8 Jorts Baggy',
+    category: 'Produção',
+    scope: 'VY-04 (8 un)',
+    supplier: 'Oficina Confecção BH + Bordado',
+    targetQty: '8 peças',
+    boughtQty: '0 peças',
+    amount: 320.0,
+    paid: false,
+    dueDate: '2027-04-25',
+    notes: 'Inclui costura pesada, passantes e matriz/aplicação do bordado lavanda.'
+  },
+  {
+    id: 'chk-cmt-moletom',
+    name: 'Corte & Costura CMT — 7 Moletons Zip Duplo + Capuz Forrado',
+    category: 'Produção',
+    scope: 'VY-05 (7 un)',
+    supplier: 'Oficina Confecção BH',
+    targetQty: '7 peças',
+    boughtQty: '0 peças',
+    amount: 245.0,
     paid: false,
     dueDate: '2027-04-30',
-    notes: 'Fechando exatamente R$ 4.018,07 de custo total de produção.'
+    notes: 'Montagem do forro interno vinho no capuz e aplicação do zíper duplo.'
   },
   {
-    id: 'chk-9',
+    id: 'chk-cmt-touca',
+    name: 'Corte, Fechamento & Aplicação Etiqueta — 5 Toucas Vinho',
+    category: 'Produção',
+    scope: 'VY-06 (5 un)',
+    supplier: 'Oficina Confecção BH',
+    targetQty: '5 peças',
+    boughtQty: '0 peças',
+    amount: 85.0,
+    paid: false,
+    dueDate: '2027-04-30',
+    notes: 'Fechamento canelado e costura da etiqueta VYRO na dobra.'
+  },
+
+  // --- SET & CAPTAÇÃO AUDIOVISUAL (JULHO 2027 — SEPARADOS POR ITEM) ---
+  {
+    id: 'chk-set-airbnb',
     name: 'Reserva Airbnb — Casa Vilas Boas (Nova Lima)',
     category: 'Set & Gravação',
     scope: 'Set DJ Discroll + Lookbook',
     supplier: 'Airbnb / Casa Vilas Boas',
-    qtyLabel: 'Diárias Julho',
+    targetQty: 'Diárias Julho/27',
+    boughtQty: 'Reservando',
     amount: 1830.0,
     paid: false,
     dueDate: '2027-06-15',
-    notes: 'Gravação do set de 40–60 min com Discroll em Julho/2027.'
+    notes: 'Locação da casa para gravação do set de 40–60 min e fotos.'
   },
   {
-    id: 'chk-10',
+    id: 'chk-set-cdj',
     name: 'Locação Pioneer CDJ-3000 + Mixer DJM',
     category: 'Set & Gravação',
     scope: 'Set DJ Discroll',
     supplier: 'Locadora Áudio BH',
-    qtyLabel: '1 diária',
+    targetQty: '1 diária',
+    boughtQty: '0 diária',
     amount: 1950.0,
     paid: false,
     dueDate: '2027-07-10',
-    notes: 'Setup principal da cabine do set.'
+    notes: 'Setup principal da cabine do DJ.'
   },
   {
-    id: 'chk-11',
-    name: 'Caixas de Som de Piso + Visualizer 3D / Painel',
+    id: 'chk-set-som',
+    name: 'Locação Caixas de Som de Piso',
     category: 'Set & Gravação',
     scope: 'Set DJ Discroll',
-    supplier: 'Locadora Áudio & Visual BH',
-    qtyLabel: 'Kit completo',
-    amount: 1755.0,
+    supplier: 'Locadora Áudio BH',
+    targetQty: '1 par',
+    boughtQty: '0 par',
+    amount: 955.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Monitoramento e estética visual no chão do set.'
+  },
+  {
+    id: 'chk-set-visualizer',
+    name: 'Locação Visualizer / Painel Visual 3D',
+    category: 'Set & Gravação',
+    scope: 'Set DJ Discroll',
+    supplier: 'Locadora Visual BH',
+    targetQty: '1 unidade',
+    boughtQty: '0 unidade',
+    amount: 800.0,
     paid: false,
     dueDate: '2027-07-10',
     notes: 'Compõe os R$ 3.705,00 totais de equipamentos do set.'
@@ -290,7 +481,7 @@ const INITIAL_CALENDAR = [
   {
     id: 'cal-2',
     month: 'Jan – Fev 2027',
-    title: 'Compra Integral de Malhas, Moletons & Aviamentos',
+    title: 'Compra Integral de Malhas, Ribanas & Aviamentos',
     avgDays: 35,
     status: 'Planejado',
     tasks: [
@@ -1002,7 +1193,13 @@ export default function App() {
     setData((prev) => ({
       ...prev,
       checklist: prev.checklist.map((item) =>
-        item.id === id ? { ...item, paid: !item.paid } : item
+        item.id === id
+          ? {
+              ...item,
+              paid: !item.paid,
+              boughtQty: !item.paid ? item.targetQty || item.boughtQty : item.boughtQty
+            }
+          : item
       )
     }));
   };
@@ -1024,7 +1221,7 @@ export default function App() {
           id: `chk-${Date.now()}`,
           paid: false,
           dueDate: new Date().toISOString().slice(0, 10),
-          notes: 'Adicionado manualmente',
+          notes: 'Novo item cadastrado',
           ...newItem
         },
         ...prev.checklist
@@ -1448,7 +1645,7 @@ export default function App() {
                     {formatBRL(stats.totalProjectCost)}
                   </div>
                   <div className="text-[11px] text-[#7D8680] mt-2">
-                    Produção R$ 4.018,07 + Set + Ads + Reserva
+                    Produção {formatBRL(stats.productionCostTotal)} + Set + Ads + Reserva
                   </div>
                 </FloatingMineralCard>
 
@@ -1458,7 +1655,7 @@ export default function App() {
                     {formatBRL(stats.totalAlreadyPaid)}
                   </div>
                   <div className="text-[11px] text-[#7D8680] mt-2">
-                    Tecido Lavanda 3,0000 kg + Ribana quitados
+                    Malha Lavanda 3kg + Ribanas (Lav/Cin/Pre) quitadas
                   </div>
                 </FloatingMineralCard>
 
@@ -1574,7 +1771,7 @@ export default function App() {
                               {item.name}
                             </div>
                             <div className="text-[10px] text-[#7D8680]">
-                              {item.category} • {item.scope}
+                              {item.category} • {item.scope} • Meta: {item.targetQty}
                             </div>
                           </div>
                         </button>
@@ -1761,24 +1958,33 @@ export default function App() {
 
 function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDelete }) {
   const [catFilter, setCatFilter] = useState('Todos');
+  const [statusFilter, setStatusFilter] = useState('Todos');
   const [newName, setNewName] = useState('');
-  const [newCat, setNewCat] = useState('Aviamentos');
-  const [newScope, setNewScope] = useState('VY-01 a VY-06');
-  const [newQty, setNewQty] = useState('1 lote');
+  const [newCat, setNewCat] = useState('Tecidos');
+  const [newScope, setNewScope] = useState('VY-01 (Camiseta Cinza)');
+  const [newTargetQty, setNewTargetQty] = useState('');
+  const [newBoughtQty, setNewBoughtQty] = useState('0');
   const [newAmount, setNewAmount] = useState('');
-  const [addedFeedback, setAddedFeedback] = useState(false);
+  const [newPaid, setNewPaid] = useState(false);
+  const [addedFeedback, setAddedFeedback] = useState('');
 
-  const categories = ['Todos', 'Tecidos', 'Aviamentos', 'Produção', 'Set & Gravação'];
+  const categories = ['Todos', 'Tecidos', 'Ribanas', 'Aviamentos', 'Produção', 'Set & Gravação'];
 
   const filtered = items.filter((item) => {
     const matchCat = catFilter === 'Todos' || item.category === catFilter;
+    const matchStatus =
+      statusFilter === 'Todos' ||
+      (statusFilter === 'Pago' && item.paid) ||
+      (statusFilter === 'Pendente' && !item.paid);
     const matchSearch =
       !search ||
       item.name.toLowerCase().includes(search.toLowerCase()) ||
       item.scope.toLowerCase().includes(search.toLowerCase()) ||
-      item.supplier.toLowerCase().includes(search.toLowerCase());
-    return matchCat && matchSearch;
+      (item.notes || '').toLowerCase().includes(search.toLowerCase());
+    return matchCat && matchStatus && matchSearch;
   });
+
+  const filteredTotal = filtered.reduce((acc, i) => acc + Number(i.amount || 0), 0);
 
   const handleAdd = (e) => {
     if (e) e.preventDefault();
@@ -1787,16 +1993,940 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
       name: newName.trim(),
       category: newCat,
       scope: newScope.trim() || 'Coleção CERNE',
-      supplier: 'A definir',
-      qtyLabel: newQty.trim() || '1 un',
-      amount: parseFloat(String(newAmount).replace(',', '.')) || 0
+      supplier: 'Fornecedor BH',
+      targetQty: newTargetQty.trim() || '1 un',
+      boughtQty: newPaid ? newTargetQty.trim() || '1 un' : newBoughtQty.trim() || '0',
+      amount: parseFloat(String(newAmount).replace(',', '.')) || 0,
+      paid: newPaid
     });
+    setAddedFeedback(`✓ "${newName.trim()}" adicionado!`);
     setNewName('');
+    setNewTargetQty('');
+    setNewBoughtQty('0');
     setNewAmount('');
+    setNewPaid(false);
     setCatFilter('Todos');
-    setAddedFeedback(true);
-    setTimeout(() => setAddedFeedback(false), 2500);
+    setStatusFilter('Todos');
+    setTimeout(() => setAddedFeedback(''), 3000);
   };
 
   return (
-    <div className
+    <div className="space-y-6">
+      {/* Formulário Completo Sempre Aberto para Adicionar Novos Itens Separados */}
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div>
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#A89AB8]">
+              Adicionar Novo Item Individual (Tecido, Ribana, Aviamento, Costura ou Equipamento)
+            </h3>
+            <p className="text-[11px] text-[#8E9690] mt-0.5">
+              Cadastre cada insumo separadamente vinculando a peça respectiva e a meta de compra.
+            </p>
+          </div>
+          {addedFeedback && (
+            <span className="px-3 py-1 rounded-full bg-[#5E6D55]/30 border border-[#5E6D55] text-xs text-[#A5CE8C] font-medium">
+              {addedFeedback}
+            </span>
+          )}
+        </div>
+
+        <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
+          <input
+            type="text"
+            placeholder="Nome do item (ex: Ribana Preta Gola)"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            className="lg:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          />
+          <select
+            value={newCat}
+            onChange={(e) => setNewCat(e.target.value)}
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          >
+            <option value="Tecidos">Tecidos</option>
+            <option value="Ribanas">Ribanas</option>
+            <option value="Aviamentos">Aviamentos</option>
+            <option value="Produção">Produção (CMT)</option>
+            <option value="Set & Gravação">Set & Gravação</option>
+          </select>
+          <select
+            value={newScope}
+            onChange={(e) => setNewScope(e.target.value)}
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          >
+            <option value="VY-01 (Camiseta Cinza)">VY-01 • Camiseta Cinza</option>
+            <option value="VY-02 (Camiseta Lavanda)">VY-02 • Camiseta Lavanda</option>
+            <option value="VY-03 (Camiseta Preta)">VY-03 • Camiseta Preta</option>
+            <option value="VY-04 (Jorts Baggy Cinza)">VY-04 • Jorts Baggy Cinza</option>
+            <option value="VY-05 (Moletom Zip Oliva)">VY-05 • Moletom Zip Oliva</option>
+            <option value="VY-06 (Touca Vinho)">VY-06 • Touca Vinho</option>
+            <option value="Todas as 4 Peças (50 un)">Todas as 4 Peças (50 un)</option>
+            <option value="Set DJ Discroll">Set DJ Discroll (Jul/27)</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Meta compra (ex: 2,5000 kg)"
+            value={newTargetQty}
+            onChange={(e) => setNewTargetQty(e.target.value)}
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          />
+          <input
+            type="text"
+            inputMode="decimal"
+            placeholder="Valor R$ (ex: 145,00)"
+            value={newAmount}
+            onChange={(e) => setNewAmount(e.target.value)}
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          />
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setNewPaid(!newPaid)}
+              className={`px-3 py-2.5 rounded-xl border text-xs font-medium cursor-pointer shrink-0 ${
+                newPaid
+                  ? 'bg-[#5E6D55]/30 border-[#5E6D55] text-[#A5CE8C]'
+                  : 'bg-[#0D100E] border-[#2A312D] text-[#97A09A]'
+              }`}
+              title="Marcar se já foi pago"
+            >
+              {newPaid ? 'Pago ✓' : 'Pendente'}
+            </button>
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] active:scale-[0.98] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add</span>
+            </button>
+          </div>
+        </form>
+      </FloatingMineralCard>
+
+      {/* Filtros por Categoria e Status */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setCatFilter(cat)}
+              className={`px-3.5 py-1.5 rounded-full text-xs transition-colors cursor-pointer ${
+                catFilter === cat
+                  ? 'bg-[#F4F1EA] text-[#0B0D0C] font-semibold'
+                  : 'bg-[#141816] text-[#97A09A] border border-[#242926] hover:text-[#F4F1EA]'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2">
+          {['Todos', 'Pago', 'Pendente'].map((st) => (
+            <button
+              key={st}
+              type="button"
+              onClick={() => setStatusFilter(st)}
+              className={`px-3 py-1 rounded-lg text-[11px] cursor-pointer ${
+                statusFilter === st
+                  ? 'bg-[#A89AB8]/25 text-[#F4F1EA] border border-[#A89AB8]/50 font-medium'
+                  : 'bg-[#141816] text-[#8E9690] border border-[#242926]'
+              }`}
+            >
+              {st}
+            </button>
+          ))}
+          <span className="ml-2 text-xs text-[#A89AB8] font-semibold">
+            Subtotal filtro: {formatBRL(filteredTotal)}
+          </span>
+        </div>
+      </div>
+
+      {/* Tabela Desmembrada Item a Item */}
+      <FloatingMineralCard accent="#5E6D55" disableTilt className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#212623] text-[10px] uppercase tracking-wider text-[#88918B] bg-[#0E110F]">
+                <th className="py-3.5 px-4">Status</th>
+                <th className="py-3.5 px-4">Item Individual</th>
+                <th className="py-3.5 px-4">Categoria</th>
+                <th className="py-3.5 px-4">Peça Respectiva</th>
+                <th className="py-3.5 px-4">Meta de Compra</th>
+                <th className="py-3.5 px-4">Já Comprado</th>
+                <th className="py-3.5 px-4">Valor (R$)</th>
+                <th className="py-3.5 px-4 text-right">Ação</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#1B201D] text-xs">
+              {filtered.map((item) => (
+                <tr key={item.id} className="hover:bg-[#161B18]/70 transition-colors">
+                  <td className="py-3 px-4">
+                    <button
+                      type="button"
+                      onClick={() => onTogglePaid(item.id)}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors cursor-pointer ${
+                        item.paid
+                          ? 'bg-[#5E6D55]/30 text-[#A5CE8C] border border-[#5E6D55]'
+                          : 'bg-[#72293C]/25 text-[#E5A0B0] border border-[#72293C]/60'
+                      }`}
+                    >
+                      {item.paid ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                      <span>{item.paid ? 'Pago' : 'Pendente'}</span>
+                    </button>
+                  </td>
+                  <td className="py-3 px-4 min-w-[220px]">
+                    <input
+                      type="text"
+                      value={item.name}
+                      onChange={(e) => onUpdateField(item.id, 'name', e.target.value)}
+                      className="bg-transparent font-medium text-[#F4F1EA] focus:outline-none focus:border-b focus:border-[#A89AB8] w-full"
+                    />
+                    <div className="text-[10px] text-[#7D8680] mt-0.5">{item.notes}</div>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="px-2.5 py-1 rounded-lg bg-[#181D1A] border border-[#272D29] text-[11px] text-[#C4CCC7]">
+                      {item.category}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <input
+                      type="text"
+                      value={item.scope}
+                      onChange={(e) => onUpdateField(item.id, 'scope', e.target.value)}
+                      className="bg-transparent text-[#D8CEE3] font-medium focus:outline-none focus:border-b focus:border-[#A89AB8] w-44"
+                    />
+                  </td>
+                  <td className="py-3 px-4">
+                    <input
+                      type="text"
+                      value={item.targetQty || ''}
+                      onChange={(e) => onUpdateField(item.id, 'targetQty', e.target.value)}
+                      className="w-24 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] text-[#F4F1EA]"
+                    />
+                  </td>
+                  <td className="py-3 px-4">
+                    <input
+                      type="text"
+                      value={item.boughtQty || ''}
+                      onChange={(e) => onUpdateField(item.id, 'boughtQty', e.target.value)}
+                      className={`w-24 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] font-medium ${
+                        item.paid ? 'text-[#8BB174]' : 'text-[#A4ADA7]'
+                      }`}
+                    />
+                  </td>
+                  <td className="py-3 px-4">
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={item.amount}
+                      onChange={(e) => onUpdateField(item.id, 'amount', Number(e.target.value))}
+                      className="w-28 px-2.5 py-1 rounded-lg bg-[#0E110F] border border-[#262C28] text-xs font-semibold text-[#F4F1EA]"
+                    />
+                  </td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      type="button"
+                      onClick={() => onDelete(item.id)}
+                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8] hover:bg-[#1E2320] cursor-pointer"
+                      title="Excluir item"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </FloatingMineralCard>
+    </div>
+  );
+}
+
+function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize }) {
+  const filtered = pieces.filter(
+    (p) =>
+      !search ||
+      p.code.toLowerCase().includes(search.toLowerCase()) ||
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      (p.group || '').toLowerCase().includes(search.toLowerCase()) ||
+      p.fabric.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalLotQty = pieces.reduce((acc, p) => acc + getPieceTotalQty(p), 0);
+  const totalLotProduction = pieces.reduce(
+    (acc, p) => acc + Number(p.productionTotalCost || 0),
+    0
+  );
+
+  return (
+    <div className="space-y-6">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-[#A89AB8]">
+              Arquitetura do Drop • 4 Peças (6 Variações)
+            </span>
+            <h3 className="text-base font-medium text-[#F4F1EA] mt-1">
+              Camisetas Boxy (3 cores) • Jorts Baggy Cinza • Moletom Zip Duplo Oliva/Vinho • Touca Vinho
+            </h3>
+          </div>
+          <div className="flex items-center gap-4 text-xs">
+            <div className="px-3.5 py-2 rounded-xl bg-[#0E110F] border border-[#242926]">
+              <span className="text-[#8E9690] block text-[10px] uppercase">Grade Total</span>
+              <span className={`font-semibold text-sm ${totalLotQty === 50 ? 'text-[#8BB174]' : 'text-[#E2B979]'}`}>
+                {totalLotQty} / 50 peças
+              </span>
+            </div>
+            <div className="px-3.5 py-2 rounded-xl bg-[#0E110F] border border-[#242926]">
+              <span className="text-[#8E9690] block text-[10px] uppercase">Produção Lote</span>
+              <span className="font-semibold text-sm text-[#F4F1EA]">
+                {formatBRL(totalLotProduction)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </FloatingMineralCard>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {filtered.map((piece) => {
+          const pieceQty = getPieceTotalQty(piece);
+          const unitCost = pieceQty > 0 ? Number(piece.productionTotalCost || 0) / pieceQty : 0;
+          const progress = Math.round((piece.stageIndex / (PRODUCTION_STAGES.length - 1)) * 100);
+          const isBeanie = piece.id === 'VY-06';
+
+          return (
+            <FloatingMineralCard key={piece.id} accent={piece.accent} disableTilt className="p-5 space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className="px-2.5 py-0.5 rounded-md text-xs font-bold text-[#0B0D0C]"
+                      style={{ backgroundColor: piece.accent }}
+                    >
+                      {piece.code}
+                    </span>
+                    <span className="text-[11px] font-medium text-[#A89AB8]">
+                      {piece.group}
+                    </span>
+                  </div>
+                  <h4 className="text-base font-semibold text-[#F4F1EA] mt-1.5">{piece.name}</h4>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-[10px] uppercase text-[#8E9690]">Total Peça</div>
+                  <div className="text-base font-bold text-[#F4F1EA]">{pieceQty} un</div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#0E110F] border border-[#222724]">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-[#8E9690] mb-2">
+                  <span>{isBeanie ? 'Grade (Tamanho Único)' : 'Grade de Tamanhos (Editável)'}</span>
+                  <span>Malha: {Number(piece.fabricWeightKg || 0).toFixed(4)} kg</span>
+                </div>
+                {isBeanie ? (
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs text-[#C4CCC7]">Tamanho Único (Canelado)</span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={piece.sizes?.M ?? 5}
+                      onChange={(e) => onUpdateSize(piece.id, 'M', e.target.value)}
+                      className="w-20 px-2.5 py-1 rounded-lg bg-[#151917] border border-[#2A312D] text-center text-xs font-semibold text-[#F4F1EA]"
+                    />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-4 gap-2">
+                    {['P', 'M', 'G', 'GG'].map((sz) => (
+                      <div key={sz} className="text-center">
+                        <label className="block text-[10px] font-semibold text-[#A89AB8] mb-1">
+                          {sz}
+                        </label>
+                        <input
+                          type="number"
+                          min="0"
+                          value={piece.sizes?.[sz] ?? 0}
+                          onChange={(e) => onUpdateSize(piece.id, sz, e.target.value)}
+                          className="w-full px-2 py-1 rounded-lg bg-[#151917] border border-[#2A312D] text-center text-xs font-semibold text-[#F4F1EA]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="text-xs text-[#A4ADA7] space-y-1">
+                <div>
+                  <strong className="text-[#D1D3D4]">Matéria-prima:</strong> {piece.fabric}
+                </div>
+                <div>
+                  <strong className="text-[#D1D3D4]">Aviamentos:</strong> {piece.trims}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between text-[11px] mb-1.5">
+                  <span className="text-[#8E9690]">
+                    Etapa: <strong className="text-[#F4F1EA]">{PRODUCTION_STAGES[piece.stageIndex]}</strong>
+                  </span>
+                  <span className="text-[#A89AB8] font-semibold">{progress}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max={PRODUCTION_STAGES.length - 1}
+                  value={piece.stageIndex}
+                  onChange={(e) => onUpdateStage(piece.id, Number(e.target.value))}
+                  className="w-full accent-[#A89AB8] cursor-pointer"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#1E2320] text-xs">
+                <div>
+                  <span className="text-[10px] text-[#7D8680] block">Custo Lote (R$)</span>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={piece.productionTotalCost}
+                    onChange={(e) =>
+                      onUpdateField(piece.id, 'productionTotalCost', Number(e.target.value))
+                    }
+                    className="w-full mt-0.5 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[#F4F1EA] font-semibold"
+                  />
+                  <span className="text-[10px] text-[#7D8680] block mt-0.5">
+                    Unit: {formatBRL(unitCost)}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-[#7D8680] block">Venda Sugerida</span>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={piece.salePrice}
+                    onChange={(e) => onUpdateField(piece.id, 'salePrice', Number(e.target.value))}
+                    className="w-full mt-0.5 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[#8BB174] font-semibold"
+                  />
+                </div>
+                <div className="text-right flex flex-col justify-center">
+                  <span className="text-[10px] text-[#7D8680]">Receita Lote</span>
+                  <span className="font-semibold text-[#F4F1EA] mt-1">
+                    {formatBRL(pieceQty * piece.salePrice)}
+                  </span>
+                </div>
+              </div>
+            </FloatingMineralCard>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAdd, onDelete }) {
+  const [statusFilter, setStatusFilter] = useState('Todos');
+  const [customer, setCustomer] = useState('');
+  const [variant, setVariant] = useState('Amarela');
+  const [qty, setQty] = useState(1);
+  const [paymentStatus, setPaymentStatus] = useState('Pago');
+
+  const filtered = sales.filter((s) => {
+    const matchStatus = statusFilter === 'Todos' || s.paymentStatus === statusFilter;
+    const matchSearch =
+      !search ||
+      s.customer.toLowerCase().includes(search.toLowerCase()) ||
+      s.variant.toLowerCase().includes(search.toLowerCase());
+    return matchStatus && matchSearch;
+  });
+
+  const handleAdd = (e) => {
+    if (e) e.preventDefault();
+    if (!customer.trim()) return;
+    onAdd({
+      customer: customer.trim(),
+      variant,
+      qty: Number(qty) || 1,
+      unitPrice: paymentStatus === 'Cortesia' ? 0 : 219.9,
+      paymentStatus,
+      note: 'Novo lançamento'
+    });
+    setCustomer('');
+    setQty(1);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <FloatingMineralCard accent="#5E6D55" className="p-5">
+          <div className="text-xs text-[#8E9690]">Caixa Recebido (Pagos)</div>
+          <div className="text-2xl font-semibold text-[#8BB174] mt-1">
+            {formatBRL(stats.salesPaidTotal)}
+          </div>
+          <div className="text-[11px] text-[#7D8680] mt-1">
+            {stats.salesPaidQty} peças × R$ 219,90
+          </div>
+        </FloatingMineralCard>
+
+        <FloatingMineralCard accent="#72293C" className="p-5">
+          <div className="text-xs text-[#8E9690]">A Receber (Não Pagos)</div>
+          <div className="text-2xl font-semibold text-[#E2B979] mt-1">
+            {formatBRL(stats.salesPendingTotal)}
+          </div>
+          <div className="text-[11px] text-[#7D8680] mt-1">
+            {stats.salesPendingQty} peças pendentes (clique no status para dar baixa)
+          </div>
+        </FloatingMineralCard>
+
+        <FloatingMineralCard accent="#A89AB8" className="p-5">
+          <div className="text-xs text-[#8E9690]">Potencial Total HEXA CLUB</div>
+          <div className="text-2xl font-semibold text-[#F4F1EA] mt-1">
+            {formatBRL(stats.salesPaidTotal + stats.salesPendingTotal)}
+          </div>
+          <div className="text-[11px] text-[#7D8680] mt-1">
+            + {stats.salesCourtesyQty} cortesias registradas (R$ 0,00)
+          </div>
+        </FloatingMineralCard>
+      </div>
+
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
+        <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <input
+            type="text"
+            placeholder="Nome do cliente"
+            value={customer}
+            onChange={(e) => setCustomer(e.target.value)}
+            className="lg:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
+          />
+          <select
+            value={variant}
+            onChange={(e) => setVariant(e.target.value)}
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
+          >
+            <option value="Amarela">Amarela</option>
+            <option value="Verde">Verde</option>
+          </select>
+          <select
+            value={paymentStatus}
+            onChange={(e) => setPaymentStatus(e.target.value)}
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
+          >
+            <option value="Pago">Pago (R$ 219,90)</option>
+            <option value="Não pago">Não pago</option>
+            <option value="Cortesia">Cortesia (R$ 0)</option>
+          </select>
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Adicionar Venda</span>
+          </button>
+        </form>
+      </FloatingMineralCard>
+
+      <div className="flex flex-wrap items-center gap-2">
+        {['Todos', 'Pago', 'Não pago', 'Cortesia'].map((st) => (
+          <button
+            key={st}
+            type="button"
+            onClick={() => setStatusFilter(st)}
+            className={`px-3.5 py-1.5 rounded-full text-xs cursor-pointer ${
+              statusFilter === st
+                ? 'bg-[#F4F1EA] text-[#0B0D0C] font-semibold'
+                : 'bg-[#141816] text-[#97A09A] border border-[#242926]'
+            }`}
+          >
+            {st}
+          </button>
+        ))}
+      </div>
+
+      <FloatingMineralCard accent="#5E6D55" disableTilt className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#212623] text-[10px] uppercase tracking-wider text-[#88918B] bg-[#0E110F]">
+                <th className="py-3 px-4">Cliente</th>
+                <th className="py-3 px-4">Cor</th>
+                <th className="py-3 px-4">Qtd</th>
+                <th className="py-3 px-4">Pagamento (Clique p/ alterar)</th>
+                <th className="py-3 px-4">Entrega</th>
+                <th className="py-3 px-4">Total</th>
+                <th className="py-3 px-4">Obs</th>
+                <th className="py-3 px-4 text-right">Excluir</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#1B201D] text-xs">
+              {filtered.map((s) => (
+                <tr key={s.id} className="hover:bg-[#161B18]/70">
+                  <td className="py-3 px-4 font-medium text-[#F4F1EA]">{s.customer}</td>
+                  <td className="py-3 px-4">
+                    <span
+                      className={`px-2 py-0.5 rounded-md text-[11px] ${
+                        s.variant === 'Amarela'
+                          ? 'bg-[#E2B979]/15 text-[#E2B979]'
+                          : 'bg-[#5E6D55]/25 text-[#9EC785]'
+                      }`}
+                    >
+                      {s.variant}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-[#C4CCC7]">{s.qty}</td>
+                  <td className="py-3 px-4">
+                    <button
+                      type="button"
+                      onClick={() => onCycleStatus(s.id)}
+                      className={`px-2.5 py-1 rounded-full text-[11px] font-medium cursor-pointer ${
+                        s.paymentStatus === 'Pago'
+                          ? 'bg-[#5E6D55]/30 text-[#A5CE8C] border border-[#5E6D55]'
+                          : s.paymentStatus === 'Cortesia'
+                          ? 'bg-[#A89AB8]/20 text-[#D8CEE3] border border-[#A89AB8]/40'
+                          : 'bg-[#72293C]/30 text-[#E8A2B2] border border-[#72293C]'
+                      }`}
+                    >
+                      {s.paymentStatus}
+                    </button>
+                  </td>
+                  <td className="py-3 px-4">
+                    <button
+                      type="button"
+                      onClick={() => onToggleDelivered(s.id)}
+                      className="text-[11px] text-[#B8C0BB] hover:underline cursor-pointer"
+                    >
+                      {s.delivered ? '✅ Entregue' : '⏳ Pendente'}
+                    </button>
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-[#F4F1EA]">
+                    {formatBRL(s.qty * s.unitPrice)}
+                  </td>
+                  <td className="py-3 px-4 text-[11px] text-[#7D8680]">{s.note}</td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      type="button"
+                      onClick={() => onDelete(s.id)}
+                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8] cursor-pointer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </FloatingMineralCard>
+    </div>
+  );
+}
+
+function PartnersTab({ stats, config, onUpdateConfig }) {
+  return (
+    <div className="space-y-6">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-6 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-[#A89AB8]">
+              Engenharia de Aporte • Regra Proporcional
+            </span>
+            <h3 className="text-lg font-medium text-[#F4F1EA] mt-1">
+              Divisão entre Jonatas, Marcos Paulo e DJ Discroll
+            </h3>
+          </div>
+        </div>
+
+        <p className="text-xs text-[#9AA39D] leading-relaxed">
+          O <strong>DJ Discroll</strong> participa apenas com uma cota leve sobre os custos de
+          gravação do Set (Casa Vilas Boas + locação CDJ/som/visualizer ={' '}
+          <strong>{formatBRL(stats.setCostTotal)}</strong>), com teto máximo configurável para não
+          pesar para ele. Todo o restante (produção das 50 peças ={' '}
+          <strong>{formatBRL(stats.productionCostTotal)}</strong>, tráfego e saldo do set) é
+          abatido pelo caixa já recebido da HEXA CLUB ({formatBRL(stats.salesPaidTotal)}) e dividido
+          igualmente entre <strong>Jonatas</strong> e <strong>Marcos Paulo</strong>.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div className="p-3.5 rounded-xl bg-[#0E110F] border border-[#242926]">
+            <label className="block text-[11px] text-[#8E9690] mb-1">
+              % do Discroll (apenas sobre o Set)
+            </label>
+            <input
+              type="number"
+              min="0"
+              max="50"
+              value={config.discrollSetSharePct}
+              onChange={(e) => onUpdateConfig({ discrollSetSharePct: Number(e.target.value) })}
+              className="w-full px-3 py-1.5 rounded-lg bg-[#151917] border border-[#2B322E] text-sm font-semibold text-[#F4F1EA]"
+            />
+          </div>
+          <div className="p-3.5 rounded-xl bg-[#0E110F] border border-[#242926]">
+            <label className="block text-[11px] text-[#8E9690] mb-1">
+              Teto Máximo Discroll (R$)
+            </label>
+            <input
+              type="number"
+              step="50"
+              value={config.discrollCap}
+              onChange={(e) => onUpdateConfig({ discrollCap: Number(e.target.value) })}
+              className="w-full px-3 py-1.5 rounded-lg bg-[#151917] border border-[#2B322E] text-sm font-semibold text-[#F4F1EA]"
+            />
+          </div>
+          <div className="p-3.5 rounded-xl bg-[#0E110F] border border-[#242926]">
+            <label className="block text-[11px] text-[#8E9690] mb-1">
+              Reserva para Imprevistos (R$)
+            </label>
+            <input
+              type="number"
+              step="50"
+              value={config.contingencyReserve}
+              onChange={(e) => onUpdateConfig({ contingencyReserve: Number(e.target.value) })}
+              className="w-full px-3 py-1.5 rounded-lg bg-[#151917] border border-[#2B322E] text-sm font-semibold text-[#F4F1EA]"
+            />
+          </div>
+        </div>
+      </FloatingMineralCard>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <FloatingMineralCard accent="#5E6D55" className="p-6 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs uppercase tracking-wider text-[#8BB174]">Co-Founder & CEO</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#5E6D55]/25 text-[11px] text-[#A5CE8C]">
+              50% Saldo Líquido
+            </span>
+          </div>
+          <h4 className="text-xl font-semibold text-[#F4F1EA]">Jonatas</h4>
+          <div className="text-3xl font-bold text-[#F4F1EA]">{formatBRL(stats.jonatasShare)}</div>
+          <p className="text-xs text-[#8C948E]">
+            Se todos os pendentes da HEXA pagarem ({formatBRL(stats.salesPendingTotal)}), seu aporte cai para{' '}
+            <strong className="text-[#8BB174]">{formatBRL(stats.netNeedIfAllPaid / 2)}</strong>.
+          </p>
+        </FloatingMineralCard>
+
+        <FloatingMineralCard accent="#5E6D55" className="p-6 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs uppercase tracking-wider text-[#8BB174]">Co-Founder</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#5E6D55]/25 text-[11px] text-[#A5CE8C]">
+              50% Saldo Líquido
+            </span>
+          </div>
+          <h4 className="text-xl font-semibold text-[#F4F1EA]">Marcos Paulo</h4>
+          <div className="text-3xl font-bold text-[#F4F1EA]">{formatBRL(stats.marcosShare)}</div>
+          <p className="text-xs text-[#8C948E]">
+            Se todos os pendentes da HEXA pagarem, seu aporte cai para{' '}
+            <strong className="text-[#8BB174]">{formatBRL(stats.netNeedIfAllPaid / 2)}</strong>.
+          </p>
+        </FloatingMineralCard>
+
+        <FloatingMineralCard accent="#A89AB8" className="p-6 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs uppercase tracking-wider text-[#A89AB8]">Parceiro Musical</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#A89AB8]/20 text-[11px] text-[#D8CEE3]">
+              Apenas Set Julho
+            </span>
+          </div>
+          <h4 className="text-xl font-semibold text-[#F4F1EA]">DJ Discroll</h4>
+          <div className="text-3xl font-bold text-[#A89AB8]">{formatBRL(stats.discrollShare)}</div>
+          <p className="text-xs text-[#8C948E]">
+            Isento dos custos de confecção das roupas. Contribui apenas na estrutura audiovisual do Set.
+          </p>
+        </FloatingMineralCard>
+      </div>
+    </div>
+  );
+}
+
+function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
+  const [taskInputs, setTaskInputs] = useState({});
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {calendar.map((block) => (
+        <FloatingMineralCard
+          key={block.id}
+          accent={block.month.includes('Julho') ? '#A89AB8' : '#5E6D55'}
+          disableTilt
+          className="p-5 flex flex-col justify-between space-y-4"
+        >
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-1 rounded-lg bg-[#1A201D] text-xs font-semibold text-[#A89AB8]">
+                {block.month}
+              </span>
+              <div className="flex items-center gap-1 text-[11px] text-[#8E9690]">
+                <Clock className="w-3 h-3" />
+                <span>Prazo médio:</span>
+                <input
+                  type="number"
+                  value={block.avgDays}
+                  onChange={(e) => onUpdateDays(block.id, e.target.value)}
+                  className="w-11 px-1.5 py-0.5 rounded bg-[#0E110F] border border-[#252B27] text-center text-[#F4F1EA] font-semibold"
+                />
+                <span>d</span>
+              </div>
+            </div>
+
+            <h4 className="text-sm font-semibold text-[#F4F1EA]">{block.title}</h4>
+
+            <div className="space-y-2 pt-1">
+              {block.tasks.map((task) => (
+                <button
+                  key={task.id}
+                  type="button"
+                  onClick={() => onToggleTask(block.id, task.id)}
+                  className="w-full flex items-start gap-2.5 text-left text-xs group cursor-pointer"
+                >
+                  <span
+                    className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
+                      task.done
+                        ? 'bg-[#5E6D55] border-[#5E6D55] text-[#F4F1EA]'
+                        : 'border-[#353D38] group-hover:border-[#A89AB8]'
+                    }`}
+                  >
+                    {task.done && <Check className="w-3 h-3" />}
+                  </span>
+                  <span className={task.done ? 'line-through text-[#767F79]' : 'text-[#C8D0CB]'}>
+                    {task.text}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onAddTask(block.id, taskInputs[block.id] || '');
+              setTaskInputs({ ...taskInputs, [block.id]: '' });
+            }}
+            className="pt-3 border-t border-[#1E2320] flex gap-2"
+          >
+            <input
+              type="text"
+              placeholder="Nova entrega..."
+              value={taskInputs[block.id] || ''}
+              onChange={(e) => setTaskInputs({ ...taskInputs, [block.id]: e.target.value })}
+              className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#0E110F] border border-[#242926] text-[11px] text-[#F4F1EA]"
+            />
+            <button
+              type="submit"
+              className="px-2.5 py-1.5 rounded-lg bg-[#1C221F] hover:bg-[#A89AB8] hover:text-[#0B0D0C] text-xs cursor-pointer"
+            >
+              +
+            </button>
+          </form>
+        </FloatingMineralCard>
+      ))}
+    </div>
+  );
+}
+
+function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
+  const [name, setName] = useState('');
+  const [platform] = useState('Instagram / Reels');
+  const [budget, setBudget] = useState('');
+
+  const totalBudget = ads.reduce((a, b) => a + Number(b.budget || 0), 0);
+  const totalSpent = ads.reduce((a, b) => a + Number(b.spent || 0), 0);
+
+  const handleAdd = (e) => {
+    if (e) e.preventDefault();
+    if (!name.trim() || !budget) return;
+    onAdd({
+      name: name.trim(),
+      platform,
+      phase: 'Lançamento (Ago/27)',
+      budget: Number(budget)
+    });
+    setName('');
+    setBudget('');
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <FloatingMineralCard accent="#A89AB8" className="p-5">
+          <div className="text-xs text-[#8E9690]">Orçamento Total Tráfego</div>
+          <div className="text-2xl font-semibold text-[#F4F1EA] mt-1">{formatBRL(totalBudget)}</div>
+        </FloatingMineralCard>
+        <FloatingMineralCard accent="#5E6D55" className="p-5">
+          <div className="text-xs text-[#8E9690]">Investido até Agora</div>
+          <div className="text-2xl font-semibold text-[#8BB174] mt-1">{formatBRL(totalSpent)}</div>
+        </FloatingMineralCard>
+        <FloatingMineralCard accent="#72293C" className="p-5">
+          <div className="text-xs text-[#8E9690]">Saldo Disponível Mídia</div>
+          <div className="text-2xl font-semibold text-[#A89AB8] mt-1">
+            {formatBRL(Math.max(0, totalBudget - totalSpent))}
+          </div>
+        </FloatingMineralCard>
+      </div>
+
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
+        <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <input
+            type="text"
+            placeholder="Nome da campanha"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="sm:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
+          />
+          <input
+            type="number"
+            placeholder="Orçamento (R$)"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
+          />
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold cursor-pointer"
+          >
+            + Nova Campanha
+          </button>
+        </form>
+      </FloatingMineralCard>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {ads.map((ad) => (
+          <FloatingMineralCard key={ad.id} accent="#A89AB8" disableTilt className="p-5 space-y-3">
+            <div className="flex items-start justify-between gap-2">
+              <span className="text-[11px] uppercase tracking-wider text-[#A89AB8]">
+                {ad.platform}
+              </span>
+              <button
+                type="button"
+                onClick={() => onDelete(ad.id)}
+                className="text-[#757E78] hover:text-[#E598A8] cursor-pointer"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <h4 className="text-sm font-semibold text-[#F4F1EA]">{ad.name}</h4>
+            <div className="text-[11px] text-[#8E9690]">{ad.phase}</div>
+
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#1E2320] text-xs">
+              <div>
+                <span className="text-[10px] text-[#7D8680] block">Orçamento (R$)</span>
+                <input
+                  type="number"
+                  value={ad.budget}
+                  onChange={(e) => onUpdateField(ad.id, 'budget', Number(e.target.value))}
+                  className="w-full mt-0.5 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[#F4F1EA]"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] text-[#7D8680] block">Gasto Real (R$)</span>
+                <input
+                  type="number"
+                  value={ad.spent}
+                  onChange={(e) => onUpdateField(ad.id, 'spent', Number(e.target.value))}
+                  className="w-full mt-0.5 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[#8BB174] font-semibold"
+                />
+              </div>
+            </div>
+          </FloatingMineralCard>
+        ))}
+      </div>
+    </div>
+  );
+}
