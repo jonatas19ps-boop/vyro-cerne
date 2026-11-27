@@ -19,9 +19,7 @@ import {
   RefreshCw,
   ArrowRight,
   CheckCircle2,
-  Clock,
-  Sparkles,
-  Layers
+  Clock
 } from 'lucide-react';
 
 // ============================================================================
@@ -435,7 +433,7 @@ const DEFAULT_STATE = {
 };
 
 // ============================================================================
-// UTILITÁRIOS & SÍMBOLO OFICIAL VYRO EM 3D (BASEADO EM VYRO2026)
+// UTILITÁRIOS & SÍMBOLO OFICIAL VYRO EM 3D
 // ============================================================================
 
 const formatBRL = (val) =>
@@ -444,7 +442,6 @@ const formatBRL = (val) =>
     currency: 'BRL'
   }).format(Number(val) || 0);
 
-// Símbolo vetorial exato da VYRO (curva em S fluida com anéis orbitais internos)
 function VyroSymbolSvg({ className = 'w-12 h-12', mode = 'front' }) {
   const uid = useMemo(() => Math.random().toString(36).slice(2, 7), []);
 
@@ -476,21 +473,17 @@ function VyroSymbolSvg({ className = 'w-12 h-12', mode = 'front' }) {
         </linearGradient>
       </defs>
 
-      {/* 1. Lâmina Superior Esquerda (S Fluido) */}
       <path
         d="M235 42 C142 82, 56 142, 62 174 C67 196, 128 190, 186 164 C144 176, 102 176, 98 158 C94 136, 152 94, 235 42 Z"
         fill={`url(#vyroChrome-${uid})`}
         stroke={`url(#vyroRim-${uid})`}
         strokeWidth="1.2"
       />
-      {/* Anel Orbital Interno Esquerdo */}
       <path
         d="M174 84 C132 114, 106 144, 112 162 C117 176, 148 176, 182 165 C154 169, 134 165, 132 152 C129 136, 148 110, 174 84 Z"
         fill={`url(#vyroChrome-${uid})`}
         opacity="0.92"
       />
-
-      {/* 2. Lâmina Diagonal Central (Conexão Dinâmica) */}
       <path
         d="M352 76 C264 114, 182 154, 142 186 C210 154, 292 114, 352 76 Z"
         fill={`url(#vyroChrome-${uid})`}
@@ -502,15 +495,12 @@ function VyroSymbolSvg({ className = 'w-12 h-12', mode = 'front' }) {
         fill={`url(#vyroChrome-${uid})`}
         opacity="0.88"
       />
-
-      {/* 3. Lâmina Inferior Direita (S Fluido Espelhado) */}
       <path
         d="M285 218 C378 178, 464 118, 458 86 C453 64, 392 70, 334 96 C376 84, 418 84, 422 102 C426 124, 368 166, 285 218 Z"
         fill={`url(#vyroChrome-${uid})`}
         stroke={`url(#vyroRim-${uid})`}
         strokeWidth="1.2"
       />
-      {/* Anel Orbital Interno Direito */}
       <path
         d="M346 176 C388 146, 414 116, 408 98 C403 84, 372 84, 338 95 C366 91, 386 95, 388 108 C391 124, 372 150, 346 176 Z"
         fill={`url(#vyroChrome-${uid})`}
@@ -520,7 +510,6 @@ function VyroSymbolSvg({ className = 'w-12 h-12', mode = 'front' }) {
   );
 }
 
-// Emblema 3D Multi-Camada Interativo
 function VyroEmblem3D({ className = 'w-12 h-12', interactive = false, tilt = { rx: 0, ry: 0 } }) {
   if (!interactive) {
     return <VyroSymbolSvg className={className} mode="front" />;
@@ -535,23 +524,18 @@ function VyroEmblem3D({ className = 'w-12 h-12', interactive = false, tilt = { r
         transition: 'transform 120ms ease-out'
       }}
     >
-      {/* Camada Sombra Profunda (Z = -18px) */}
       <div
         className="absolute inset-0 pointer-events-none blur-[2px] opacity-60"
         style={{ transform: 'translateZ(-18px) translateY(8px)' }}
       >
         <VyroSymbolSvg className={className} mode="depth" />
       </div>
-
-      {/* Camada Extrusão Metálica Intermediária (Z = -8px) */}
       <div
         className="absolute inset-0 pointer-events-none opacity-75"
         style={{ transform: 'translateZ(-8px) translateY(3px)' }}
       >
         <VyroSymbolSvg className={className} mode="depth" />
       </div>
-
-      {/* Camada Frontal Cromada/Mineral (Z = +28px) */}
       <div
         className="relative"
         style={{
@@ -565,30 +549,37 @@ function VyroEmblem3D({ className = 'w-12 h-12', interactive = false, tilt = { r
   );
 }
 
-// Cartão flutuante com resposta sutil de tilt 3D e brilho especular ao mouse
-function FloatingMineralCard({ children, className = '', accent = '#A89AB8', onClick }) {
+// Cartão flutuante (disableTilt em cartões com inputs/formulários garante clique 100% livre)
+function FloatingMineralCard({
+  children,
+  className = '',
+  accent = '#A89AB8',
+  onClick,
+  disableTilt = false
+}) {
   const cardRef = useRef(null);
   const [style, setStyle] = useState({});
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (disableTilt || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -2.0;
-    const rotateY = ((x - centerX) / centerX) * 2.0;
+    const rotateX = ((y - centerY) / centerY) * -1.8;
+    const rotateY = ((x - centerX) / centerX) * 1.8;
 
     setStyle({
-      transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-1px)`,
+      transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`,
       backgroundImage: `radial-gradient(380px circle at ${x}px ${y}px, ${accent}16, transparent 70%)`
     });
   };
 
   const handleMouseLeave = () => {
+    if (disableTilt) return;
     setStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+      transform: 'none',
       backgroundImage: 'none'
     });
   };
@@ -599,15 +590,14 @@ function FloatingMineralCard({ children, className = '', accent = '#A89AB8', onC
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      style={style}
-      className={`relative rounded-2xl bg-[#121513]/85 backdrop-blur-md border border-[#242926] transition-all duration-200 ease-out hover:border-[#3A433D] shadow-[0_12px_32px_rgba(0,0,0,0.45)] ${className}`}
+      style={disableTilt ? undefined : style}
+      className={`relative rounded-2xl bg-[#121513]/90 backdrop-blur-md border border-[#242926] transition-colors duration-200 hover:border-[#3A433D] shadow-[0_12px_32px_rgba(0,0,0,0.45)] ${className}`}
     >
       {children}
     </div>
   );
 }
 
-// Fundo topográfico mineral inspirado na estética geológica CERNE
 function TopographicBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -681,7 +671,6 @@ function PortalLanding({ onEnter, stats }) {
       onMouseMove={handleMouseMove}
       className="relative min-h-screen w-full flex flex-col items-center justify-between p-6 md:p-10 text-[#F4F1EA] overflow-hidden select-none z-10"
     >
-      {/* Topo Minimalista */}
       <div className="w-full max-w-6xl flex items-center justify-between text-xs tracking-[0.2em] uppercase text-[#9CA39E]">
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-[#5E6D55] animate-pulse" />
@@ -694,7 +683,6 @@ function PortalLanding({ onEnter, stats }) {
         </div>
       </div>
 
-      {/* Centro 3D Interativo */}
       <div className="flex flex-col items-center text-center my-auto py-6">
         <div
           onClick={onEnter}
@@ -703,7 +691,6 @@ function PortalLanding({ onEnter, stats }) {
           onKeyDown={(e) => e.key === 'Enter' && onEnter()}
           className="group relative cursor-pointer px-8 py-10 sm:px-14 sm:py-12 rounded-3xl transition-all duration-200"
         >
-          {/* Halo Mineral Dinâmico */}
           <div
             className="absolute inset-0 rounded-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
             style={{
@@ -712,7 +699,6 @@ function PortalLanding({ onEnter, stats }) {
           />
           <div className="absolute inset-1 rounded-3xl border border-[#2A302C] group-hover:border-[#A89AB8]/60 transition-colors pointer-events-none bg-[#111412]/40 backdrop-blur-sm" />
 
-          {/* Emblema VYRO 3D com Extrusão Real */}
           <div className="relative z-10">
             <VyroEmblem3D
               className="w-72 sm:w-96 md:w-[440px] h-auto mx-auto"
@@ -736,7 +722,6 @@ function PortalLanding({ onEnter, stats }) {
           </div>
         </div>
 
-        {/* Pílulas Minerais de Resumo Vivo */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl w-full">
           <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Evolução Geral</div>
@@ -757,7 +742,6 @@ function PortalLanding({ onEnter, stats }) {
         </div>
       </div>
 
-      {/* Rodapé */}
       <div className="w-full max-w-6xl flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#737B76]">
         <span>Mova o cursor para girar o símbolo 3D • Clique para abrir os controles</span>
         <span>50 Peças • Casa Vilas Boas • DJ Discroll</span>
@@ -1048,8 +1032,8 @@ export default function App() {
         {
           id: `chk-${Date.now()}`,
           paid: false,
-          dueDate: '2027-03-01',
-          notes: '',
+          dueDate: new Date().toISOString().slice(0, 10),
+          notes: 'Adicionado manualmente',
           ...newItem
         },
         ...prev.checklist
@@ -1207,10 +1191,6 @@ export default function App() {
     };
     reader.readAsText(file);
   };
-
-  // ============================================================================
-  // RENDERIZAÇÃO: PORTAL INICIAL OU DASHBOARD COMPLETO
-  // ============================================================================
 
   if (showPortal) {
     return (
@@ -1545,7 +1525,7 @@ export default function App() {
                   </div>
                 </FloatingMineralCard>
 
-                <FloatingMineralCard accent="#5E6D55" className="p-5 lg:col-span-2 space-y-4">
+                <FloatingMineralCard accent="#5E6D55" disableTilt className="p-5 lg:col-span-2 space-y-4">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-medium text-[#F4F1EA]">
                       Checklist Rápido — Clique para Marcar como Pago
@@ -1564,6 +1544,7 @@ export default function App() {
                         className="py-2.5 flex items-center justify-between gap-3"
                       >
                         <button
+                          type="button"
                           onClick={() => toggleChecklistPaid(item.id)}
                           className="flex items-center gap-3 text-left group"
                         >
@@ -1766,7 +1747,7 @@ export default function App() {
 }
 
 // ============================================================================
-// SUB-COMPONENTES DAS ABAS
+// SUB-COMPONENTES DAS ABAS (COM FORMULÁRIOS 100% INTERATIVOS)
 // ============================================================================
 
 function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDelete }) {
@@ -1774,7 +1755,9 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
   const [newName, setNewName] = useState('');
   const [newCat, setNewCat] = useState('Aviamentos');
   const [newScope, setNewScope] = useState('VY-01 a VY-08');
+  const [newQty, setNewQty] = useState('1 lote');
   const [newAmount, setNewAmount] = useState('');
+  const [addedFeedback, setAddedFeedback] = useState(false);
 
   const categories = ['Todos', 'Tecidos', 'Aviamentos', 'Produção', 'Set & Gravação'];
 
@@ -1789,38 +1772,48 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
   });
 
   const handleAdd = (e) => {
-    e.preventDefault();
-    if (!newName.trim() || !newAmount) return;
+    if (e) e.preventDefault();
+    if (!newName.trim()) return;
     onAdd({
       name: newName.trim(),
       category: newCat,
       scope: newScope.trim() || 'Coleção CERNE',
       supplier: 'A definir',
-      qtyLabel: '1 lote',
-      amount: Number(newAmount)
+      qtyLabel: newQty.trim() || '1 un',
+      amount: parseFloat(String(newAmount).replace(',', '.')) || 0
     });
     setNewName('');
     setNewAmount('');
+    setCatFilter('Todos');
+    setAddedFeedback(true);
+    setTimeout(() => setAddedFeedback(false), 2500);
   };
 
   return (
     <div className="space-y-6">
-      <FloatingMineralCard accent="#A89AB8" className="p-5">
-        <h3 className="text-xs uppercase tracking-[0.18em] text-[#A89AB8] mb-3">
-          Adicionar Novo Item (Tecido, Aviamento, Costura ou Equipamento)
-        </h3>
-        <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-xs uppercase tracking-[0.18em] text-[#A89AB8]">
+            Adicionar Novo Item (Tecido, Aviamento, Costura ou Equipamento)
+          </h3>
+          {addedFeedback && (
+            <span className="text-xs text-[#8BB174] font-medium">
+              ✓ Item adicionado à lista!
+            </span>
+          )}
+        </div>
+        <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
           <input
             type="text"
             placeholder="Nome do item (ex: Linha Bordado Lavanda)"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            className="lg:col-span-2 px-3.5 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="lg:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
           />
           <select
             value={newCat}
             onChange={(e) => setNewCat(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
           >
             <option value="Tecidos">Tecidos</option>
             <option value="Aviamentos">Aviamentos</option>
@@ -1828,18 +1821,26 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
             <option value="Set & Gravação">Set & Gravação</option>
           </select>
           <input
-            type="number"
-            step="0.01"
-            placeholder="Valor (R$)"
+            type="text"
+            placeholder="Peça / Aplicação (ex: VY-04)"
+            value={newScope}
+            onChange={(e) => setNewScope(e.target.value)}
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
+          />
+          <input
+            type="text"
+            inputMode="decimal"
+            placeholder="Valor R$ (ex: 150,00)"
             value={newAmount}
             onChange={(e) => setNewAmount(e.target.value)}
-            className="px-3.5 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
           />
           <button
-            type="submit"
-            className="px-4 py-2 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1.5"
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] active:scale-[0.98] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-all"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" />
             <span>Adicionar</span>
           </button>
         </form>
@@ -1849,8 +1850,9 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         {categories.map((cat) => (
           <button
             key={cat}
+            type="button"
             onClick={() => setCatFilter(cat)}
-            className={`px-3.5 py-1.5 rounded-full text-xs transition-colors ${
+            className={`px-3.5 py-1.5 rounded-full text-xs transition-colors cursor-pointer ${
               catFilter === cat
                 ? 'bg-[#F4F1EA] text-[#0B0D0C] font-semibold'
                 : 'bg-[#141816] text-[#97A09A] border border-[#242926] hover:text-[#F4F1EA]'
@@ -1861,7 +1863,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         ))}
       </div>
 
-      <FloatingMineralCard accent="#5E6D55" className="overflow-hidden">
+      <FloatingMineralCard accent="#5E6D55" disableTilt className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -1880,8 +1882,9 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                 <tr key={item.id} className="hover:bg-[#161B18]/70 transition-colors">
                   <td className="py-3 px-4">
                     <button
+                      type="button"
                       onClick={() => onTogglePaid(item.id)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors cursor-pointer ${
                         item.paid
                           ? 'bg-[#5E6D55]/30 text-[#A5CE8C] border border-[#5E6D55]'
                           : 'bg-[#72293C]/25 text-[#E5A0B0] border border-[#72293C]/60'
@@ -1905,9 +1908,21 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                       {item.category}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-[#A4ADA7]">{item.scope}</td>
+                  <td className="py-3 px-4">
+                    <input
+                      type="text"
+                      value={item.scope}
+                      onChange={(e) => onUpdateField(item.id, 'scope', e.target.value)}
+                      className="bg-transparent text-[#A4ADA7] focus:outline-none focus:border-b focus:border-[#A89AB8] w-32"
+                    />
+                  </td>
                   <td className="py-3 px-4 text-[#A4ADA7]">
-                    <div>{item.qtyLabel}</div>
+                    <input
+                      type="text"
+                      value={item.qtyLabel}
+                      onChange={(e) => onUpdateField(item.id, 'qtyLabel', e.target.value)}
+                      className="bg-transparent text-[#A4ADA7] focus:outline-none focus:border-b focus:border-[#A89AB8] w-24"
+                    />
                     <div className="text-[10px] text-[#6E7771]">{item.dueDate}</div>
                   </td>
                   <td className="py-3 px-4">
@@ -1921,8 +1936,9 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                   </td>
                   <td className="py-3 px-4 text-right">
                     <button
+                      type="button"
                       onClick={() => onDelete(item.id)}
-                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8] hover:bg-[#1E2320]"
+                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8] hover:bg-[#1E2320] cursor-pointer"
                       title="Excluir item"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -1955,7 +1971,7 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
   });
 
   const handleAdd = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (!customer.trim()) return;
     onAdd({
       customer: customer.trim(),
@@ -2003,19 +2019,19 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         </FloatingMineralCard>
       </div>
 
-      <FloatingMineralCard accent="#A89AB8" className="p-5">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
         <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <input
             type="text"
             placeholder="Nome do cliente"
             value={customer}
             onChange={(e) => setCustomer(e.target.value)}
-            className="lg:col-span-2 px-3.5 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="lg:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
           />
           <select
             value={variant}
             onChange={(e) => setVariant(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
           >
             <option value="Amarela">Amarela</option>
             <option value="Verde">Verde</option>
@@ -2023,15 +2039,16 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
           <select
             value={paymentStatus}
             onChange={(e) => setPaymentStatus(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
           >
             <option value="Pago">Pago (R$ 219,90)</option>
             <option value="Não pago">Não pago</option>
             <option value="Cortesia">Cortesia (R$ 0)</option>
           </select>
           <button
-            type="submit"
-            className="px-4 py-2 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1.5"
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Adicionar Venda</span>
@@ -2043,8 +2060,9 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         {['Todos', 'Pago', 'Não pago', 'Cortesia'].map((st) => (
           <button
             key={st}
+            type="button"
             onClick={() => setStatusFilter(st)}
-            className={`px-3.5 py-1.5 rounded-full text-xs ${
+            className={`px-3.5 py-1.5 rounded-full text-xs cursor-pointer ${
               statusFilter === st
                 ? 'bg-[#F4F1EA] text-[#0B0D0C] font-semibold'
                 : 'bg-[#141816] text-[#97A09A] border border-[#242926]'
@@ -2055,7 +2073,7 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         ))}
       </div>
 
-      <FloatingMineralCard accent="#5E6D55" className="overflow-hidden">
+      <FloatingMineralCard accent="#5E6D55" disableTilt className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -2088,8 +2106,9 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
                   <td className="py-3 px-4 text-[#C4CCC7]">{s.qty}</td>
                   <td className="py-3 px-4">
                     <button
+                      type="button"
                       onClick={() => onCycleStatus(s.id)}
-                      className={`px-2.5 py-1 rounded-full text-[11px] font-medium ${
+                      className={`px-2.5 py-1 rounded-full text-[11px] font-medium cursor-pointer ${
                         s.paymentStatus === 'Pago'
                           ? 'bg-[#5E6D55]/30 text-[#A5CE8C] border border-[#5E6D55]'
                           : s.paymentStatus === 'Cortesia'
@@ -2102,8 +2121,9 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
                   </td>
                   <td className="py-3 px-4">
                     <button
+                      type="button"
                       onClick={() => onToggleDelivered(s.id)}
-                      className="text-[11px] text-[#B8C0BB] hover:underline"
+                      className="text-[11px] text-[#B8C0BB] hover:underline cursor-pointer"
                     >
                       {s.delivered ? '✅ Entregue' : '⏳ Pendente'}
                     </button>
@@ -2114,8 +2134,9 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
                   <td className="py-3 px-4 text-[11px] text-[#7D8680]">{s.note}</td>
                   <td className="py-3 px-4 text-right">
                     <button
+                      type="button"
                       onClick={() => onDelete(s.id)}
-                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8]"
+                      className="p-1.5 rounded-lg text-[#757E78] hover:text-[#E598A8] cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -2133,7 +2154,7 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
 function PartnersTab({ stats, config, onUpdateConfig }) {
   return (
     <div className="space-y-6">
-      <FloatingMineralCard accent="#A89AB8" className="p-6 space-y-4">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="text-[11px] uppercase tracking-[0.2em] text-[#A89AB8]">
@@ -2258,7 +2279,7 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField }) {
       {filtered.map((piece) => {
         const progress = Math.round((piece.stageIndex / (PRODUCTION_STAGES.length - 1)) * 100);
         return (
-          <FloatingMineralCard key={piece.id} accent={piece.accent} className="p-5 space-y-4">
+          <FloatingMineralCard key={piece.id} accent={piece.accent} disableTilt className="p-5 space-y-4">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
@@ -2350,6 +2371,7 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
         <FloatingMineralCard
           key={block.id}
           accent={block.month.includes('Julho') ? '#A89AB8' : '#5E6D55'}
+          disableTilt
           className="p-5 flex flex-col justify-between space-y-4"
         >
           <div className="space-y-3">
@@ -2376,8 +2398,9 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
               {block.tasks.map((task) => (
                 <button
                   key={task.id}
+                  type="button"
                   onClick={() => onToggleTask(block.id, task.id)}
-                  className="w-full flex items-start gap-2.5 text-left text-xs group"
+                  className="w-full flex items-start gap-2.5 text-left text-xs group cursor-pointer"
                 >
                   <span
                     className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
@@ -2413,7 +2436,7 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
             />
             <button
               type="submit"
-              className="px-2.5 py-1.5 rounded-lg bg-[#1C221F] hover:bg-[#A89AB8] hover:text-[#0B0D0C] text-xs"
+              className="px-2.5 py-1.5 rounded-lg bg-[#1C221F] hover:bg-[#A89AB8] hover:text-[#0B0D0C] text-xs cursor-pointer"
             >
               +
             </button>
@@ -2433,7 +2456,7 @@ function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
   const totalSpent = ads.reduce((a, b) => a + Number(b.spent || 0), 0);
 
   const handleAdd = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (!name.trim() || !budget) return;
     onAdd({
       name: name.trim(),
@@ -2464,25 +2487,26 @@ function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
         </FloatingMineralCard>
       </div>
 
-      <FloatingMineralCard accent="#A89AB8" className="p-5">
+      <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
         <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <input
             type="text"
             placeholder="Nome da campanha"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="sm:col-span-2 px-3.5 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="sm:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
           />
           <input
             type="number"
             placeholder="Orçamento (R$)"
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
-            className="px-3.5 py-2 rounded-xl bg-[#0D100E] border border-[#252B27] text-xs text-[#F4F1EA]"
+            className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA]"
           />
           <button
-            type="submit"
-            className="px-4 py-2 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold"
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2.5 rounded-xl bg-[#F4F1EA] hover:bg-[#A89AB8] text-[#0B0D0C] text-xs font-semibold cursor-pointer"
           >
             + Nova Campanha
           </button>
@@ -2491,14 +2515,15 @@ function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {ads.map((ad) => (
-          <FloatingMineralCard key={ad.id} accent="#A89AB8" className="p-5 space-y-3">
+          <FloatingMineralCard key={ad.id} accent="#A89AB8" disableTilt className="p-5 space-y-3">
             <div className="flex items-start justify-between gap-2">
               <span className="text-[11px] uppercase tracking-wider text-[#A89AB8]">
                 {ad.platform}
               </span>
               <button
+                type="button"
                 onClick={() => onDelete(ad.id)}
-                className="text-[#757E78] hover:text-[#E598A8]"
+                className="text-[#757E78] hover:text-[#E598A8] cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
