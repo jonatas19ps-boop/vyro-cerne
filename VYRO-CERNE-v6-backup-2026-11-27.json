@@ -1,0 +1,965 @@
+{
+  "version": 6,
+  "lastUpdated": "2026-11-27T15:38:24.695Z",
+  "pieces": [
+    {
+      "id": "VY-01",
+      "code": "VY-01",
+      "name": "Camiseta boxy cinza",
+      "description": "Modelagem boxy estruturada em malha cinza mescla mineral.",
+      "plannedQty": 8,
+      "status": "Modelagem",
+      "accent": "mineral",
+      "notes": "Base essencial cinza mineral.",
+      "stages": {
+        "modelagem": true,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-02",
+      "code": "VY-02",
+      "name": "Camiseta boxy lavanda",
+      "description": "Modelagem boxy em malha lavanda exclusiva (3 kg já adquiridos e recebidos).",
+      "plannedQty": 8,
+      "status": "Pilotagem",
+      "accent": "lavender",
+      "notes": "3 kg de tecido lavanda já adquiridos e pagos.",
+      "stages": {
+        "modelagem": true,
+        "materiais": true,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-03",
+      "code": "VY-03",
+      "name": "Camiseta boxy preta",
+      "description": "Modelagem boxy essencial em malha preta profunda.",
+      "plannedQty": 8,
+      "status": "Modelagem",
+      "accent": "mineral",
+      "notes": "Peça core preta.",
+      "stages": {
+        "modelagem": true,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-04",
+      "code": "VY-04",
+      "name": "Jorts baggy cinza com bordado lavanda",
+      "description": "Bermuda baggy cinza com passantes, rebites metálicos e bordado lavanda.",
+      "plannedQty": 6,
+      "status": "Em desenvolvimento",
+      "accent": "lavender",
+      "notes": "Peça hero de bottom com bordado lavanda e ferragens.",
+      "stages": {
+        "modelagem": false,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-05",
+      "code": "VY-05",
+      "name": "Moletom oliva com forro vinho",
+      "description": "Moletom pesado oliva 3 cabos com capuz forrado em vinho e cordão longo.",
+      "plannedQty": 5,
+      "status": "Em desenvolvimento",
+      "accent": "olive",
+      "notes": "Combinação cromática assinatura CERNE (Oliva + Vinho).",
+      "stages": {
+        "modelagem": false,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-06",
+      "code": "VY-06",
+      "name": "Moletom zip oliva",
+      "description": "Moletom oliva com fechamento frontal em zíper duplo e cordão longo.",
+      "plannedQty": 5,
+      "status": "Em desenvolvimento",
+      "accent": "olive",
+      "notes": "Equipado com zíper duplo metálico.",
+      "stages": {
+        "modelagem": false,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-07",
+      "code": "VY-07",
+      "name": "Shorts cinza",
+      "description": "Shorts estruturado em fleece/sarja cinza com cordão longo na cintura.",
+      "plannedQty": 6,
+      "status": "Em desenvolvimento",
+      "accent": "mineral",
+      "notes": "",
+      "stages": {
+        "modelagem": false,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    },
+    {
+      "id": "VY-08",
+      "code": "VY-08",
+      "name": "Gorro vinho",
+      "description": "Gorro encorpado na tonalidade vinho CERNE.",
+      "plannedQty": 4,
+      "status": "Em desenvolvimento",
+      "accent": "wine",
+      "notes": "Acessório-chave para styling do set e drop.",
+      "stages": {
+        "modelagem": false,
+        "materiais": false,
+        "pilotagem": false,
+        "corte": false,
+        "costura": false,
+        "beneficiamento": false,
+        "acabamento": false,
+        "qualidade": false
+      }
+    }
+  ],
+  "checklistItems": [
+    {
+      "id": "item-tecido-lavanda",
+      "name": "Tecido Lavanda (3 kg adquiridos)",
+      "group": "Tecidos",
+      "pieceId": "VY-02",
+      "supplier": "Malharia BH",
+      "neededQty": 3,
+      "acquiredQty": 3,
+      "receivedQty": 3,
+      "unit": "kg",
+      "plannedValue": 270,
+      "paidValue": 270,
+      "paymentStatus": "Pago",
+      "acquisitionStatus": "Recebido",
+      "paymentDate": "2026-11-15",
+      "notes": "3 kg já adquiridos e recebidos. Edite a qtd. necessária se precisar de mais."
+    },
+    {
+      "id": "item-ribana",
+      "name": "Ribana (Golas Boxy e Punhos)",
+      "group": "Tecidos",
+      "pieceId": "ALL",
+      "supplier": "Malharia BH",
+      "neededQty": 2,
+      "acquiredQty": 2,
+      "receivedQty": 2,
+      "unit": "kg",
+      "plannedValue": 180,
+      "paidValue": 180,
+      "paymentStatus": "Pago",
+      "acquisitionStatus": "Recebido",
+      "paymentDate": "2026-11-15",
+      "notes": "Compra já realizada e recebida."
+    },
+    {
+      "id": "item-malha-cinza",
+      "name": "Malha Cinza Mescla (Boxy)",
+      "group": "Tecidos",
+      "pieceId": "VY-01",
+      "supplier": "Malharia BH",
+      "neededQty": 3.5,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "kg",
+      "plannedValue": 295,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Destinado às 8 unidades VY-01."
+    },
+    {
+      "id": "item-malha-preta",
+      "name": "Malha Preta Profunda (Boxy)",
+      "group": "Tecidos",
+      "pieceId": "VY-03",
+      "supplier": "Malharia BH",
+      "neededQty": 3.5,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "kg",
+      "plannedValue": 295,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Destinado às 8 unidades VY-03."
+    },
+    {
+      "id": "item-moletom-oliva-forro",
+      "name": "Moletom Oliva 3 Cabos + Forro Vinho",
+      "group": "Tecidos",
+      "pieceId": "VY-05",
+      "supplier": "Fornecedor Têxtil BH",
+      "neededQty": 12,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "metro",
+      "plannedValue": 580,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Cobre os 10 moletons (VY-05 e VY-06) + gorros vinho VY-08."
+    },
+    {
+      "id": "item-sarja-fleece-cinza",
+      "name": "Sarja / Fleece Cinza Estruturado (Jorts & Shorts)",
+      "group": "Tecidos",
+      "pieceId": "VY-04",
+      "supplier": "Fornecedor Têxtil BH",
+      "neededQty": 14,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "metro",
+      "plannedValue": 450,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Cobre 6 Jorts VY-04 e 6 Shorts VY-07."
+    },
+    {
+      "id": "item-etiquetas-essence",
+      "name": "Etiquetas VYRO ESSENCE Retangulares",
+      "group": "Aviamentos",
+      "pieceId": "ALL",
+      "supplier": "Fornecedor Etiquetas",
+      "neededQty": 60,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 110,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "50 peças + 10 unidades de reserva."
+    },
+    {
+      "id": "item-tag-montanha",
+      "name": "Tag Montanha Minas Gerais + Composição",
+      "group": "Aviamentos",
+      "pieceId": "ALL",
+      "supplier": "Gráfica / Etiquetas BH",
+      "neededQty": 60,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 85,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Identidade geográfica CERNE Minas Gerais."
+    },
+    {
+      "id": "item-cordao-longo",
+      "name": "Cordão Longo Personalizado",
+      "group": "Aviamentos",
+      "pieceId": "VY-05",
+      "supplier": "Aviamentos BH",
+      "neededQty": 30,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "metro",
+      "plannedValue": 65,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Para capuzes VY-05/VY-06 e cintura VY-07."
+    },
+    {
+      "id": "item-passantes",
+      "name": "Passantes Reforçados Jorts",
+      "group": "Aviamentos",
+      "pieceId": "VY-04",
+      "supplier": "Aviamentos BH",
+      "neededQty": 36,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 38.07,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "6 passantes por peça para os 6 Jorts VY-04."
+    },
+    {
+      "id": "item-rebites",
+      "name": "Rebites Metálicos",
+      "group": "Aviamentos",
+      "pieceId": "VY-04",
+      "supplier": "Aviamentos BH",
+      "neededQty": 48,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 45,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Acabamento de bolsos no Jorts VY-04."
+    },
+    {
+      "id": "item-ziper-duplo",
+      "name": "Zíper Duplo YKK / Metálico",
+      "group": "Aviamentos",
+      "pieceId": "VY-06",
+      "supplier": "Aviamentos BH",
+      "neededQty": 6,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 95,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "5 unidades + 1 reserva para Moletom zip oliva VY-06."
+    },
+    {
+      "id": "item-modelagem-pilotagem",
+      "name": "Modelagem Industrial & Pilotagem (8 Modelos)",
+      "group": "Costura/Acabamento",
+      "pieceId": "ALL",
+      "supplier": "Modelista BH",
+      "neededQty": 8,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 480,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Moldes boxy, baggy, moletom e gorro."
+    },
+    {
+      "id": "item-cmt-costura",
+      "name": "Corte, Costura (CMT) & Bordado Lavanda — 50 Peças",
+      "group": "Costura/Acabamento",
+      "pieceId": "ALL",
+      "supplier": "Oficina de Confecção BH",
+      "neededQty": 50,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 1030,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Confecção integral do lote inicial em Belo Horizonte."
+    },
+    {
+      "id": "item-airbnb-vilas-boas",
+      "name": "Locação Airbnb Casa Vilas Boas — Nova Lima (Julho/2027)",
+      "group": "Equipamentos & Locação Set",
+      "pieceId": "ALL",
+      "supplier": "Airbnb / Casa Vilas Boas",
+      "neededQty": 1,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "diária",
+      "plannedValue": 1830,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Reserva exclusiva para Julho/2027 (única janela disponível da casa)."
+    },
+    {
+      "id": "item-pioneer-cdj3000",
+      "name": "Aluguel Pioneer CDJ-3000 + Mixer DJM (Set Discroll)",
+      "group": "Equipamentos & Locação Set",
+      "pieceId": "ALL",
+      "supplier": "Locadora Backline BH",
+      "neededQty": 1,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "diária",
+      "plannedValue": 1850,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Setup padrão club para gravação de 40–60 min com DJ Discroll."
+    },
+    {
+      "id": "item-caixas-som-piso",
+      "name": "Caixas de Som de Piso & Monitoração Acústica",
+      "group": "Equipamentos & Locação Set",
+      "pieceId": "ALL",
+      "supplier": "Locadora Áudio BH",
+      "neededQty": 2,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "unidade",
+      "plannedValue": 955,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Estética minimalista de piso integrada à arquitetura da casa."
+    },
+    {
+      "id": "item-visualizer-3d-led",
+      "name": "Visualizer 3D/LED & Captação Audiovisual Set",
+      "group": "Equipamentos & Locação Set",
+      "pieceId": "ALL",
+      "supplier": "Estúdio Visual BH",
+      "neededQty": 1,
+      "acquiredQty": 0,
+      "receivedQty": 0,
+      "unit": "diária",
+      "plannedValue": 900,
+      "paidValue": 0,
+      "paymentStatus": "Pendente",
+      "acquisitionStatus": "Não comprado",
+      "paymentDate": "",
+      "notes": "Projeção/Visualizer Frequência Mineral + captação multicâmera."
+    }
+  ],
+  "sales": [
+    {
+      "id": "sale-1",
+      "customer": "PABLIN",
+      "variant": "Amarela",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Pendente financeiro"
+    },
+    {
+      "id": "sale-2",
+      "customer": "Tavin",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-3",
+      "customer": "Sorriso",
+      "variant": "Verde",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Enviar • Pendente financeiro/envio"
+    },
+    {
+      "id": "sale-4",
+      "customer": "Batata",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-5",
+      "customer": "Veronica",
+      "variant": "Verde",
+      "paymentStatus": "Não pago",
+      "delivered": false,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Confirmar • Confirmar pagamento"
+    },
+    {
+      "id": "sale-6",
+      "customer": "Henrique",
+      "variant": "Verde",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Confirmar • Confirmar pagamento"
+    },
+    {
+      "id": "sale-7",
+      "customer": "Lucas",
+      "variant": "Verde",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Enviar • Pendente financeiro/envio"
+    },
+    {
+      "id": "sale-8",
+      "customer": "Ana",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Enviar • Pendente financeiro/envio"
+    },
+    {
+      "id": "sale-9",
+      "customer": "Fabinho",
+      "variant": "Verde",
+      "paymentStatus": "Cortesia",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 0,
+      "notes": "Enviar • Cortesia"
+    },
+    {
+      "id": "sale-10",
+      "customer": "Borja",
+      "variant": "Verde",
+      "paymentStatus": "Cortesia",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 0,
+      "notes": "Enviar • Cortesia"
+    },
+    {
+      "id": "sale-11",
+      "customer": "Wallace",
+      "variant": "Amarela",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Pendente financeiro"
+    },
+    {
+      "id": "sale-12",
+      "customer": "Pedrão",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-13",
+      "customer": "Vitor Fein",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-14",
+      "customer": "Tito",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-15",
+      "customer": "Namorado do Hueubert",
+      "variant": "Amarela",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Pendente financeiro"
+    },
+    {
+      "id": "sale-16",
+      "customer": "Hueubert",
+      "variant": "Verde",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Pendente financeiro"
+    },
+    {
+      "id": "sale-17",
+      "customer": "Anny",
+      "variant": "Verde",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-18",
+      "customer": "Jonatas",
+      "variant": "Amarela",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-19",
+      "customer": "Ruan",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-20",
+      "customer": "SAN",
+      "variant": "Verde",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Pendente financeiro"
+    },
+    {
+      "id": "sale-21",
+      "customer": "Marcos",
+      "variant": "Amarela",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 2,
+      "unitPrice": 219.9,
+      "notes": "Qtd 2 • Finalizado"
+    },
+    {
+      "id": "sale-22",
+      "customer": "Tiane",
+      "variant": "Verde",
+      "paymentStatus": "Não pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Finalizado"
+    },
+    {
+      "id": "sale-23",
+      "customer": "Vitor",
+      "variant": "Amarela",
+      "paymentStatus": "Pago",
+      "delivered": true,
+      "qty": 1,
+      "unitPrice": 219.9,
+      "notes": "Enviar • Pendente financeiro/envio"
+    }
+  ],
+  "calendarStages": [
+    {
+      "id": "cal-1",
+      "monthLabel": "Dez/2026 – Jan/2027",
+      "phaseTitle": "Fichas Técnicas & Compra Integral de Tecidos/Aviamentos",
+      "averageDays": 30,
+      "dateWindow": "01/12/2026 a 31/01/2027",
+      "owner": "Jonatas & Marcos Paulo",
+      "status": "Em Andamento",
+      "deliverables": [
+        {
+          "id": "d-1",
+          "text": "Tecido Lavanda (3 kg) e Ribana adquiridos e recebidos",
+          "done": true
+        },
+        {
+          "id": "d-2",
+          "text": "Fechar compra malha cinza, preta, moletom oliva e sarja",
+          "done": false
+        },
+        {
+          "id": "d-3",
+          "text": "Encomendar etiquetas VYRO ESSENCE, tag montanha e zíper duplo",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-2",
+      "monthLabel": "Fev/2027",
+      "phaseTitle": "Pilotagem, Prova Boxy/Baggy & Aprovação Bordado",
+      "averageDays": 20,
+      "dateWindow": "01/02/2027 a 28/02/2027",
+      "owner": "Jonatas & Modelista BH",
+      "status": "Próximo",
+      "deliverables": [
+        {
+          "id": "d-4",
+          "text": "Provar caimento boxy das camisetas VY-01, VY-02 e VY-03",
+          "done": false
+        },
+        {
+          "id": "d-5",
+          "text": "Validar matriz do bordado lavanda no Jorts baggy VY-04",
+          "done": false
+        },
+        {
+          "id": "d-6",
+          "text": "Aprovar forro vinho e zíper duplo nos moletons VY-05/VY-06",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-3",
+      "monthLabel": "Mar/2027 – Abr/2027",
+      "phaseTitle": "Corte, Costura (CMT) & Acabamento das 50 Peças",
+      "averageDays": 45,
+      "dateWindow": "01/03/2027 a 30/04/2027",
+      "owner": "Oficina BH & Jonatas",
+      "status": "Próximo",
+      "deliverables": [
+        {
+          "id": "d-7",
+          "text": "Enfesto e corte do lote completo de 50 peças",
+          "done": false
+        },
+        {
+          "id": "d-8",
+          "text": "Fechamento de costura e aplicação de rebites/passantes",
+          "done": false
+        },
+        {
+          "id": "d-9",
+          "text": "Aplicação dos bordados lavanda",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-4",
+      "monthLabel": "Mai/2027",
+      "phaseTitle": "Controle de Qualidade, Etiquetas ESSENCE & Embalagens",
+      "averageDays": 15,
+      "dateWindow": "01/05/2027 a 31/05/2027",
+      "owner": "Jonatas & Marcos Paulo",
+      "status": "Próximo",
+      "deliverables": [
+        {
+          "id": "d-10",
+          "text": "Revisão de medidas peça por peça (50 unidades)",
+          "done": false
+        },
+        {
+          "id": "d-11",
+          "text": "Fixação das etiquetas VYRO ESSENCE e tag montanha MG",
+          "done": false
+        },
+        {
+          "id": "d-12",
+          "text": "Separação das grades para shooting e e-commerce",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-5",
+      "monthLabel": "Jun/2027",
+      "phaseTitle": "Pré-Produção Audiovisual, Reserva Casa Vilas Boas & Ensaio",
+      "averageDays": 20,
+      "dateWindow": "01/06/2027 a 30/06/2027",
+      "owner": "Jonatas, Marcos Paulo & Discroll",
+      "status": "Próximo",
+      "deliverables": [
+        {
+          "id": "d-13",
+          "text": "Quitar e confirmar reserva Airbnb Casa Vilas Boas (Nova Lima)",
+          "done": false
+        },
+        {
+          "id": "d-14",
+          "text": "Reservar Pioneer CDJ-3000, caixas de piso e visualizer 3D/LED",
+          "done": false
+        },
+        {
+          "id": "d-15",
+          "text": "Curadoria musical e ensaio do set de 40–60 min com Discroll",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-6",
+      "monthLabel": "Julho/2027",
+      "phaseTitle": "Gravação Oficial DJ Home Set Discroll + Shooting Lookbook",
+      "averageDays": 7,
+      "dateWindow": "10/07/2027 a 20/07/2027",
+      "owner": "VYRO Studios & DJ Discroll",
+      "status": "Crítico",
+      "deliverables": [
+        {
+          "id": "d-16",
+          "text": "Montagem setup CDJ-3000 + caixas de piso na Casa Vilas Boas",
+          "done": false
+        },
+        {
+          "id": "d-17",
+          "text": "Gravação multicâmera do DJ Set Frequência Mineral (40–60 min)",
+          "done": false
+        },
+        {
+          "id": "d-18",
+          "text": "Shooting editorial lookbook das 8 peças CERNE",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "cal-7",
+      "monthLabel": "Agosto/2027",
+      "phaseTitle": "Teasers, Aquecimento Tráfego Pago & Drop Oficial CERNE",
+      "averageDays": 14,
+      "dateWindow": "01/08/2027 a 20/08/2027",
+      "owner": "VYRO Studios",
+      "status": "Crítico",
+      "deliverables": [
+        {
+          "id": "d-19",
+          "text": "Ativar campanhas Meta Ads / TikTok Ads / YouTube Shorts",
+          "done": false
+        },
+        {
+          "id": "d-20",
+          "text": "Estreia pública do DJ Set Discroll no YouTube",
+          "done": false
+        },
+        {
+          "id": "d-21",
+          "text": "Abertura oficial de vendas das 50 peças Series 001: CERNE",
+          "done": false
+        }
+      ]
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "camp-1",
+      "name": "Teaser Audiovisual — DJ Set Discroll (Casa Vilas Boas)",
+      "platform": "Meta Ads / Instagram",
+      "objective": "Teaser Set Discroll",
+      "period": "22/07/2027 – 04/08/2027",
+      "dailyBudget": 35,
+      "plannedBudget": 490,
+      "paidAmount": 0,
+      "estimatedReach": 28000,
+      "estimatedClicks": 920,
+      "targetCpa": 18.5,
+      "status": "Planejada",
+      "notes": "Reels de 15s e 30s com cortes do CDJ-3000 e estética mineral."
+    },
+    {
+      "id": "camp-2",
+      "name": "Aquecimento Lista VIP & Close Friends CERNE",
+      "platform": "Meta Ads / Instagram",
+      "objective": "Aquecimento Lista VIP",
+      "period": "01/08/2027 – 12/08/2027",
+      "dailyBudget": 40,
+      "plannedBudget": 480,
+      "paidAmount": 0,
+      "estimatedReach": 22000,
+      "estimatedClicks": 1100,
+      "targetCpa": 14,
+      "status": "Planejada",
+      "notes": "Captação de leads para acesso antecipado 2h antes do drop."
+    },
+    {
+      "id": "camp-3",
+      "name": "Cortes Verticais Set Frequência Mineral (Descoberta)",
+      "platform": "TikTok Ads",
+      "objective": "Teaser Set Discroll",
+      "period": "25/07/2027 – 15/08/2027",
+      "dailyBudget": 25,
+      "plannedBudget": 525,
+      "paidAmount": 0,
+      "estimatedReach": 45000,
+      "estimatedClicks": 1450,
+      "targetCpa": 16,
+      "status": "Planejada",
+      "notes": "Foco em público de música eletrônica, streetwear e design."
+    },
+    {
+      "id": "camp-4",
+      "name": "Lookbook Drop CERNE & Remarketing Carrinho",
+      "platform": "YouTube Shorts",
+      "objective": "Lookbook Drop CERNE",
+      "period": "12/08/2027 – 25/08/2027",
+      "dailyBudget": 30,
+      "plannedBudget": 420,
+      "paidAmount": 0,
+      "estimatedReach": 19000,
+      "estimatedClicks": 680,
+      "targetCpa": 21,
+      "status": "Planejada",
+      "notes": "Conversão direta para as 50 peças disponíveis."
+    }
+  ],
+  "budget": {
+    "productionPlanned": 4018.07,
+    "setEquipmentPlanned": 5535,
+    "paidTrafficPlanned": 1915,
+    "contingencyReserve": 800
+  },
+  "partnerSplit": {
+    "discrollSetSharePct": 20,
+    "discrollMaxCap": 1200,
+    "jonatasSharePct": 50,
+    "marcosSharePct": 50,
+    "usePendingReceivables": false
+  }
+}
