@@ -24,108 +24,114 @@ import {
 
 // ============================================================================
 // DADOS REAIS CONSOLIDADOS - VYRO STUDIOS | SERIES 001: CERNE — FREQUÊNCIA MINERAL
-// 4 Peças Principais (6 SKUs somando 50 peças) | Produção Total: R$ 4.018,07
+// 4 Refs x 6 SKUs = 50 Peças | Teto Investimento: R$ 10.401,08 | Meta Fat.: R$ 12.715,00
 // ============================================================================
 
-const STORAGE_KEY = 'vyro_cerne_management_v8';
+const STORAGE_KEY = 'vyro_cerne_management_v9';
 const CLOUD_CFG_KEY = 'vyro_cerne_supabase_cfg_v1';
 
 const INITIAL_PIECES = [
   {
     id: 'VY-01',
     code: 'VY-01',
-    group: 'Peça 01 • Camiseta Boxy (3 Cores)',
+    group: 'Ref. 01 • Essential • Cinza Mescla (#A1A1A1)',
     name: 'Camiseta Boxy Cinza Mescla',
-    mineral: 'Quartzo Fumê',
-    accent: '#9CA3AF',
-    sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
-    fabric: 'Meia Malha Heavyweight 280g Cinza Mescla + Ribana Cinza Mescla',
-    fabricWeightKg: 3.15,
-    trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
-    productionTotalCost: 598.5,
-    salePrice: 219.9,
+    mineral: 'Pedra-sabão (Cachoeira do Brumado)',
+    accent: '#A1A1A1',
+    sizes: { P: 1, M: 3, G: 3, GG: 1, TU: 0 }, // 8 un
+    fabric: 'Moletinho Mescla 210 g/m² (115.04-mc1001) + Ribana 2X1 Mescla',
+    fabricWeightKg: 6.45, // 6,0000 kg MOQ + 0,4500 kg ribana
+    trims: 'Gola ribana estruturada, micro-bordado e etiqueta VYRO ESSENCE',
+    productionTotalCost: 543.89,
+    effectiveUnitCost: 47.89,
+    salePrice: 189.9,
     stageIndex: 2,
-    notes: 'Modelagem boxy quadrada, gola ribana canelada 3cm.'
+    notes: 'MOQ de 6 kg gera sobra útil de 2,78 kg (R$ 146,12) para até 14 camisetas extras.'
   },
   {
     id: 'VY-02',
     code: 'VY-02',
-    group: 'Peça 01 • Camiseta Boxy (3 Cores)',
+    group: 'Ref. 01 • Fashion • Lavanda (#9993A3)',
     name: 'Camiseta Boxy Lavanda',
-    mineral: 'Quartzo Lavanda',
-    accent: '#A89AB8',
-    sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
-    fabric: 'Meia Malha Heavyweight 280g Lavanda (3,0000 kg já adquiridos) + Ribana Lavanda',
-    fabricWeightKg: 3.0,
-    trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
-    productionTotalCost: 615.0,
-    salePrice: 219.9,
+    mineral: 'Ametista (Montezuma)',
+    accent: '#9993A3',
+    sizes: { P: 1, M: 3, G: 3, GG: 1, TU: 0 }, // 8 un
+    fabric: 'Moletinho Fine Lavanda 210 g/m² (105.05cl-rx1008) + Ribana 2X1 Lavanda',
+    fabricWeightKg: 3.95, // 3,5000 kg + 0,4500 kg ribana
+    trims: 'Ponto fashion da cartela, gola ribana, bordado e etiqueta VYRO',
+    productionTotalCost: 433.62,
+    effectiveUnitCost: 51.4,
+    salePrice: 189.9,
     stageIndex: 3,
-    notes: '3,0000 kg de malha lavanda e ribana lavanda já adquiridos.'
+    notes: 'Malha lavanda e ribana já adquiridas.'
   },
   {
     id: 'VY-03',
     code: 'VY-03',
-    group: 'Peça 01 • Camiseta Boxy (3 Cores)',
+    group: 'Ref. 01 • Essential • Preto (#0D0D0D)',
     name: 'Camiseta Boxy Preta',
-    mineral: 'Obsidiana / Grafite',
+    mineral: 'Hematita e Turmalina Negra',
     accent: '#52525B',
-    sizes: { P: 2, M: 4, G: 3, GG: 1 }, // 10 un
-    fabric: 'Meia Malha Heavyweight 280g Preto Grafite + Ribana Preta',
-    fabricWeightKg: 3.15,
-    trims: 'Etiqueta retangular VYRO ESSENCE + Tag Montanha MG',
-    productionTotalCost: 598.5,
-    salePrice: 219.9,
+    sizes: { P: 1, M: 3, G: 3, GG: 1, TU: 0 }, // 8 un (Subtotal Camisetas = 24 un)
+    fabric: 'Moletinho Fine Preto 210 g/m² (105.05ft-pr1001) + Ribana 2X1 Preta',
+    fabricWeightKg: 3.95, // 3,5000 kg + 0,4500 kg ribana
+    trims: 'Zero ruído gráfico, ribana estruturada e etiqueta interna',
+    productionTotalCost: 440.96,
+    effectiveUnitCost: 52.74,
+    salePrice: 189.9,
     stageIndex: 2,
-    notes: 'Base essencial da cápsula CERNE.'
+    notes: 'Base neutra de peso visual da cápsula CERNE.'
   },
   {
     id: 'VY-04',
     code: 'VY-04',
-    group: 'Peça 02 • Jorts Baggy',
-    name: 'Jorts Baggy Cinza Mescla c/ Bordado Lavanda',
-    mineral: 'Ardósia & Quartzo',
-    accent: '#A89AB8',
-    sizes: { P: 1, M: 3, G: 3, GG: 1 }, // 8 un
-    fabric: 'Moletom 3 Cabos / Sarja Encorpada Cinza Mescla',
-    fabricWeightKg: 4.8,
-    trims: 'Bordado lavanda, passantes, cordão longo, rebites metálicos, etiqueta VYRO',
-    productionTotalCost: 786.07,
-    salePrice: 329.9,
+    group: 'Ref. 02 • Core • Cinza Mescla + Bordado Lavanda',
+    name: 'Jorts Baggy Cinza Mescla',
+    mineral: 'Pedra-sabão & Ametista',
+    accent: '#9993A3',
+    sizes: { P: 2, M: 5, G: 5, GG: 0, TU: 0 }, // 12 un
+    fabric: 'Moletom Stretch Mescla 200 g/m² (114.55-mc1001)',
+    fabricWeightKg: 8.5,
+    trims: 'Cós elástico 40mm + passantes + cordão 8mm, rebites, barra a fio e bordado Lavanda',
+    productionTotalCost: 1068.33,
+    effectiveUnitCost: 88.45,
+    salePrice: 289.9,
     stageIndex: 1,
-    notes: 'Peça hero com bordado lavanda e acabamento pesado.'
+    notes: 'Abaixo do joelho, barra a fio controlada e bordado computadorizado Lavanda.'
   },
   {
     id: 'VY-05',
     code: 'VY-05',
-    group: 'Peça 03 • Moletom Zip Duplo',
-    name: 'Moletom Zip Duplo Verde Oliva c/ Capuz Interno Vinho',
-    mineral: 'Epidoto & Granada',
+    group: 'Ref. 03 • Core • Oliva (#454D32) + Forro Vinho',
+    name: 'Moletom Zip Oversized Oliva c/ Forro Vinho',
+    mineral: 'Epidoto e Titanita (Capelinha)',
     accent: '#5E6D55',
-    sizes: { P: 1, M: 3, G: 2, GG: 1 }, // 7 un
-    fabric: 'Moletom 3 Cabos 360g Verde Oliva + Forro Capuz Vinho + Ribana Oliva',
-    fabricWeightKg: 7.35,
-    trims: 'Zíper duplo metálico (alt. YKK), cordão longo, ilhós, etiqueta VYRO',
-    productionTotalCost: 1185.0,
-    salePrice: 399.9,
+    sizes: { P: 2, M: 3, G: 3, GG: 0, TU: 0 }, // 8 un
+    fabric: 'Moletom 3 Cabos Verde 350 g/m² + Stretch Fine Vinho 360 g/m² (forro capuz) + Ribana Verde',
+    fabricWeightKg: 12.5, // 8,0000 kg + 2,4000 kg ribana + 2,1000 kg forro
+    trims: 'Zíper duplo 70cm #5 (Coats Opti/SBS) dividindo bolso canguru, capuz forrado Vinho',
+    productionTotalCost: 1232.54,
+    effectiveUnitCost: 148.62,
+    salePrice: 479.9,
     stageIndex: 1,
-    notes: 'Peça única: corpo verde oliva, capuz forrado em vinho e zíper duplo frontal.'
+    notes: 'Peça âncora unificada (VY-05 + VY-06 conceito).'
   },
   {
     id: 'VY-06',
     code: 'VY-06',
-    group: 'Peça 04 • Touca / Gorro',
-    name: 'Touca Canelada Vinho',
-    mineral: 'Granada Vinho',
+    group: 'Ref. 04 • Core • Vinho do Porto (#480109)',
+    name: 'Gorro / Touca c/ Forro Vinho',
+    mineral: 'Granada Almandina (São Tiago)',
     accent: '#72293C',
-    sizes: { P: 0, M: 5, G: 0, GG: 0 }, // 5 un (Tamanho Único -> Total Geral = 50 un)
-    fabric: 'Malha Ribana Canelada Vinho do Porto',
-    fabricWeightKg: 0.85,
-    trims: 'Etiqueta retangular VYRO ESSENCE dobrada na barra',
-    productionTotalCost: 235.0,
+    sizes: { P: 0, M: 0, G: 0, GG: 0, TU: 6 }, // 6 un TU (Total Geral = 50 un)
+    fabric: 'Stretch Fine Vinho 360 g/m² (104.03es-vm1003)',
+    fabricWeightKg: 1.4, // parte dos 3,5000 kg compartilhados com forro do VY-05
+    trims: 'Corpo e forro no mesmo tecido do capuz do VY-05, gomos e micro-logo off-white',
+    productionTotalCost: 298.73,
+    effectiveUnitCost: 48.5,
     salePrice: 139.9,
     stageIndex: 2,
-    notes: 'Tamanho único canelado (5 unidades fechando exatamente o lote de 50 peças).'
+    notes: '6 unidades Tamanho Único (TU), fechando exatamente o lote de 50 peças.'
   }
 ];
 
@@ -139,330 +145,451 @@ const PRODUCTION_STAGES = [
 ];
 
 // ============================================================================
-// CHECKLIST TOTALMENTE DESMEMBRADO ITEM POR ITEM (SEM AGRUPAMENTOS)
-// Soma exata da Produção = R$ 4.018,07 | Soma exata do Set Julho/27 = R$ 5.535,00
+// CHECKLIST DESMEMBRADO ITEM POR ITEM (EXATAMENTE CONFORME DOCUMENTO CERNE)
+// Malhas/Ribanas: R$ 2.189,14 | Facção: R$ 1.102,00 | Aviam./Bord.: R$ 726,93
+// Campanha Set/Foto: R$ 3.705,00 | Eng./Log./Site: R$ 1.478,00 | Ads: R$ 1.200,00
+// TOTAL GERAL ORÇADO: R$ 10.401,08
 // ============================================================================
 const INITIAL_CHECKLIST = [
-  // --- TECIDOS PRINCIPAIS (SEPARADOS POR COR E PEÇA) ---
+  // --- 1. MALHAS (6 ITENS INDIVIDUAIS) ---
   {
-    id: 'chk-tec-lavanda',
-    name: 'Malha Heavyweight 280g — Lavanda',
+    id: 'malha-1',
+    name: 'Moletinho Fine Lavanda (Ref: 105.05cl-rx1008)',
     category: 'Tecidos',
-    scope: 'VY-02 (Camiseta Boxy Lavanda)',
+    scope: 'VY-02 (Boxy Lavanda • 8 un)',
     supplier: 'Fornecedor Malhas BH',
-    targetQty: '3,0000 kg',
+    targetQty: '3,5000 kg',
     boughtQty: '3,0000 kg',
-    amount: 210.0,
+    amount: 203.46,
     paid: true,
     dueDate: '2026-11-20',
-    notes: 'Meta atingida: 3,0000 kg já comprados e recebidos.'
+    notes: 'Rend. 2,50 m/kg · R$ 58,13/kg · Compra já realizada.'
   },
   {
-    id: 'chk-tec-cinza-camiseta',
-    name: 'Malha Heavyweight 280g — Cinza Mescla',
+    id: 'malha-2',
+    name: 'Moletom 3 Cabos Verde Oliva (Ref: 103.06es-vd1003)',
     category: 'Tecidos',
-    scope: 'VY-01 (Camiseta Boxy Cinza)',
-    supplier: 'Aradefe / JMEI Têxtil',
-    targetQty: '3,1500 kg',
+    scope: 'VY-05 (Moletom Zip • 8 un)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '8,0000 kg',
     boughtQty: '0,0000 kg',
-    amount: 220.0,
+    amount: 449.2,
+    paid: false,
+    dueDate: '2027-02-10',
+    notes: 'Rend. 1,60 m/kg · Nec. corte: 7,62 kg · Preço: R$ 56,15/kg.'
+  },
+  {
+    id: 'malha-3',
+    name: 'Stretch Fine Vinho (Ref: 104.03es-vm1003)',
+    category: 'Tecidos',
+    scope: 'Forro VY-05 + VY-06 Gorro (14 un)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '3,5000 kg',
+    boughtQty: '0,0000 kg',
+    amount: 251.37,
+    paid: false,
+    dueDate: '2027-02-10',
+    notes: 'Rend. 1,63 m/kg · Nec. corte: 3,33 kg · Preço: R$ 71,82/kg.'
+  },
+  {
+    id: 'malha-4',
+    name: 'Moletinho Fine Preto (Ref: 105.05ft-pr1001)',
+    category: 'Tecidos',
+    scope: 'VY-03 (Boxy Preta • 8 un)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '3,5000 kg',
+    boughtQty: '0,0000 kg',
+    amount: 210.21,
     paid: false,
     dueDate: '2027-01-15',
-    notes: 'Meta de compra para as 10 camisetas boxy cinza mescla.'
+    notes: 'Rend. 2,50 m/kg · Nec. corte: 3,35 kg · Preço: R$ 60,06/kg.'
   },
   {
-    id: 'chk-tec-preta-camiseta',
-    name: 'Malha Heavyweight 280g — Preta',
+    id: 'malha-5',
+    name: 'Moletinho Mescla MOQ 6kg (Ref: 115.04-mc1001)',
     category: 'Tecidos',
-    scope: 'VY-03 (Camiseta Boxy Preta)',
-    supplier: 'Aradefe / JMEI Têxtil',
-    targetQty: '3,1500 kg',
+    scope: 'VY-01 (Boxy Cinza • 8 un)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '6,0000 kg',
     boughtQty: '0,0000 kg',
-    amount: 220.0,
+    amount: 315.36,
     paid: false,
     dueDate: '2027-01-15',
-    notes: 'Meta de compra para as 10 camisetas boxy pretas.'
+    notes: 'Rend. 2,60 m/kg · Nec. corte: 3,22 kg · Preço: R$ 52,56/kg (sobra 2,78 kg útil).'
   },
   {
-    id: 'chk-tec-jorts-cinza',
-    name: 'Moletom / Sarja Encorpada — Cinza Mescla (Jorts)',
+    id: 'malha-6',
+    name: 'Moletom Stretch Mescla (Ref: 114.55-mc1001)',
     category: 'Tecidos',
-    scope: 'VY-04 (Jorts Baggy Cinza)',
-    supplier: 'Aliah Tecidos',
-    targetQty: '4,8000 kg',
+    scope: 'VY-04 (Jorts Baggy • 12 un)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '8,5000 kg',
     boughtQty: '0,0000 kg',
-    amount: 410.0,
+    amount: 523.51,
     paid: false,
     dueDate: '2027-02-15',
-    notes: 'Meta de compra para os 8 jorts baggy cinza mescla.'
-  },
-  {
-    id: 'chk-tec-moletom-oliva',
-    name: 'Moletom 3 Cabos 360g — Verde Oliva',
-    category: 'Tecidos',
-    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
-    supplier: 'Aliah Tecidos',
-    targetQty: '5,8000 kg',
-    boughtQty: '0,0000 kg',
-    amount: 580.0,
-    paid: false,
-    dueDate: '2027-02-10',
-    notes: 'Corpo principal dos 7 moletons verde oliva.'
-  },
-  {
-    id: 'chk-tec-forro-vinho',
-    name: 'Malha / Forro Capuz — Vinho',
-    category: 'Tecidos',
-    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
-    supplier: 'Aliah Tecidos',
-    targetQty: '1,5500 kg',
-    boughtQty: '0,0000 kg',
-    amount: 160.0,
-    paid: false,
-    dueDate: '2027-02-10',
-    notes: 'Forro interno do capuz em tom vinho.'
+    notes: 'Rend. 1,70 m/kg · Nec. corte: 8,39 kg · Preço: R$ 61,59/kg.'
   },
 
-  // --- RIBANAS (SEPARADAS POR COR E PEÇA) ---
+  // --- 2. RIBANAS (4 ITENS INDIVIDUAIS — SEM RIBANA VINHO) ---
   {
-    id: 'chk-rib-lavanda',
-    name: 'Ribana Canelada 2x1 — Lavanda (Gola)',
+    id: 'ribana-1',
+    name: 'Ribana 2X1 Lavanda (Ref: 102.64cl-rx1008)',
     category: 'Ribanas',
-    scope: 'VY-02 (Camiseta Boxy Lavanda)',
+    scope: 'VY-02 (Gola Boxy Lavanda)',
     supplier: 'Fornecedor Malhas BH',
     targetQty: '0,4500 kg',
     boughtQty: '0,4500 kg',
-    amount: 75.0,
+    amount: 28.87,
     paid: true,
     dueDate: '2026-11-20',
-    notes: 'Ribana lavanda já comprada junto com a malha.'
+    notes: 'Rend. 3,09 m/kg · R$ 64,16/kg · Compra já realizada.'
   },
   {
-    id: 'chk-rib-cinza',
-    name: 'Ribana Canelada 2x1 — Cinza Mescla (Gola)',
+    id: 'ribana-2',
+    name: 'Ribana 2X1 Verde Oliva (Ref: 122.06es-vd1003)',
     category: 'Ribanas',
-    scope: 'VY-01 (Camiseta Boxy Cinza)',
+    scope: 'VY-05 (Punho/Barra Moletom)',
     supplier: 'Fornecedor Malhas BH',
-    targetQty: '0,4500 kg',
-    boughtQty: '0,4500 kg',
-    amount: 60.0,
-    paid: true,
-    dueDate: '2026-11-20',
-    notes: 'Ribana cinza já comprada.'
-  },
-  {
-    id: 'chk-rib-preta',
-    name: 'Ribana Canelada 2x1 — Preta (Gola)',
-    category: 'Ribanas',
-    scope: 'VY-03 (Camiseta Boxy Preta)',
-    supplier: 'Fornecedor Malhas BH',
-    targetQty: '0,4500 kg',
-    boughtQty: '0,4500 kg',
-    amount: 60.0,
-    paid: true,
-    dueDate: '2026-11-20',
-    notes: 'Ribana preta já comprada.'
-  },
-  {
-    id: 'chk-rib-oliva',
-    name: 'Ribana Canelada — Verde Oliva (Punhos e Barra)',
-    category: 'Ribanas',
-    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
-    supplier: 'Aliah Tecidos',
-    targetQty: '0,9000 kg',
+    targetQty: '2,4000 kg',
     boughtQty: '0,0000 kg',
-    amount: 85.0,
+    amount: 150.46,
     paid: false,
     dueDate: '2027-02-10',
-    notes: 'Punhos das mangas e barra do moletom oliva.'
+    notes: 'Rend. 1,22 m/kg · Nec. corte: 2,12 kg · Preço: R$ 62,69/kg.'
   },
   {
-    id: 'chk-rib-touca-vinho',
-    name: 'Ribana Canelada Grossa — Vinho (Touca)',
+    id: 'ribana-3',
+    name: 'Ribana 2X1 Preta (Ref: 120.05ft-pr1001)',
     category: 'Ribanas',
-    scope: 'VY-06 (Touca Canelada Vinho)',
-    supplier: 'Aliah Tecidos',
-    targetQty: '0,8500 kg',
+    scope: 'VY-03 (Gola Boxy Preta)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '0,4500 kg',
     boughtQty: '0,0000 kg',
-    amount: 95.0,
+    amount: 29.46,
     paid: false,
-    dueDate: '2027-02-15',
-    notes: 'Matéria-prima principal das 5 toucas vinho.'
+    dueDate: '2027-01-15',
+    notes: 'Rend. 2,47 m/kg · Nec. corte: 0,30 kg · Preço: R$ 65,47/kg.'
+  },
+  {
+    id: 'ribana-4',
+    name: 'Ribana 2X1 Mescla (Ref: 102.41-mc1001)',
+    category: 'Ribanas',
+    scope: 'VY-01 (Gola Boxy Cinza)',
+    supplier: 'Fornecedor Malhas BH',
+    targetQty: '0,4500 kg',
+    boughtQty: '0,0000 kg',
+    amount: 27.24,
+    paid: false,
+    dueDate: '2027-01-15',
+    notes: 'Rend. 3,53 m/kg · Nec. corte: 0,21 kg · Preço: R$ 60,53/kg.'
   },
 
-  // --- AVIAMENTOS & ETIQUETAS (SEPARADOS ITEM A ITEM) ---
+  // --- 3. AVIAMENTOS & BORDADOS (7 ITENS INDIVIDUAIS = R$ 726,93) ---
   {
-    id: 'chk-av-etiqueta',
-    name: 'Etiqueta Interna Tecida VYRO ESSENCE',
+    id: 'aviam-1',
+    name: 'Zíper Duplo 70 cm #5 (Coats Opti ou SBS — alt. YKK)',
     category: 'Aviamentos',
-    scope: 'Todas as 4 Peças (50 un)',
-    supplier: 'Insumos UAI',
-    targetQty: '60 un',
+    scope: 'VY-05 (Moletom Zip • 8 un)',
+    supplier: 'Aviamentos BH',
+    targetQty: '8 un (~R$ 15,00)',
     boughtQty: '0 un',
-    amount: 130.0,
+    amount: 120.0,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: 'Zíper duplo frontal dividindo bolso canguru.'
+  },
+  {
+    id: 'aviam-2',
+    name: 'Rebites Metálicos Niquelados',
+    category: 'Aviamentos',
+    scope: 'VY-04 (Jorts Baggy • 12 un)',
+    supplier: 'Aviamentos BH',
+    targetQty: '1 pct (100 un)',
+    boughtQty: '0 pct',
+    amount: 13.99,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: 'Reforço metálico nos bolsos do Jorts.'
+  },
+  {
+    id: 'aviam-3',
+    name: 'Cordão Algodão Trançado 8 mm',
+    category: 'Aviamentos',
+    scope: 'VY-04 (Jorts Baggy • 12 un)',
+    supplier: 'Aviamentos BH',
+    targetQty: '1 rolo (20 m)',
+    boughtQty: '0 rolo',
+    amount: 31.0,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: 'Cordão longo de ajuste no cós do Jorts.'
+  },
+  {
+    id: 'aviam-4',
+    name: 'Elástico de Cós 40 mm Reforçado',
+    category: 'Aviamentos',
+    scope: 'VY-04 (Jorts Baggy • 12 un)',
+    supplier: 'Aviamentos BH',
+    targetQty: '1 rolo (25 m)',
+    boughtQty: '0 rolo',
+    amount: 53.9,
+    paid: false,
+    dueDate: '2027-02-25',
+    notes: 'Cós elástico estruturado do Jorts Baggy.'
+  },
+  {
+    id: 'aviam-5',
+    name: 'Etiquetas (VYRO ESSENCE + Tamanho)',
+    category: 'Aviamentos',
+    scope: 'Todas as Peças (50 un)',
+    supplier: 'Etiquetas BH',
+    targetQty: '100 marca + kit tam.',
+    boughtQty: '0 un',
+    amount: 103.04,
     paid: false,
     dueDate: '2027-02-20',
-    notes: 'Etiqueta retangular aplicada na gola/cós/barra.'
+    notes: 'Etiqueta retangular tecida + composição/tamanho.'
   },
   {
-    id: 'chk-av-tag',
-    name: 'Tag Externa Sarja Montanha MG + Cordão',
+    id: 'aviam-6',
+    name: 'Linhas e Fios de Overloque',
     category: 'Aviamentos',
-    scope: 'Todas as 4 Peças (50 un)',
-    supplier: 'Insumos UAI',
-    targetQty: '60 un',
-    boughtQty: '0 un',
-    amount: 110.0,
+    scope: 'Todas as Peças (50 un)',
+    supplier: 'Aviamentos BH',
+    targetQty: 'Lote básico',
+    boughtQty: '0 lote',
+    amount: 60.0,
     paid: false,
     dueDate: '2027-02-20',
-    notes: 'Tag externa com identidade mineral de Minas Gerais.'
+    notes: 'Cones nas 5 cores da cartela CERNE.'
   },
   {
-    id: 'chk-av-ziper',
-    name: 'Zíper Duplo Metálico (Alternativa YKK)',
+    id: 'aviam-7',
+    name: 'Bordado Computadorizado + Matriz',
     category: 'Aviamentos',
-    scope: 'VY-05 (Moletom Zip Duplo Oliva)',
-    supplier: 'Insumos UAI',
-    targetQty: '7 un',
+    scope: 'Todas as Peças (50 un)',
+    supplier: 'Bordados BH',
+    targetQty: '50 un (R$ 6) + matriz',
     boughtQty: '0 un',
-    amount: 112.0,
+    amount: 345.0,
     paid: false,
-    dueDate: '2027-02-25',
-    notes: '1 zíper duplo por moletom (7 unidades).'
-  },
-  {
-    id: 'chk-av-cordao',
-    name: 'Cordão Longo Algodão + Ponteiras Metálicas',
-    category: 'Aviamentos',
-    scope: 'VY-04 (Jorts) e VY-05 (Moletom)',
-    supplier: 'Insumos UAI',
-    targetQty: '15 un',
-    boughtQty: '0 un',
-    amount: 56.07,
-    paid: false,
-    dueDate: '2027-02-25',
-    notes: '8 cordões para os jorts + 7 para os capuzes dos moletons.'
-  },
-  {
-    id: 'chk-av-rebites',
-    name: 'Rebites Metálicos + Ilhós + Passantes',
-    category: 'Aviamentos',
-    scope: 'VY-04 (Jorts) e VY-05 (Moletom)',
-    supplier: 'Insumos UAI',
-    targetQty: '1 kit (50 pçs)',
-    boughtQty: '0 kit',
-    amount: 45.0,
-    paid: false,
-    dueDate: '2027-02-25',
-    notes: 'Reforço dos bolsos do jorts e ilhós do capuz.'
+    dueDate: '2027-04-15',
+    notes: 'Inclui desenvolvimento de matriz + aplicação nas 50 peças.'
   },
 
-  // --- COSTURA CMT & BORDADO (SEPARADOS POR PEÇA) ---
+  // --- 4. FACÇÃO / CORTE E COSTURA BH (4 BLOCOS = R$ 1.102,00) ---
   {
-    id: 'chk-cmt-camisetas',
-    name: 'Corte & Costura CMT — 30 Camisetas Boxy (3 cores)',
+    id: 'faccao-1',
+    name: 'Corte & Costura BH — Camisetas Boxy (24 un)',
     category: 'Produção',
-    scope: 'VY-01, VY-02, VY-03 (30 un)',
-    supplier: 'Oficina Confecção BH',
-    targetQty: '30 peças',
-    boughtQty: '0 peças',
-    amount: 540.0,
+    scope: 'VY-01, VY-02, VY-03 (24 un)',
+    supplier: 'Facção Barro Preto / Prado / Contagem',
+    targetQty: '24 un (R$ 15,00/un)',
+    boughtQty: '0 un',
+    amount: 360.0,
     paid: false,
-    dueDate: '2027-04-20',
-    notes: 'R$ 18,00 por camiseta (corte, fechamento e gola ribana).'
+    dueDate: '2027-04-10',
+    notes: 'Faixa BH: R$ 12 a R$ 18/un (média R$ 15,00).'
   },
   {
-    id: 'chk-cmt-jorts',
-    name: 'Corte, Costura & Bordado Lavanda — 8 Jorts Baggy',
+    id: 'faccao-2',
+    name: 'Corte & Costura BH — Jorts Baggy (12 un)',
     category: 'Produção',
-    scope: 'VY-04 (8 un)',
-    supplier: 'Oficina Confecção BH + Bordado',
-    targetQty: '8 peças',
-    boughtQty: '0 peças',
-    amount: 320.0,
+    scope: 'VY-04 (12 un)',
+    supplier: 'Facção Barro Preto / Prado / Contagem',
+    targetQty: '12 un (R$ 27,00/un)',
+    boughtQty: '0 un',
+    amount: 324.0,
     paid: false,
-    dueDate: '2027-04-25',
-    notes: 'Inclui costura pesada, passantes e matriz/aplicação do bordado lavanda.'
+    dueDate: '2027-04-15',
+    notes: 'Faixa BH: R$ 22 a R$ 32/un (média R$ 27,00).'
   },
   {
-    id: 'chk-cmt-moletom',
-    name: 'Corte & Costura CMT — 7 Moletons Zip Duplo + Capuz Forrado',
+    id: 'faccao-3',
+    name: 'Corte & Costura BH — Moletom Zip Oliva (8 un)',
     category: 'Produção',
-    scope: 'VY-05 (7 un)',
-    supplier: 'Oficina Confecção BH',
-    targetQty: '7 peças',
-    boughtQty: '0 peças',
-    amount: 245.0,
+    scope: 'VY-05 (8 un)',
+    supplier: 'Facção Barro Preto / Prado / Contagem',
+    targetQty: '8 un (R$ 42,50/un)',
+    boughtQty: '0 un',
+    amount: 340.0,
     paid: false,
-    dueDate: '2027-04-30',
-    notes: 'Montagem do forro interno vinho no capuz e aplicação do zíper duplo.'
+    dueDate: '2027-05-20',
+    notes: 'Faixa BH: R$ 35 a R$ 50/un (média R$ 42,50).'
   },
   {
-    id: 'chk-cmt-touca',
-    name: 'Corte, Fechamento & Aplicação Etiqueta — 5 Toucas Vinho',
+    id: 'faccao-4',
+    name: 'Corte & Costura BH — Gorro c/ Forro Vinho (6 un)',
     category: 'Produção',
-    scope: 'VY-06 (5 un)',
-    supplier: 'Oficina Confecção BH',
-    targetQty: '5 peças',
-    boughtQty: '0 peças',
-    amount: 85.0,
+    scope: 'VY-06 (6 un)',
+    supplier: 'Facção Barro Preto / Prado / Contagem',
+    targetQty: '6 un (R$ 13,00/un)',
+    boughtQty: '0 un',
+    amount: 78.0,
     paid: false,
-    dueDate: '2027-04-30',
-    notes: 'Fechamento canelado e costura da etiqueta VYRO na dobra.'
+    dueDate: '2027-05-20',
+    notes: 'Faixa BH: R$ 10 a R$ 16/un (média R$ 13,00).'
   },
 
-  // --- SET & CAPTAÇÃO AUDIOVISUAL (JULHO 2027 — SEPARADOS POR ITEM) ---
+  // --- 5. CAMPANHA, LOOKBOOK & HOME SET — CASA VILAS BOAS (R$ 3.705,00) ---
   {
-    id: 'chk-set-airbnb',
-    name: 'Reserva Airbnb — Casa Vilas Boas (Nova Lima)',
+    id: 'set-1',
+    name: 'Locação Casa Vilas Boas — Nova Lima (1 diária Airbnb)',
     category: 'Set & Gravação',
-    scope: 'Set DJ Discroll + Lookbook',
-    supplier: 'Airbnb / Casa Vilas Boas',
-    targetQty: 'Diárias Julho/27',
-    boughtQty: 'Reservando',
+    scope: 'Home Set Discroll + Lookbook',
+    supplier: 'Airbnb (Anfitrião Felipe)',
+    targetQty: '1 diária Julho/27',
+    boughtQty: '0 diária',
     amount: 1830.0,
     paid: false,
     dueDate: '2027-06-15',
-    notes: 'Locação da casa para gravação do set de 40–60 min e fotos.'
+    notes: '2× Pioneer CDJ-3000 + Mixer DJM e Câmera 2 sem custo (R$ 0,00).'
   },
   {
-    id: 'chk-set-cdj',
-    name: 'Locação Pioneer CDJ-3000 + Mixer DJM',
+    id: 'set-2',
+    name: 'Par de Caixas Ativas 15” no chão (frete grátis Nova Lima)',
     category: 'Set & Gravação',
-    scope: 'Set DJ Discroll',
-    supplier: 'Locadora Áudio BH',
+    scope: 'Sonorização Home Set',
+    supplier: 'Mundo do Evento BH',
     targetQty: '1 diária',
     boughtQty: '0 diária',
-    amount: 1950.0,
+    amount: 400.0,
     paid: false,
     dueDate: '2027-07-10',
-    notes: 'Setup principal da cabine do DJ.'
+    notes: 'Posicionadas diretamente no chão (sem pedestais).'
   },
   {
-    id: 'chk-set-som',
-    name: 'Locação Caixas de Som de Piso',
+    id: 'set-3',
+    name: 'Interface M-Audio Fast Track C400 (REC Out)',
     category: 'Set & Gravação',
-    scope: 'Set DJ Discroll',
-    supplier: 'Locadora Áudio BH',
-    targetQty: '1 par',
-    boughtQty: '0 par',
-    amount: 955.0,
+    scope: 'Gravação Áudio Set',
+    supplier: 'LocNow BH',
+    targetQty: '1 diária',
+    boughtQty: '0 diária',
+    amount: 90.0,
     paid: false,
     dueDate: '2027-07-10',
-    notes: 'Monitoramento e estética visual no chão do set.'
+    notes: 'Captação limpa REC Out + backup DJM-REC.'
   },
   {
-    id: 'chk-set-visualizer',
-    name: 'Locação Visualizer / Painel Visual 3D',
+    id: 'set-4',
+    name: 'Kit Cabos Extras XLR / RCA / P10',
     category: 'Set & Gravação',
-    scope: 'Set DJ Discroll',
-    supplier: 'Locadora Visual BH',
-    targetQty: '1 unidade',
-    boughtQty: '0 unidade',
-    amount: 800.0,
+    scope: 'Conexão Mixer → Caixas',
+    supplier: 'LocNow BH',
+    targetQty: '1 kit',
+    boughtQty: '0 kit',
+    amount: 60.0,
     paid: false,
     dueDate: '2027-07-10',
-    notes: 'Compõe os R$ 3.705,00 totais de equipamentos do set.'
+    notes: 'Ligação mixer para caixas ativas no chão.'
+  },
+  {
+    id: 'set-5',
+    name: 'Sony FX30 Cinema Kit (Vídeo 4K contínuo + Fotos)',
+    category: 'Set & Gravação',
+    scope: 'Câmera 1 Híbrida',
+    supplier: 'LocNow BH',
+    targetQty: '1 diária',
+    boughtQty: '0 diária',
+    amount: 540.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Centralizada no tripé de frente para a mesa.'
+  },
+  {
+    id: 'set-6',
+    name: 'Lente Editorial Sony E 35mm f/1.8 OSS',
+    category: 'Set & Gravação',
+    scope: 'Fotos Lookbook das Peças',
+    supplier: 'LocNow BH',
+    targetQty: '1 diária',
+    boughtQty: '0 diária',
+    amount: 120.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Captação editorial na parede de vidro e muro de pedra.'
+  },
+  {
+    id: 'set-7',
+    name: 'LED Godox SL60W (R$ 120) + 2× Bastões LED RGB (R$ 80)',
+    category: 'Set & Gravação',
+    scope: 'Iluminação Blue Hour / Noite',
+    supplier: 'LocNow BH',
+    targetQty: '1 kit luz',
+    boughtQty: '0 kit',
+    amount: 200.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Iluminação controlada do set.'
+  },
+  {
+    id: 'set-8',
+    name: 'Cartão SanDisk 128GB (R$ 45) + 1× Tripé Câmera 1 (R$ 60)',
+    category: 'Set & Gravação',
+    scope: 'Mídia & Suporte FX30',
+    supplier: 'LocNow BH',
+    targetQty: '1 kit mídia',
+    boughtQty: '0 kit',
+    amount: 105.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Armazenamento 4K contínuo + tripé dedicado.'
+  },
+  {
+    id: 'set-9',
+    name: 'Técnico Setup AV BH (Freelancer 3h)',
+    category: 'Set & Gravação',
+    scope: 'Montagem, Foco, Luz & Áudio',
+    supplier: 'Freelancer AV BH',
+    targetQty: '3 horas',
+    boughtQty: '0 horas',
+    amount: 360.0,
+    paid: false,
+    dueDate: '2027-07-10',
+    notes: 'Apenas montagem, ajuste de foco, luz e teste de gravação.'
+  },
+
+  // --- 6. ENGENHARIA, LOGÍSTICA & E-COMMERCE (FECHANDO TETO R$ 10.401,08) ---
+  {
+    id: 'eng-1',
+    name: 'Modelagem, Gradação & 4 Peças-Piloto (4 Refs)',
+    category: 'Engenharia & Site',
+    scope: '4 Modelagens Base',
+    supplier: 'Modelista BH',
+    targetQty: '4 modelos + pilotos',
+    boughtQty: '0 modelos',
+    amount: 950.0,
+    paid: false,
+    dueDate: '2027-02-28',
+    notes: 'Meta orçada da Etapa 1 · Engenharia.'
+  },
+  {
+    id: 'eng-2',
+    name: 'Embalagens, Tags & Frete das Malhas (36,75 kg)',
+    category: 'Engenharia & Site',
+    scope: 'Logística Lote 50 pçs',
+    supplier: 'Transportadora / Embalagens BH',
+    targetQty: '36,75 kg + 50 emb.',
+    boughtQty: '0',
+    amount: 200.0,
+    paid: false,
+    dueDate: '2027-05-30',
+    notes: 'Meta orçada da Etapa 1 · Logística.'
+  },
+  {
+    id: 'eng-3',
+    name: 'Plataforma E-commerce Site (R$ 164,00/mês × 2 meses)',
+    category: 'Engenharia & Site',
+    scope: 'Loja Online VYRO',
+    supplier: 'Plataforma E-commerce',
+    targetQty: '2 meses ciclo',
+    boughtQty: '0 meses',
+    amount: 328.0,
+    paid: false,
+    dueDate: '2027-07-25',
+    notes: 'Domínio próprio já está pago e ativo por +1 ano (R$ 0,00).'
   }
 ];
 
@@ -474,63 +601,63 @@ const INITIAL_CALENDAR = [
     avgDays: 25,
     status: 'Em andamento',
     tasks: [
-      { id: 't-1', text: 'Receber pendências da coleção VYRO HEXA CLUB', done: false },
-      { id: 't-2', text: 'Validar grade de tamanhos das 4 peças (50 un totais)', done: true }
+      { id: 't-1', text: 'Receber pendências da coleção VYRO HEXA CLUB (R$ 2.199,00)', done: false },
+      { id: 't-2', text: 'Validar grade oficial 7P · 17M · 17G · 3GG · 6TU (50 peças)', done: true }
     ]
   },
   {
     id: 'cal-2',
     month: 'Jan – Fev 2027',
-    title: 'Compra Integral de Malhas, Ribanas & Aviamentos',
+    title: 'Compra das Malhas (36,75 kg), Ribanas & Modelagem',
     avgDays: 35,
     status: 'Planejado',
     tasks: [
-      { id: 't-3', text: 'Comprar malha cinza/preta e moletom oliva + forro vinho', done: false },
-      { id: 't-4', text: 'Encomendar etiquetas VYRO ESSENCE e zíper duplo', done: false }
+      { id: 't-3', text: 'Comprar malhas restantes (sem Ribana Vinho) + zíper duplo Coats/SBS', done: false },
+      { id: 't-4', text: 'Concluir modelagem, gradação e 4 peças-piloto (R$ 950,00)', done: false }
     ]
   },
   {
     id: 'cal-3',
     month: 'Mar – Abr 2027',
-    title: 'Pilotagem, Corte & Costura das 50 Peças',
+    title: '1ª Entrada: Camisetas Boxy (VY-01 a 03) + Jorts (VY-04)',
     avgDays: 45,
     status: 'Planejado',
     tasks: [
-      { id: 't-5', text: 'Aprovar peça-piloto do Jorts bordado e Moletom zip duplo oliva', done: false },
-      { id: 't-6', text: 'Produção em lote das 50 peças em BH/Contagem', done: false }
+      { id: 't-5', text: 'Corte, costura e bordado computadorizado das 24 camisetas + 12 jorts', done: false },
+      { id: 't-6', text: 'Revisão de barra a fio, rebites e etiquetas VYRO ESSENCE', done: false }
     ]
   },
   {
     id: 'cal-4',
     month: 'Mai – Jun 2027',
-    title: 'Acabamento, Revisão & Reserva Casa Vilas Boas',
+    title: '2ª Entrada: Moletom Zip (VY-05) + Gorro (VY-06) & Reserva Casa',
     avgDays: 30,
     status: 'Planejado',
     tasks: [
-      { id: 't-7', text: 'Aplicar tags montanha MG e revisar costura peça a peça', done: false },
-      { id: 't-8', text: 'Confirmar reserva Casa Vilas Boas e locação CDJ-3000', done: false }
+      { id: 't-7', text: 'Finalizar 8 moletons oliva c/ forro vinho + 6 gorros vinho', done: false },
+      { id: 't-8', text: 'Confirmar reserva Casa Vilas Boas (R$ 1.830,00) e kit LocNow BH', done: false }
     ]
   },
   {
     id: 'cal-5',
     month: 'Julho 2027',
-    title: 'Gravação Set DJ Discroll + Editorial Lookbook',
+    title: 'Gravação Home Set DJ Discroll + Lookbook Casa Vilas Boas',
     avgDays: 10,
     status: 'Marco Crítico',
     tasks: [
-      { id: 't-9', text: 'Gravar DJ Set (40–60 min) na Casa Vilas Boas com visualizer', done: false },
-      { id: 't-10', text: 'Captar fotos e reels de campanha com as 4 peças', done: false }
+      { id: 't-9', text: 'Gravar Set 40–60 min (2× CDJ-3000 + FX30 + Caixas no chão)', done: false },
+      { id: 't-10', text: 'Fotografar lookbook das 6 peças na parede de vidro e muro de pedra', done: false }
     ]
   },
   {
     id: 'cal-6',
     month: 'Agosto 2027',
-    title: 'Teasers, Tráfego Pago & Lançamento Oficial CERNE',
+    title: 'Ativação Meta Ads (60 dias) & Lançamento Oficial CERNE',
     avgDays: 20,
     status: 'Lançamento',
     tasks: [
-      { id: 't-11', text: 'Publicar set no YouTube + cortes no Instagram/TikTok', done: false },
-      { id: 't-12', text: 'Abrir vendas oficiais da Series 001: CERNE (50 peças)', done: false }
+      { id: 't-11', text: 'Rodar Meta Ads (R$ 20/dia × 60d = R$ 1.200,00) + Set no YouTube', done: false },
+      { id: 't-12', text: 'Atingir ponto de equilíbrio (43 peças) e meta de R$ 12.715,00', done: false }
     ]
   }
 ];
@@ -538,36 +665,19 @@ const INITIAL_CALENDAR = [
 const INITIAL_ADS = [
   {
     id: 'ad-1',
-    name: 'Aquecimento Set Discroll — Cortes House & Mineral',
-    platform: 'Instagram / Reels',
-    phase: 'Pré-Lançamento (Jul/27)',
-    budget: 450.0,
-    spent: 0,
-    clicks: 0,
-    status: 'Planejada'
-  },
-  {
-    id: 'ad-2',
-    name: 'Drop Oficial CERNE — Lookbook & Peças Hero',
+    name: 'Campanha Principal Meta Ads — Drop CERNE (R$ 20/dia × 60d)',
     platform: 'Meta Ads (IG + Feed)',
-    phase: 'Lançamento (Ago/27)',
-    budget: 750.0,
-    spent: 0,
-    clicks: 0,
-    status: 'Planejada'
-  },
-  {
-    id: 'ad-3',
-    name: 'Impulsionamento YouTube Set Completo Casa Vilas Boas',
-    platform: 'YouTube / TikTok',
-    phase: 'Sustentação (Ago/27)',
-    budget: 300.0,
+    phase: 'Ciclo 1 • 60 dias (Jul–Ago/27)',
+    budget: 1200.0,
     spent: 0,
     clicks: 0,
     status: 'Planejada'
   }
 ];
 
+// ============================================================================
+// ARRECADAÇÃO DA COLEÇÃO ANTERIOR (VYRO HEXA CLUB) — PRESERVADA INTACTA
+// ============================================================================
 const INITIAL_SALES = [
   { id: 's-1', customer: 'PABLIN', variant: 'Amarela', qty: 1, unitPrice: 219.9, paymentStatus: 'Não pago', delivered: true, note: 'Pendente financeiro' },
   { id: 's-2', customer: 'Tavin', variant: 'Amarela', qty: 1, unitPrice: 219.9, paymentStatus: 'Pago', delivered: true, note: 'Finalizado' },
@@ -596,8 +706,8 @@ const INITIAL_SALES = [
 
 const INITIAL_PARTNER_CONFIG = {
   discrollSetSharePct: 20,
-  discrollCap: 1200,
-  contingencyReserve: 600
+  discrollCap: 800,
+  contingencyReserve: 0 // Reserva já contemplada nos R$ 10.401,08
 };
 
 const DEFAULT_STATE = {
@@ -891,7 +1001,7 @@ function PortalLanding({ onEnter, stats }) {
 
           <div className="relative z-10 mt-4 space-y-1.5">
             <p className="text-[11px] tracking-[0.36em] uppercase text-[#A89AB8]">
-              FREQUÊNCIA MINERAL
+              FREQUÊNCIA MINERAL • 120 BPM
             </p>
             <h1 className="text-2xl sm:text-3xl font-light tracking-[0.14em] text-[#F4F1EA]">
               CERNE • CONTROLE DE COLEÇÃO
@@ -906,26 +1016,26 @@ function PortalLanding({ onEnter, stats }) {
 
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl w-full">
           <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
-            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Evolução Geral</div>
-            <div className="text-base font-semibold text-[#F4F1EA] mt-0.5">{stats.overallProgress}%</div>
-          </div>
-          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
             <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Caixa HEXA Pago</div>
             <div className="text-base font-semibold text-[#8BB174] mt-0.5">{formatBRL(stats.salesPaidTotal)}</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
-            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Produção (4 Peças)</div>
-            <div className="text-base font-semibold text-[#F4F1EA] mt-0.5">{formatBRL(stats.productionCostTotal)}</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">A Receber HEXA</div>
+            <div className="text-base font-semibold text-[#E2B979] mt-0.5">{formatBRL(stats.salesPendingTotal)}</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
-            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Gravação Set</div>
-            <div className="text-base font-semibold text-[#A89AB8] mt-0.5">Julho 2027</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Teto Drop CERNE</div>
+            <div className="text-base font-semibold text-[#F4F1EA] mt-0.5">{formatBRL(stats.totalProjectCost)}</div>
+          </div>
+          <div className="px-4 py-3 rounded-xl bg-[#121513]/85 border border-[#242926] text-left">
+            <div className="text-[10px] uppercase tracking-wider text-[#8C948E]">Meta Faturamento</div>
+            <div className="text-base font-semibold text-[#A89AB8] mt-0.5">{formatBRL(stats.projectedRevenueCerne)}</div>
           </div>
         </div>
       </div>
 
       <div className="w-full max-w-6xl flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#737B76]">
-        <span>4 Peças Principais • Grade 50 Unidades • Casa Vilas Boas</span>
+        <span>4 Refs × 6 SKUs • 50 Peças • Casa Vilas Boas</span>
         <span>VYRO STUDIOS • 2026–2027</span>
       </div>
     </div>
@@ -941,10 +1051,29 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [globalSearch, setGlobalSearch] = useState('');
 
+  // Preserva os dados de arrecadação HEXA caso você já tenha editado algo na v8/v7/v6
   const [data, setData] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      const savedV9 = localStorage.getItem(STORAGE_KEY);
+      if (savedV9) return JSON.parse(savedV9);
+
+      const legacyKeys = [
+        'vyro_cerne_management_v8',
+        'vyro_cerne_management_v7',
+        'vyro_cerne_management_v6'
+      ];
+      for (const k of legacyKeys) {
+        const legacyRaw = localStorage.getItem(k);
+        if (legacyRaw) {
+          const parsedLegacy = JSON.parse(legacyRaw);
+          if (Array.isArray(parsedLegacy.sales) && parsedLegacy.sales.length > 0) {
+            return {
+              ...DEFAULT_STATE,
+              sales: parsedLegacy.sales
+            };
+          }
+        }
+      }
     } catch (e) {
       console.error('Erro ao ler localStorage:', e);
     }
@@ -1077,13 +1206,16 @@ export default function App() {
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
     const checklistPending = checklistTotal - checklistPaid;
 
+    // Produção das 50 Peças BH (Tecidos + Ribanas + Aviamentos + Facção = R$ 4.018,07)
+    const productionCategories = ['Tecidos', 'Ribanas', 'Aviamentos', 'Produção'];
     const productionCostTotal = data.checklist
-      .filter((i) => i.category !== 'Set & Gravação')
+      .filter((i) => productionCategories.includes(i.category))
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
     const productionPaid = data.checklist
-      .filter((i) => i.category !== 'Set & Gravação' && i.paid)
+      .filter((i) => productionCategories.includes(i.category) && i.paid)
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
 
+    // Campanha Home Set + Lookbook (Casa Vilas Boas + Técnica BH = R$ 3.705,00)
     const setCostTotal = data.checklist
       .filter((i) => i.category === 'Set & Gravação')
       .reduce((acc, item) => acc + Number(item.amount || 0), 0);
@@ -1099,6 +1231,7 @@ export default function App() {
     const totalAlreadyPaid = checklistPaid + adsSpentTotal;
     const remainingToPay = Math.max(0, totalProjectCost - totalAlreadyPaid);
 
+    // Caixa HEXA CLUB (intacto)
     const salesPaidTotal = data.sales
       .filter((s) => s.paymentStatus === 'Pago')
       .reduce((acc, s) => acc + Number(s.qty || 1) * Number(s.unitPrice || 0), 0);
@@ -1119,6 +1252,7 @@ export default function App() {
       .filter((s) => s.paymentStatus === 'Cortesia')
       .reduce((acc, s) => acc + Number(s.qty || 1), 0);
 
+    // Rateio Sócios
     const discrollRaw = setCostTotal * (Number(data.partnerConfig.discrollSetSharePct || 0) / 100);
     const discrollCap = Number(data.partnerConfig.discrollCap || 0);
     const discrollShare = discrollCap > 0 ? Math.min(discrollRaw, discrollCap) : discrollRaw;
@@ -1302,7 +1436,7 @@ export default function App() {
           ? {
               ...p,
               sizes: {
-                ...(p.sizes || { P: 0, M: 0, G: 0, GG: 0 }),
+                ...(p.sizes || { P: 0, M: 0, G: 0, GG: 0, TU: 0 }),
                 [sizeKey]: Math.max(0, Number(qtyVal) || 0)
               }
             }
@@ -1449,7 +1583,7 @@ export default function App() {
               type="text"
               value={globalSearch}
               onChange={(e) => setGlobalSearch(e.target.value)}
-              placeholder="Filtrar item, peça ou cliente..."
+              placeholder="Filtrar item, código, peça ou cliente..."
               className="w-full bg-[#151917] border border-[#242926] rounded-xl pl-8 pr-3 py-2 text-xs text-[#F4F1EA] placeholder-[#6B736E] focus:outline-none focus:border-[#A89AB8]"
             />
           </div>
@@ -1499,14 +1633,14 @@ export default function App() {
         <div className="mt-6 pt-4 border-t border-[#1E2320] space-y-2.5">
           <div className="p-3 rounded-xl bg-gradient-to-br from-[#171C19] to-[#121513] border border-[#262C28]">
             <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-[#A89AB8]">
-              <span>Cronograma Alvo</span>
-              <span>2027</span>
+              <span>Metas Ciclo 1</span>
+              <span>60 dias</span>
             </div>
             <div className="mt-1 text-xs font-medium text-[#F4F1EA]">
-              Set Vilas Boas: <span className="text-[#8BB174]">Julho</span>
+              Break-even: <span className="text-[#8BB174]">43 peças</span>
             </div>
             <div className="text-[11px] text-[#8E9690]">
-              Lançamento Drop: <span className="text-[#F4F1EA]">Agosto</span>
+              Reestoque: <span className="text-[#F4F1EA]">35 peças vendidas</span>
             </div>
           </div>
 
@@ -1549,7 +1683,7 @@ export default function App() {
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#8E9690]">
               <span>Frequência Mineral</span>
               <span>•</span>
-              <span className="text-[#A89AB8]">4 Peças ({stats.totalPiecesQty} unidades)</span>
+              <span className="text-[#A89AB8]">4 Refs × 6 SKUs ({stats.totalPiecesQty} un)</span>
             </div>
             <h2 className="text-lg font-medium text-[#F4F1EA]">
               {navItems.find((n) => n.id === activeTab)?.label}
@@ -1588,7 +1722,7 @@ export default function App() {
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <span className="text-[11px] uppercase tracking-[0.2em] text-[#A89AB8]">
-                      Status Geral • Series 001: CERNE
+                      Visão Executiva • Series 001: CERNE
                     </span>
                     <h3 className="text-xl font-medium text-[#F4F1EA] mt-1">
                       Evolução Consolidada até o Drop (Julho / Agosto 2027)
@@ -1612,13 +1746,13 @@ export default function App() {
                 </div>
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                   <div className="p-3 rounded-xl bg-[#0E110F] border border-[#1F2421]">
-                    <span className="text-[#88918B] block text-[11px]">Produção 4 Peças (50 un)</span>
+                    <span className="text-[#88918B] block text-[11px]">Produção BH (50 Peças)</span>
                     <span className="font-semibold text-[#F4F1EA] mt-0.5 block">
                       {formatBRL(stats.productionPaid)} / {formatBRL(stats.productionCostTotal)}
                     </span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#0E110F] border border-[#1F2421]">
-                    <span className="text-[#88918B] block text-[11px]">Set Casa Vilas Boas</span>
+                    <span className="text-[#88918B] block text-[11px]">Home Set + Lookbook</span>
                     <span className="font-semibold text-[#A89AB8] mt-0.5 block">
                       {formatBRL(stats.setPaid)} / {formatBRL(stats.setCostTotal)}
                     </span>
@@ -1640,42 +1774,42 @@ export default function App() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <FloatingMineralCard accent="#F4F1EA" className="p-5">
-                  <div className="text-xs text-[#8E9690]">Investimento Total CERNE</div>
+                  <div className="text-xs text-[#8E9690]">Teto Investimento Drop 001</div>
                   <div className="text-2xl font-semibold text-[#F4F1EA] mt-1.5">
                     {formatBRL(stats.totalProjectCost)}
                   </div>
                   <div className="text-[11px] text-[#7D8680] mt-2">
-                    Produção {formatBRL(stats.productionCostTotal)} + Set + Ads + Reserva
+                    Mapeado (R$ 7.723,07) + Eng./Site/Ads
                   </div>
                 </FloatingMineralCard>
 
                 <FloatingMineralCard accent="#5E6D55" className="p-5">
-                  <div className="text-xs text-[#8E9690]">Já Pago / Amortizado</div>
+                  <div className="text-xs text-[#8E9690]">Já Pago / Quitado</div>
                   <div className="text-2xl font-semibold text-[#8BB174] mt-1.5">
                     {formatBRL(stats.totalAlreadyPaid)}
                   </div>
                   <div className="text-[11px] text-[#7D8680] mt-2">
-                    Malha Lavanda 3kg + Ribanas (Lav/Cin/Pre) quitadas
+                    Malha & Ribana Lavanda + Domínio ativo
                   </div>
                 </FloatingMineralCard>
 
                 <FloatingMineralCard accent="#A89AB8" className="p-5">
-                  <div className="text-xs text-[#8E9690]">Falta Pagar (Bruto)</div>
+                  <div className="text-xs text-[#8E9690]">Falta Pagar (Orçamento)</div>
                   <div className="text-2xl font-semibold text-[#A89AB8] mt-1.5">
                     {formatBRL(stats.remainingToPay)}
                   </div>
                   <div className="text-[11px] text-[#7D8680] mt-2">
-                    Saldo pendente do cronograma
+                    Saldo pendente das etapas
                   </div>
                 </FloatingMineralCard>
 
                 <FloatingMineralCard accent="#72293C" className="p-5">
-                  <div className="text-xs text-[#8E9690]">Faturamento Projetado ({stats.totalPiecesQty} pçs)</div>
+                  <div className="text-xs text-[#8E9690]">Meta Faturamento Bruto (50 pçs)</div>
                   <div className="text-2xl font-semibold text-[#F4F1EA] mt-1.5">
                     {formatBRL(stats.projectedRevenueCerne)}
                   </div>
                   <div className="text-[11px] text-[#8BB174] mt-2">
-                    Margem bruta est.: {formatBRL(stats.projectedRevenueCerne - stats.totalProjectCost)}
+                    Resultado s/ teto: +{formatBRL(stats.projectedRevenueCerne - stats.totalProjectCost)}
                   </div>
                 </FloatingMineralCard>
               </div>
@@ -1695,7 +1829,7 @@ export default function App() {
                   </div>
                   <p className="text-xs text-[#8C948E]">
                     Abatendo os <strong className="text-[#8BB174]">{formatBRL(stats.salesPaidTotal)}</strong> já
-                    em caixa da coleção anterior:
+                    em caixa da coleção HEXA:
                   </p>
                   <div className="space-y-2.5">
                     <div className="p-3 rounded-xl bg-[#0E110F] border border-[#222724] flex items-center justify-between">
@@ -1961,14 +2095,22 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
   const [statusFilter, setStatusFilter] = useState('Todos');
   const [newName, setNewName] = useState('');
   const [newCat, setNewCat] = useState('Tecidos');
-  const [newScope, setNewScope] = useState('VY-01 (Camiseta Cinza)');
+  const [newScope, setNewScope] = useState('VY-01 (Boxy Cinza)');
   const [newTargetQty, setNewTargetQty] = useState('');
   const [newBoughtQty, setNewBoughtQty] = useState('0');
   const [newAmount, setNewAmount] = useState('');
   const [newPaid, setNewPaid] = useState(false);
   const [addedFeedback, setAddedFeedback] = useState('');
 
-  const categories = ['Todos', 'Tecidos', 'Ribanas', 'Aviamentos', 'Produção', 'Set & Gravação'];
+  const categories = [
+    'Todos',
+    'Tecidos',
+    'Ribanas',
+    'Aviamentos',
+    'Produção',
+    'Set & Gravação',
+    'Engenharia & Site'
+  ];
 
   const filtered = items.filter((item) => {
     const matchCat = catFilter === 'Todos' || item.category === catFilter;
@@ -2012,7 +2154,6 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
 
   return (
     <div className="space-y-6">
-      {/* Formulário Completo Sempre Aberto para Adicionar Novos Itens Separados */}
       <FloatingMineralCard accent="#A89AB8" disableTilt className="p-5">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
@@ -2033,7 +2174,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
           <input
             type="text"
-            placeholder="Nome do item (ex: Ribana Preta Gola)"
+            placeholder="Nome do item (ex: Lavanderia VY-04)"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             className="lg:col-span-2 px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
@@ -2046,26 +2187,27 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
             <option value="Tecidos">Tecidos</option>
             <option value="Ribanas">Ribanas</option>
             <option value="Aviamentos">Aviamentos</option>
-            <option value="Produção">Produção (CMT)</option>
+            <option value="Produção">Produção (Facção)</option>
             <option value="Set & Gravação">Set & Gravação</option>
+            <option value="Engenharia & Site">Engenharia & Site</option>
           </select>
           <select
             value={newScope}
             onChange={(e) => setNewScope(e.target.value)}
             className="px-3 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
           >
-            <option value="VY-01 (Camiseta Cinza)">VY-01 • Camiseta Cinza</option>
-            <option value="VY-02 (Camiseta Lavanda)">VY-02 • Camiseta Lavanda</option>
-            <option value="VY-03 (Camiseta Preta)">VY-03 • Camiseta Preta</option>
-            <option value="VY-04 (Jorts Baggy Cinza)">VY-04 • Jorts Baggy Cinza</option>
-            <option value="VY-05 (Moletom Zip Oliva)">VY-05 • Moletom Zip Oliva</option>
-            <option value="VY-06 (Touca Vinho)">VY-06 • Touca Vinho</option>
-            <option value="Todas as 4 Peças (50 un)">Todas as 4 Peças (50 un)</option>
-            <option value="Set DJ Discroll">Set DJ Discroll (Jul/27)</option>
+            <option value="VY-01 (Boxy Cinza • 8 un)">VY-01 • Boxy Cinza</option>
+            <option value="VY-02 (Boxy Lavanda • 8 un)">VY-02 • Boxy Lavanda</option>
+            <option value="VY-03 (Boxy Preta • 8 un)">VY-03 • Boxy Preta</option>
+            <option value="VY-04 (Jorts Baggy • 12 un)">VY-04 • Jorts Baggy</option>
+            <option value="VY-05 (Moletom Zip • 8 un)">VY-05 • Moletom Zip</option>
+            <option value="VY-06 (Gorro Vinho • 6 un)">VY-06 • Gorro Vinho</option>
+            <option value="Todas as Peças (50 un)">Todas as Peças (50 un)</option>
+            <option value="Home Set Discroll">Home Set Discroll (Jul/27)</option>
           </select>
           <input
             type="text"
-            placeholder="Meta compra (ex: 2,5000 kg)"
+            placeholder="Meta compra (ex: 3,5000 kg)"
             value={newTargetQty}
             onChange={(e) => setNewTargetQty(e.target.value)}
             className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
@@ -2073,7 +2215,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
           <input
             type="text"
             inputMode="decimal"
-            placeholder="Valor R$ (ex: 145,00)"
+            placeholder="Valor R$ (ex: 150,00)"
             value={newAmount}
             onChange={(e) => setNewAmount(e.target.value)}
             className="px-3.5 py-2.5 rounded-xl bg-[#0D100E] border border-[#2A312D] text-xs text-[#F4F1EA] focus:outline-none focus:border-[#A89AB8]"
@@ -2103,7 +2245,6 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         </form>
       </FloatingMineralCard>
 
-      {/* Filtros por Categoria e Status */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           {categories.map((cat) => (
@@ -2143,14 +2284,13 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
         </div>
       </div>
 
-      {/* Tabela Desmembrada Item a Item */}
       <FloatingMineralCard accent="#5E6D55" disableTilt className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-[#212623] text-[10px] uppercase tracking-wider text-[#88918B] bg-[#0E110F]">
                 <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Item Individual</th>
+                <th className="py-3.5 px-4">Item Individual / Ref.</th>
                 <th className="py-3.5 px-4">Categoria</th>
                 <th className="py-3.5 px-4">Peça Respectiva</th>
                 <th className="py-3.5 px-4">Meta de Compra</th>
@@ -2176,7 +2316,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                       <span>{item.paid ? 'Pago' : 'Pendente'}</span>
                     </button>
                   </td>
-                  <td className="py-3 px-4 min-w-[220px]">
+                  <td className="py-3 px-4 min-w-[230px]">
                     <input
                       type="text"
                       value={item.name}
@@ -2203,7 +2343,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                       type="text"
                       value={item.targetQty || ''}
                       onChange={(e) => onUpdateField(item.id, 'targetQty', e.target.value)}
-                      className="w-24 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] text-[#F4F1EA]"
+                      className="w-28 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] text-[#F4F1EA]"
                     />
                   </td>
                   <td className="py-3 px-4">
@@ -2211,7 +2351,7 @@ function ChecklistTab({ items, search, onTogglePaid, onUpdateField, onAdd, onDel
                       type="text"
                       value={item.boughtQty || ''}
                       onChange={(e) => onUpdateField(item.id, 'boughtQty', e.target.value)}
-                      className={`w-24 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] font-medium ${
+                      className={`w-28 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[11px] font-medium ${
                         item.paid ? 'text-[#8BB174]' : 'text-[#A4ADA7]'
                       }`}
                     />
@@ -2260,6 +2400,10 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
     (acc, p) => acc + Number(p.productionTotalCost || 0),
     0
   );
+  const totalProjectedSales = pieces.reduce(
+    (acc, p) => acc + getPieceTotalQty(p) * Number(p.salePrice || 0),
+    0
+  );
 
   return (
     <div className="space-y-6">
@@ -2267,13 +2411,13 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="text-[11px] uppercase tracking-[0.2em] text-[#A89AB8]">
-              Arquitetura do Drop • 4 Peças (6 Variações)
+              Mix Oficial • 4 Refs × 6 SKUs (Grade: 7P · 17M · 17G · 3GG · 6TU)
             </span>
             <h3 className="text-base font-medium text-[#F4F1EA] mt-1">
-              Camisetas Boxy (3 cores) • Jorts Baggy Cinza • Moletom Zip Duplo Oliva/Vinho • Touca Vinho
+              Camisetas Boxy (3 cores) • Jorts Baggy Mescla • Moletom Zip Oliva/Vinho • Gorro Vinho
             </h3>
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex flex-wrap items-center gap-3 text-xs">
             <div className="px-3.5 py-2 rounded-xl bg-[#0E110F] border border-[#242926]">
               <span className="text-[#8E9690] block text-[10px] uppercase">Grade Total</span>
               <span className={`font-semibold text-sm ${totalLotQty === 50 ? 'text-[#8BB174]' : 'text-[#E2B979]'}`}>
@@ -2281,9 +2425,15 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
               </span>
             </div>
             <div className="px-3.5 py-2 rounded-xl bg-[#0E110F] border border-[#242926]">
-              <span className="text-[#8E9690] block text-[10px] uppercase">Produção Lote</span>
+              <span className="text-[#8E9690] block text-[10px] uppercase">Produção BH</span>
               <span className="font-semibold text-sm text-[#F4F1EA]">
                 {formatBRL(totalLotProduction)}
+              </span>
+            </div>
+            <div className="px-3.5 py-2 rounded-xl bg-[#0E110F] border border-[#242926]">
+              <span className="text-[#8E9690] block text-[10px] uppercase">Meta Faturamento</span>
+              <span className="font-semibold text-sm text-[#8BB174]">
+                {formatBRL(totalProjectedSales)}
               </span>
             </div>
           </div>
@@ -2293,7 +2443,7 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {filtered.map((piece) => {
           const pieceQty = getPieceTotalQty(piece);
-          const unitCost = pieceQty > 0 ? Number(piece.productionTotalCost || 0) / pieceQty : 0;
+          const unitCostMoq = pieceQty > 0 ? Number(piece.productionTotalCost || 0) / pieceQty : 0;
           const progress = Math.round((piece.stageIndex / (PRODUCTION_STAGES.length - 1)) * 100);
           const isBeanie = piece.id === 'VY-06';
 
@@ -2313,6 +2463,7 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
                     </span>
                   </div>
                   <h4 className="text-base font-semibold text-[#F4F1EA] mt-1.5">{piece.name}</h4>
+                  <div className="text-[11px] text-[#7D8680]">{piece.mineral}</div>
                 </div>
                 <div className="text-right shrink-0">
                   <div className="text-[10px] uppercase text-[#8E9690]">Total Peça</div>
@@ -2322,17 +2473,17 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
 
               <div className="p-3 rounded-xl bg-[#0E110F] border border-[#222724]">
                 <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-[#8E9690] mb-2">
-                  <span>{isBeanie ? 'Grade (Tamanho Único)' : 'Grade de Tamanhos (Editável)'}</span>
-                  <span>Malha: {Number(piece.fabricWeightKg || 0).toFixed(4)} kg</span>
+                  <span>{isBeanie ? 'Grade (TU — Tamanho Único)' : 'Grade de Tamanhos (Editável)'}</span>
+                  <span>Peso compra: {Number(piece.fabricWeightKg || 0).toFixed(4)} kg</span>
                 </div>
                 {isBeanie ? (
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-[#C4CCC7]">Tamanho Único (Canelado)</span>
+                    <span className="text-xs text-[#C4CCC7]">Tamanho Único (TU)</span>
                     <input
                       type="number"
                       min="0"
-                      value={piece.sizes?.M ?? 5}
-                      onChange={(e) => onUpdateSize(piece.id, 'M', e.target.value)}
+                      value={piece.sizes?.TU ?? 6}
+                      onChange={(e) => onUpdateSize(piece.id, 'TU', e.target.value)}
                       className="w-20 px-2.5 py-1 rounded-lg bg-[#151917] border border-[#2A312D] text-center text-xs font-semibold text-[#F4F1EA]"
                     />
                   </div>
@@ -2358,10 +2509,10 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
 
               <div className="text-xs text-[#A4ADA7] space-y-1">
                 <div>
-                  <strong className="text-[#D1D3D4]">Matéria-prima:</strong> {piece.fabric}
+                  <strong className="text-[#D1D3D4]">Base Têxtil:</strong> {piece.fabric}
                 </div>
                 <div>
-                  <strong className="text-[#D1D3D4]">Aviamentos:</strong> {piece.trims}
+                  <strong className="text-[#D1D3D4]">Acabamentos:</strong> {piece.trims}
                 </div>
               </div>
 
@@ -2384,7 +2535,7 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
 
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#1E2320] text-xs">
                 <div>
-                  <span className="text-[10px] text-[#7D8680] block">Custo Lote (R$)</span>
+                  <span className="text-[10px] text-[#7D8680] block">Total BH (MOQ)</span>
                   <input
                     type="number"
                     step="0.01"
@@ -2395,11 +2546,11 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
                     className="w-full mt-0.5 px-2 py-1 rounded bg-[#0E110F] border border-[#242926] text-[#F4F1EA] font-semibold"
                   />
                   <span className="text-[10px] text-[#7D8680] block mt-0.5">
-                    Unit: {formatBRL(unitCost)}
+                    Unit: {formatBRL(unitCostMoq)} (Efet. {formatBRL(piece.effectiveUnitCost)})
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#7D8680] block">Venda Sugerida</span>
+                  <span className="text-[10px] text-[#7D8680] block">Preço Venda</span>
                   <input
                     type="number"
                     step="0.1"
@@ -2409,7 +2560,7 @@ function PiecesTab({ pieces, search, onUpdateStage, onUpdateField, onUpdateSize 
                   />
                 </div>
                 <div className="text-right flex flex-col justify-center">
-                  <span className="text-[10px] text-[#7D8680]">Receita Lote</span>
+                  <span className="text-[10px] text-[#7D8680]">Faturamento SKU</span>
                   <span className="font-semibold text-[#F4F1EA] mt-1">
                     {formatBRL(pieceQty * piece.salePrice)}
                   </span>
@@ -2458,7 +2609,7 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FloatingMineralCard accent="#5E6D55" className="p-5">
-          <div className="text-xs text-[#8E9690]">Caixa Recebido (Pagos)</div>
+          <div className="text-xs text-[#8E9690]">Caixa Recebido (Pagos HEXA)</div>
           <div className="text-2xl font-semibold text-[#8BB174] mt-1">
             {formatBRL(stats.salesPaidTotal)}
           </div>
@@ -2468,7 +2619,7 @@ function SalesTab({ sales, stats, search, onCycleStatus, onToggleDelivered, onAd
         </FloatingMineralCard>
 
         <FloatingMineralCard accent="#72293C" className="p-5">
-          <div className="text-xs text-[#8E9690]">A Receber (Não Pagos)</div>
+          <div className="text-xs text-[#8E9690]">A Receber (Não Pagos HEXA)</div>
           <div className="text-2xl font-semibold text-[#E2B979] mt-1">
             {formatBRL(stats.salesPendingTotal)}
           </div>
@@ -2637,10 +2788,9 @@ function PartnersTab({ stats, config, onUpdateConfig }) {
 
         <p className="text-xs text-[#9AA39D] leading-relaxed">
           O <strong>DJ Discroll</strong> participa apenas com uma cota leve sobre os custos de
-          gravação do Set (Casa Vilas Boas + locação CDJ/som/visualizer ={' '}
+          gravação do Home Set + Lookbook (Casa Vilas Boas + técnica BH ={' '}
           <strong>{formatBRL(stats.setCostTotal)}</strong>), com teto máximo configurável para não
-          pesar para ele. Todo o restante (produção das 50 peças ={' '}
-          <strong>{formatBRL(stats.productionCostTotal)}</strong>, tráfego e saldo do set) é
+          pesar para ele. Todo o restante do teto da coleção ({formatBRL(stats.totalProjectCost)}) é
           abatido pelo caixa já recebido da HEXA CLUB ({formatBRL(stats.salesPaidTotal)}) e dividido
           igualmente entre <strong>Jonatas</strong> e <strong>Marcos Paulo</strong>.
         </p>
@@ -2673,7 +2823,7 @@ function PartnersTab({ stats, config, onUpdateConfig }) {
           </div>
           <div className="p-3.5 rounded-xl bg-[#0E110F] border border-[#242926]">
             <label className="block text-[11px] text-[#8E9690] mb-1">
-              Reserva para Imprevistos (R$)
+              Reserva Extra Imprevistos (R$)
             </label>
             <input
               type="number"
@@ -2822,7 +2972,7 @@ function CalendarTab({ calendar, onToggleTask, onAddTask, onUpdateDays }) {
 
 function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
   const [name, setName] = useState('');
-  const [platform] = useState('Instagram / Reels');
+  const [platform] = useState('Meta Ads (IG + Feed)');
   const [budget, setBudget] = useState('');
 
   const totalBudget = ads.reduce((a, b) => a + Number(b.budget || 0), 0);
@@ -2845,8 +2995,9 @@ function AdsTab({ ads, onUpdateField, onAdd, onDelete }) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FloatingMineralCard accent="#A89AB8" className="p-5">
-          <div className="text-xs text-[#8E9690]">Orçamento Total Tráfego</div>
+          <div className="text-xs text-[#8E9690]">Orçamento Total Tráfego (Meta Ads)</div>
           <div className="text-2xl font-semibold text-[#F4F1EA] mt-1">{formatBRL(totalBudget)}</div>
+          <div className="text-[11px] text-[#7D8680] mt-1">Meta: R$ 20/dia × 60 dias</div>
         </FloatingMineralCard>
         <FloatingMineralCard accent="#5E6D55" className="p-5">
           <div className="text-xs text-[#8E9690]">Investido até Agora</div>
